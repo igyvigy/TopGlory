@@ -25,7 +25,7 @@ enum TGError: Error {
     case critical(error: NSError)
     case warning(error: NSError)
     case serialization(error: NSError)
-//    case errorModels(errorModels: [ErrorModel])
+    case errorModels(errorModels: [ErrorModel])
     case custom(text: String)
     case unknown(error: NSError)
     
@@ -35,42 +35,38 @@ enum TGError: Error {
             return "\(String(describing: self)) - \(error.localizedDescription)\n\(String(describing: error.localizedFailureReason))\n\(String(describing: error.localizedRecoverySuggestion))"
         case .custom(let text):
             return text
+        case .errorModels(let errorModels):
+            guard errorModels.count > 0 else { return "empty error model" }
+            
+            return errorModels.map({ $0.infoString }).reduce("", { $0 == "" ? $1 : $0 + "," + $1 })
         }
     }
 }
 
-//class ErrorModel: Model {
-//    enum Fields: String {
-//        case code, status, title, detail
-//    }
-//    
-//    var code = ""
-//    var status = ""
-//    var title = ""
-//    var detail = ""
-//    
-//    override func decode(_ json: JSON, onlyData: Bool = true, jSONStructure: JSONStructure = .jSONApi, jsonApiIncludes: JSON? = nil) {
-//        let data = onlyData ? json : json["data"]
-//        code = data[Fields.code.rawValue].stringValue
-//        status = data[Fields.status.rawValue].stringValue
-//        title = data[Fields.title.rawValue].stringValue
-//        detail = data[Fields.detail.rawValue].stringValue
-//    }
-//    
-//    override func encode() -> JSON {
-//        let returnValue: JSON = [
-//            Fields.code.rawValue: code,
-//            Fields.status.rawValue: status,
-//            Fields.title.rawValue: title,
-//            Fields.detail.rawValue: detail
-//        ]
-//        return returnValue
-//    }
-//    
-//    var infoString: String {
-//        return "\(detail) code:\(code)"
-//    }
-//}
+class ErrorModel {
+    enum Fields: String {
+        case title
+    }
+    
+    var title = ""
+    
+    static func from(json: [String: Any]) -> ErrorModel {
+        let errorModel = ErrorModel()
+        errorModel.title = json[Fields.title.rawValue] as? String ?? ""
+        return errorModel
+    }
+    
+    var json: [String: Any] {
+        let returnValue: [String: Any] = [
+            Fields.title.rawValue: title
+        ]
+        return returnValue
+    }
+    
+    var infoString: String {
+        return "error: \(title)"
+    }
+}
 
 enum TGResultType {
     case jsonApiObject, jsonApiArray
@@ -94,8 +90,6 @@ struct TGResult<M: Model> {
                 responseObjects.append(object)
             }
             values = responseObjects
-        } else {
-            self.error = .custom(text: "jsonApiArray - no json")
         }
     }
     
@@ -105,8 +99,6 @@ struct TGResult<M: Model> {
             self.error = error
         } else if let json = transferObject.json {
             value = M(json: json["data"], included: json["included"].arrayValue.map({ Model(json: $0) }))
-        } else {
-            self.error = .custom(text: "jsonApiObject - no json")
         }
     }
 }
@@ -209,20 +201,16 @@ class ErrorService {
         if 200..<300 ~= validation.1.statusCode {
             return (.success, nil)
         }
-//        else if let data = validation.2 {
-//            let jsonError: JSON = JSON(data)["errors"]
-//            var errorModels = [ErrorModel]()
-//            let jsonObjects = ErrorModel.jsonPath().isEmpty ? jsonError : jsonError[ErrorModel.jsonPath()]
-//            for (_, objectJSON):(String, JSON) in jsonObjects {
-//                let object = ErrorModel(json: objectJSON)
-//                errorModels.append(object)
-//            }
-//            return (.success, .errorModels(errorModels: errorModels))
-//        }
-        else {
-            let error = NSError(domain: "TG", code: validation.1.statusCode, userInfo: [NSLocalizedDescriptionKey: "unrecognized error"])
-            return (.failure(error), .unknown(error: error))
+        else if let data = validation.2 {
+            if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                if let errors = json?["errors"] as? [[String: Any]] {
+                    return (.success, .errorModels(errorModels: errors.map({ ErrorModel.from(json: $0) })))
+                }
+            }
         }
+        let error = NSError(domain: "TG", code: validation.1.statusCode, userInfo: [NSLocalizedDescriptionKey: "unrecognized error"])
+        return (.failure(error), .unknown(error: error))
+        
     }
     
     static func validateAlamofireJSONResponse(_ dataResponce: DataResponse<Any>, onSuccess: JSONCompletion, onError: ErrorCompletion) {
@@ -266,7 +254,7 @@ class ErrorService {
         case .jsonApiArray:
             DispatchQueue.main.async {
                 if let error = result.error {
-                    onError?(error.localizedDescription)
+                    onError?(error.description)
                 } else if let values = result.values {
                     onSuccess(values)
                 } else {

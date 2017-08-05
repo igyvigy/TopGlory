@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     }
     
     func saveLastPlayer(playerName: String?) {
-        UserDefaults.standard.set(playerName, forKey: "lastPlayerName")
+        UserDefaults.standard.set(playerName, forKey: Constants.lastUserDefaultsKey)
     }
 }
 
