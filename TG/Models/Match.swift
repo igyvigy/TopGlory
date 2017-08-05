@@ -83,7 +83,6 @@ extension Match {
                          control: Control? = nil,
                          onSuccess: @escaping ([Match]) -> Void,
                          onError: Completion? = nil) {
-        
         let parameters: Parameters = [
             "filter[playerNames]": userName ?? "null",
             "filter[createdAt-start]": stardDate?.iso8601 ?? "null",
