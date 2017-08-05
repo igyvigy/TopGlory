@@ -9,14 +9,11 @@
 /* Begin PBXBuildFile section */
 		B537BC9B1F1401C80064E979 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C97A1F13F0A0008F191F /* MatchesViewController.swift */; };
 		B545C9681F13F03B008F191F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C9671F13F03B008F191F /* AppDelegate.swift */; };
-		B545C96A1F13F03B008F191F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C9691F13F03B008F191F /* ViewController.swift */; };
 		B545C96D1F13F03B008F191F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B545C96B1F13F03B008F191F /* Main.storyboard */; };
 		B545C96F1F13F03B008F191F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B545C96E1F13F03B008F191F /* Assets.xcassets */; };
 		B545C9721F13F03B008F191F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B545C9701F13F03B008F191F /* LaunchScreen.storyboard */; };
 		B545C9901F13F0A0008F191F /* MatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C97C1F13F0A0008F191F /* MatchTableViewCell.swift */; };
 		B545C9911F13F0A0008F191F /* MatchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B545C97D1F13F0A0008F191F /* MatchTableViewCell.xib */; };
-		B545C9921F13F0A0008F191F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C97E1F13F0A0008F191F /* APIManager.swift */; };
-		B545C9931F13F0A0008F191F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C97F1F13F0A0008F191F /* Constants.swift */; };
 		B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C9811F13F0A0008F191F /* ArrayExtension.swift */; };
 		B545C9951F13F0A0008F191F /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C9821F13F0A0008F191F /* DateExtensions.swift */; };
 		B545C9961F13F0A0008F191F /* StoryboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C9831F13F0A0008F191F /* StoryboardExtension.swift */; };
@@ -37,7 +34,6 @@
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
 		B5890A4A1F3622360046C18B /* OperationsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A491F3622360046C18B /* OperationsExtension.swift */; };
-		B5890A4C1F3622870046C18B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A4B1F3622870046C18B /* Router.swift */; };
 		B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A4D1F3622C40046C18B /* AppConfig.swift */; };
 		B5890A501F362E900046C18B /* PSOperations.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5890A4F1F362E900046C18B /* PSOperations.framework */; };
 		B5890A521F362EA00046C18B /* Whisper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5890A511F362EA00046C18B /* Whisper.framework */; };
@@ -45,6 +41,10 @@
 		B5890A561F3637980046C18B /* NumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A551F3637980046C18B /* NumberExtension.swift */; };
 		B5890A581F3641E50046C18B /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A571F3641E50046C18B /* Participant.swift */; };
 		B5890A5A1F3642FE0046C18B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A591F3642FE0046C18B /* Player.swift */; };
+		B5890A5C1F3679D60046C18B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A5B1F3679D60046C18B /* ViewController.swift */; };
+		B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A5D1F3679DE0046C18B /* APIManager.swift */; };
+		B5890A601F3679DE0046C18B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A5E1F3679DE0046C18B /* Router.swift */; };
+		B5890A621F3679E70046C18B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A611F3679E70046C18B /* Constants.swift */; };
 		B5A91F681F2FC1C600C1B512 /* Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A91F671F2FC1C600C1B512 /* Hero.framework */; };
 		B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBCB701F16BD250060E2C1 /* RosterView.xib */; };
 		B5CBCB741F16D3560060E2C1 /* JSONModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */; };
@@ -61,7 +61,6 @@
 /* Begin PBXFileReference section */
 		B545C9641F13F03B008F191F /* TG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B545C9671F13F03B008F191F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B545C9691F13F03B008F191F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B545C96C1F13F03B008F191F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B545C96E1F13F03B008F191F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B545C9711F13F03B008F191F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -69,8 +68,6 @@
 		B545C97A1F13F0A0008F191F /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		B545C97C1F13F0A0008F191F /* MatchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchTableViewCell.swift; sourceTree = "<group>"; };
 		B545C97D1F13F0A0008F191F /* MatchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchTableViewCell.xib; sourceTree = "<group>"; };
-		B545C97E1F13F0A0008F191F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = ../APIManager.swift; sourceTree = "<group>"; };
-		B545C97F1F13F0A0008F191F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B545C9811F13F0A0008F191F /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		B545C9821F13F0A0008F191F /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		B545C9831F13F0A0008F191F /* StoryboardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardExtension.swift; sourceTree = "<group>"; };
@@ -91,7 +88,6 @@
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
 		B5890A491F3622360046C18B /* OperationsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationsExtension.swift; sourceTree = "<group>"; };
-		B5890A4B1F3622870046C18B /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		B5890A4D1F3622C40046C18B /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B5890A4F1F362E900046C18B /* PSOperations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSOperations.framework; path = Carthage/Build/iOS/PSOperations.framework; sourceTree = "<group>"; };
 		B5890A511F362EA00046C18B /* Whisper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Whisper.framework; path = Carthage/Build/iOS/Whisper.framework; sourceTree = "<group>"; };
@@ -99,6 +95,10 @@
 		B5890A551F3637980046C18B /* NumberExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtension.swift; sourceTree = "<group>"; };
 		B5890A571F3641E50046C18B /* Participant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
 		B5890A591F3642FE0046C18B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B5890A5B1F3679D60046C18B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B5890A5D1F3679DE0046C18B /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		B5890A5E1F3679DE0046C18B /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		B5890A611F3679E70046C18B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B5A91F671F2FC1C600C1B512 /* Hero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hero.framework; path = Carthage/Build/iOS/Hero.framework; sourceTree = "<group>"; };
 		B5CBCB701F16BD250060E2C1 /* RosterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterView.xib; sourceTree = "<group>"; };
 		B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModelTableViewCell.swift; sourceTree = "<group>"; };
@@ -153,11 +153,8 @@
 				B545C9AA1F13F911008F191F /* Models */,
 				B545C9791F13F0A0008F191F /* Controllers */,
 				B545C97B1F13F0A0008F191F /* Views */,
-				B5890A4B1F3622870046C18B /* Router.swift */,
-				B545C97F1F13F0A0008F191F /* Constants.swift */,
 				B545C9801F13F0A0008F191F /* Extensions */,
 				B545C9671F13F03B008F191F /* AppDelegate.swift */,
-				B545C9691F13F03B008F191F /* ViewController.swift */,
 				B545C96B1F13F03B008F191F /* Main.storyboard */,
 				B545C96E1F13F03B008F191F /* Assets.xcassets */,
 				B545C9701F13F03B008F191F /* LaunchScreen.storyboard */,
@@ -169,6 +166,7 @@
 		B545C9791F13F0A0008F191F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B5890A5B1F3679D60046C18B /* ViewController.swift */,
 				B545C97A1F13F0A0008F191F /* MatchesViewController.swift */,
 				B5E6094C1F1957FF001D4D58 /* TableViewController.swift */,
 			);
@@ -240,7 +238,8 @@
 		B5890A3F1F3617750046C18B /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				B545C97E1F13F0A0008F191F /* APIManager.swift */,
+				B5890A5D1F3679DE0046C18B /* APIManager.swift */,
+				B5890A5E1F3679DE0046C18B /* Router.swift */,
 				B5890A401F3617750046C18B /* ErrorService.swift */,
 				B5890A411F3617750046C18B /* NetworkObserver.swift */,
 			);
@@ -250,6 +249,7 @@
 		B5890A461F361E620046C18B /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				B5890A611F3679E70046C18B /* Constants.swift */,
 				B5890A471F361E6C0046C18B /* TGColors.swift */,
 				B5890A4D1F3622C40046C18B /* AppConfig.swift */,
 				B5890A531F36301B0046C18B /* TGDates.swift */,
@@ -357,19 +357,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5890A581F3641E50046C18B /* Participant.swift in Sources */,
+				B5890A621F3679E70046C18B /* Constants.swift in Sources */,
 				B5E6094F1F196085001D4D58 /* NibLoadingView.swift in Sources */,
 				B545C99D1F13F0A0008F191F /* UIStackViewExtension.swift in Sources */,
-				B545C96A1F13F03B008F191F /* ViewController.swift in Sources */,
 				B545C9971F13F0A0008F191F /* StringExtension.swift in Sources */,
-				B545C9921F13F0A0008F191F /* APIManager.swift in Sources */,
 				B545C9681F13F03B008F191F /* AppDelegate.swift in Sources */,
 				B5CBCB741F16D3560060E2C1 /* JSONModelTableViewCell.swift in Sources */,
 				B537BC9B1F1401C80064E979 /* MatchesViewController.swift in Sources */,
 				B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */,
+				B5890A601F3679DE0046C18B /* Router.swift in Sources */,
 				B545C99C1F13F0A0008F191F /* UINavigationControllerExtension.swift in Sources */,
 				B545C9961F13F0A0008F191F /* StoryboardExtension.swift in Sources */,
 				B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */,
 				B545C9981F13F0A0008F191F /* UIBarBUttonItemExtension.swift in Sources */,
+				B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */,
 				B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */,
 				B545C9951F13F0A0008F191F /* DateExtensions.swift in Sources */,
 				B5890A5A1F3642FE0046C18B /* Player.swift in Sources */,
@@ -381,10 +382,9 @@
 				B545C99E1F13F0A0008F191F /* UITableViewCellExtension.swift in Sources */,
 				B5890A481F361E6C0046C18B /* TGColors.swift in Sources */,
 				B5890A4A1F3622360046C18B /* OperationsExtension.swift in Sources */,
-				B5890A4C1F3622870046C18B /* Router.swift in Sources */,
-				B545C9931F13F0A0008F191F /* Constants.swift in Sources */,
 				B5890A421F3617750046C18B /* ErrorService.swift in Sources */,
 				B5890A561F3637980046C18B /* NumberExtension.swift in Sources */,
+				B5890A5C1F3679D60046C18B /* ViewController.swift in Sources */,
 				B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */,
 				B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */,
 				B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */,
