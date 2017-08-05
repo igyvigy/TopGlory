@@ -1,0 +1,5 @@
+github "Alamofire/Alamofire" "4.5.0"
+github "SwiftyJSON/SwiftyJSON" "3.1.4"
+github "hyperoslo/Whisper" "5.0.0"
+github "lkzhao/Hero" "0.3.6"
+github "pluralsight/PSOperations" "3.0.0"

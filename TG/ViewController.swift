@@ -9,17 +9,44 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var playerTextField: UITextField!
+    @IBOutlet weak var goButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        configure()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func configure() {
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
+        playerTextField.delegate = self
+        if let playerName = AppConfig.currentUserName {
+            playerTextField.text = playerName
+        }
     }
+    
+    func saveLastPlayer(playerName: String?) {
+        UserDefaults.standard.set(playerName, forKey: "lastPlayerName")
+    }
+}
 
+extension ViewController {
+    @IBAction func didTapGoButton(_ sender: UIButton) {
+        guard let name = playerTextField.text, name != "" else { return }
+        saveLastPlayer(playerName: name)
+        Match.findWhere(withOwner: self, userName: name, loaderMessage: "loading matches", control: sender, onSuccess: { [weak self] matches in
+            let matchesVC = MatchesViewController.deploy(with: matches)
+            self?.navigationController?.pushViewController(matchesVC, animated: true)
+        })
+    }
+}
 
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(false)
+        didTapGoButton(goButton)
+        return false
+    }
 }
 
