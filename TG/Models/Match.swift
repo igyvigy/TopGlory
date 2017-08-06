@@ -11,12 +11,13 @@ import SwiftyJSON
 import Alamofire
 
 enum GameMode: String {
-    case casual_aral, casual, ranked
+    case casual_aral, casual, ranked, blitz_pvp_ranked
     var description: String {
         switch self {
         case .casual: return "casual match"
         case .casual_aral: return "royal battle"
         case .ranked: return "ranked match"
+        case .blitz_pvp_ranked: return "blitz pvp"
         default: return self.rawValue
         }
     }

@@ -9,6 +9,23 @@
 import Foundation
 import SwiftyJSON
 
+class ItemStatsModel: Model {
+    var name: String
+    var count: Int
+    
+    init (name: String, count: Int) {
+        self.name = name
+        self.count = count
+        super.init(json: JSON.null)
+    }
+    
+    required convenience init(json: JSON, included: [Model]?) {
+        self.init(json: json, included: included)
+        name = ""
+        count = 0
+    }
+}
+
 class ItemStats {
     var stats: [String: Int]
     init(json: JSON) {
@@ -18,6 +35,7 @@ class ItemStats {
             stats[key] = statsDict[key]?.intValue
         }
     }
+    
 }
 class ItemGrants: ItemStats {}
 class ItemSells: ItemStats {}

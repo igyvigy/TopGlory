@@ -35,6 +35,8 @@
 		B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */; };
 		B555F7961F37613A0091838A /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */; };
 		B555F79E1F3767050091838A /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B555F79D1F3767050091838A /* AlamofireImage.framework */; };
+		B555F7A11F376F820091838A /* UsedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F79F1F376F820091838A /* UsedItemTableViewCell.swift */; };
+		B555F7A21F376F820091838A /* UsedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B555F7A01F376F820091838A /* UsedItemTableViewCell.xib */; };
 		B55F20D11F36872E00770410 /* RosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */; };
 		B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20D01F36872E00770410 /* RosterTableViewCell.xib */; };
 		B55F20D51F368C8600770410 /* ParticipantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */; };
@@ -105,6 +107,8 @@
 		B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		B555F79D1F3767050091838A /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		B555F79F1F376F820091838A /* UsedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsedItemTableViewCell.swift; sourceTree = "<group>"; };
+		B555F7A01F376F820091838A /* UsedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsedItemTableViewCell.xib; sourceTree = "<group>"; };
 		B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterTableViewCell.swift; sourceTree = "<group>"; };
 		B55F20D01F36872E00770410 /* RosterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterTableViewCell.xib; sourceTree = "<group>"; };
 		B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantTableViewCell.swift; sourceTree = "<group>"; };
@@ -230,6 +234,8 @@
 				B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */,
 				B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */,
 				B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */,
+				B555F79F1F376F820091838A /* UsedItemTableViewCell.swift */,
+				B555F7A01F376F820091838A /* UsedItemTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */,
 				B545C9721F13F03B008F191F /* LaunchScreen.storyboard in Resources */,
 				B545C96F1F13F03B008F191F /* Assets.xcassets in Resources */,
+				B555F7A21F376F820091838A /* UsedItemTableViewCell.xib in Resources */,
 				B545C96D1F13F03B008F191F /* Main.storyboard in Resources */,
 				B5CBCB751F16D3560060E2C1 /* JSONModelTableViewCell.xib in Resources */,
 				B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */,
@@ -475,6 +482,7 @@
 				B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */,
 				B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */,
 				B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */,
+				B555F7A11F376F820091838A /* UsedItemTableViewCell.swift in Sources */,
 				B545C99F1F13F0A0008F191F /* UITableViewExtension.swift in Sources */,
 				B545C9A01F13F0A0008F191F /* UIViewControllerExtension.swift in Sources */,
 				B5CBCB7A1F1741460060E2C1 /* Model.swift in Sources */,
