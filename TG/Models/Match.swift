@@ -47,7 +47,14 @@ class Match: Model {
         return related.filter({ $0.type == "spectators" })
     }
     public var description: String {
-        return "\(gameMode?.description ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
+        let key = "match\(id ?? "").description"
+        if let catched = Catche.runtimeString[key] {
+            return catched
+        } else {
+            let description = "\(gameMode?.description ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
+            Catche.runtimeString[key] = description
+            return description
+        }
     }
     init(model: Model) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)

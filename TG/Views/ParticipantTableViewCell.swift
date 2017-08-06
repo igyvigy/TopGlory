@@ -30,7 +30,7 @@ class ParticipantTableViewCell: UITableViewCell {
     func update(with participant: Participant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
         let actor = participant.actor
-        let player = participant.player?.name ?? ""
+        let player = participant.playerName
         var text = participant.isUser ? " (you) \(actor ?? "")" : actor
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text

@@ -54,11 +54,32 @@ class Roster: Model {
         return related.filter({ $0.type == "team" })
     }
     var isUserTeam: Bool {
-        return participants.filter({ $0.player?.name == AppConfig.currentUserName }).count > 0
+        let key = "roster\(id ?? "").isUserTeam"
+        if let catched = Catche.runtimeBool[key] {
+            return catched
+        } else {
+            let isUserTeam = participants
+                .filter({ $0.player?.name == AppConfig.currentUserName })
+                .count > 0
+            Catche.runtimeBool[key] = isUserTeam
+            return isUserTeam
+        }
     }
     init (model: Model) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
+    }
+    public var partisipantsString: String {
+        let key = "roster\(id ?? "").partisipantsString"
+        if let catched = Catche.runtimeString[key] {
+            return catched
+        } else {
+            let description = participants
+                .flatMap({ $0.actor })
+                .reduce("", {$0 == "" ? $1 : $0 + "," + $1})
+            Catche.runtimeString[key] = description
+            return description
+        }
     }
     
     required init(json: JSON, included: [Model]? = nil) {

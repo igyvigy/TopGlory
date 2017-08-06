@@ -53,11 +53,25 @@ class Participant: Model {
     private var related = [Model]()
     
     public var player: Player? {
-        return related.filter({ $0.type == "player" }).map({ Player(model: $0) }).first
+        return related
+            .filter({ $0.type == "player" })
+            .map({ Player(model: $0) })
+            .first
+    }
+    
+    var playerName: String {
+        let key = "participant\(id ?? "").playerName"
+        if let catched = Catche.runtimeString[key] {
+            return catched
+        } else {
+            let playerName = player?.name ?? ""
+            Catche.runtimeString[key] = playerName
+            return playerName
+        }
     }
     
     var isUser: Bool {
-        return player?.name == AppConfig.currentUserName
+        return playerName == AppConfig.currentUserName
     }
     init (model: Model) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)

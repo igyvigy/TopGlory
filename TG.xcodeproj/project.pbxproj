@@ -37,6 +37,7 @@
 		B55F20D81F369BE000770410 /* ParticipantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */; };
 		B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */; };
 		B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */; };
+		B55F20E41F36BC6700770410 /* Catche.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20E31F36BC6700770410 /* Catche.swift */; };
 		B5890A421F3617750046C18B /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A401F3617750046C18B /* ErrorService.swift */; };
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
@@ -99,6 +100,7 @@
 		B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantDetailViewController.swift; sourceTree = "<group>"; };
 		B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
+		B55F20E31F36BC6700770410 /* Catche.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catche.swift; sourceTree = "<group>"; };
 		B5890A401F3617750046C18B /* ErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				B5890A471F361E6C0046C18B /* TGColors.swift */,
 				B5890A4D1F3622C40046C18B /* AppConfig.swift */,
 				B5890A531F36301B0046C18B /* TGDates.swift */,
+				B55F20E31F36BC6700770410 /* Catche.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				B5890A561F3637980046C18B /* NumberExtension.swift in Sources */,
 				B5890A5C1F3679D60046C18B /* ViewController.swift in Sources */,
 				B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */,
+				B55F20E41F36BC6700770410 /* Catche.swift in Sources */,
 				B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */,
 				B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */,
 				B545C99F1F13F0A0008F191F /* UITableViewExtension.swift in Sources */,

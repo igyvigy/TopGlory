@@ -29,9 +29,7 @@ class RosterView: NibLoadingView {
         krakenCapturesLabel.text = "\(roster.krakenCaptures ?? 0)"
         turretsKilledLabel.text = "\(roster.turretKills ?? 0)"
         turretsRemainsLabel.text = "\(roster.turretsRemaining ?? 0)"
-        participantsLabel.text = roster.participants
-            .flatMap({ $0.actor })
-            .reduce("", {$0 == "" ? $1 : $0 + "," + $1})
+        participantsLabel.text = roster.partisipantsString
         yourTeamLabel.isHidden = !roster.isUserTeam
     }
 }

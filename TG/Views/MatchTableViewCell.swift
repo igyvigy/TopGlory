@@ -21,7 +21,7 @@ class MatchTableViewCell: UITableViewCell {
     func update(with match: Match) {
         createdAtLabel.text = TGDateFormats.dateAndTime.string(from: match.createdAt?.dateFromISO8601WithoutTimeZone ?? .now)
         durationLabel.text = match.duration?.secondsFormatted
-        gameModeLabel.text = match.gameMode?.description
+        gameModeLabel.text = match.description
         endGameReasonLabel.text = match.endGameReason
         queueLabel.text = match.queue
         
