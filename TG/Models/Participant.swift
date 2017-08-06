@@ -56,8 +56,8 @@ class Participant: Model {
         return related.filter({ $0.type == "player" }).map({ Player(model: $0) }).first
     }
     
-    var isUserTeam: Bool {
-        return false
+    var isUser: Bool {
+        return player?.name == AppConfig.currentUserName
     }
     init (model: Model) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)

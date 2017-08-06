@@ -49,4 +49,7 @@ struct TGColors {
         return UIColor(hexString: "#626262")
     }
     
+    static var tableViewLight: UIColor {
+        return UIColor(hexString: "#F7F7F7")
+    }
 }

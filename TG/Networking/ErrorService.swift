@@ -19,7 +19,7 @@ typealias DateCompletion = (Date) -> Void
 typealias MatchesCompletion = ([Match]) -> Void
 typealias ModelsCompletion = ([Model]) -> Void
 typealias MatchCompletion = (Match) -> Void
-
+typealias RosterCompletion = (Roster) -> Void
 
 enum TGError: Error {
     case critical(error: NSError)

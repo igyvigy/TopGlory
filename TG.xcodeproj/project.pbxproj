@@ -30,6 +30,13 @@
 		B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C98E1F13F0A0008F191F /* UIViewExtension.swift */; };
 		B545C9A81F13F706008F191F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9A71F13F706008F191F /* Alamofire.framework */; };
 		B545C9B71F13FCDC008F191F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9B61F13FCDC008F191F /* SwiftyJSON.framework */; };
+		B55F20D11F36872E00770410 /* RosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */; };
+		B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20D01F36872E00770410 /* RosterTableViewCell.xib */; };
+		B55F20D51F368C8600770410 /* ParticipantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */; };
+		B55F20D61F368C8600770410 /* ParticipantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20D41F368C8600770410 /* ParticipantTableViewCell.xib */; };
+		B55F20D81F369BE000770410 /* ParticipantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */; };
+		B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */; };
+		B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */; };
 		B5890A421F3617750046C18B /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A401F3617750046C18B /* ErrorService.swift */; };
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
@@ -45,6 +52,7 @@
 		B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A5D1F3679DE0046C18B /* APIManager.swift */; };
 		B5890A601F3679DE0046C18B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A5E1F3679DE0046C18B /* Router.swift */; };
 		B5890A621F3679E70046C18B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A611F3679E70046C18B /* Constants.swift */; };
+		B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AF6091F3683C100E2F4BA /* RostersViewController.swift */; };
 		B5A91F681F2FC1C600C1B512 /* Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A91F671F2FC1C600C1B512 /* Hero.framework */; };
 		B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBCB701F16BD250060E2C1 /* RosterView.xib */; };
 		B5CBCB741F16D3560060E2C1 /* JSONModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */; };
@@ -84,6 +92,13 @@
 		B545C98E1F13F0A0008F191F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B545C9A71F13F706008F191F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		B545C9B61F13FCDC008F191F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterTableViewCell.swift; sourceTree = "<group>"; };
+		B55F20D01F36872E00770410 /* RosterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterTableViewCell.xib; sourceTree = "<group>"; };
+		B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantTableViewCell.swift; sourceTree = "<group>"; };
+		B55F20D41F368C8600770410 /* ParticipantTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParticipantTableViewCell.xib; sourceTree = "<group>"; };
+		B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantDetailViewController.swift; sourceTree = "<group>"; };
+		B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
 		B5890A401F3617750046C18B /* ErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
@@ -99,6 +114,7 @@
 		B5890A5D1F3679DE0046C18B /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B5890A5E1F3679DE0046C18B /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		B5890A611F3679E70046C18B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B58AF6091F3683C100E2F4BA /* RostersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RostersViewController.swift; sourceTree = "<group>"; };
 		B5A91F671F2FC1C600C1B512 /* Hero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hero.framework; path = Carthage/Build/iOS/Hero.framework; sourceTree = "<group>"; };
 		B5CBCB701F16BD250060E2C1 /* RosterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterView.xib; sourceTree = "<group>"; };
 		B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModelTableViewCell.swift; sourceTree = "<group>"; };
@@ -168,6 +184,8 @@
 			children = (
 				B5890A5B1F3679D60046C18B /* ViewController.swift */,
 				B545C97A1F13F0A0008F191F /* MatchesViewController.swift */,
+				B58AF6091F3683C100E2F4BA /* RostersViewController.swift */,
+				B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */,
 				B5E6094C1F1957FF001D4D58 /* TableViewController.swift */,
 			);
 			path = Controllers;
@@ -183,6 +201,12 @@
 				B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */,
 				B5CBCB731F16D3560060E2C1 /* JSONModelTableViewCell.xib */,
 				B5E6094E1F196085001D4D58 /* NibLoadingView.swift */,
+				B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */,
+				B55F20D01F36872E00770410 /* RosterTableViewCell.xib */,
+				B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */,
+				B55F20D41F368C8600770410 /* ParticipantTableViewCell.xib */,
+				B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */,
+				B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -318,12 +342,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */,
 				B545C9721F13F03B008F191F /* LaunchScreen.storyboard in Resources */,
 				B545C96F1F13F03B008F191F /* Assets.xcassets in Resources */,
 				B545C96D1F13F03B008F191F /* Main.storyboard in Resources */,
 				B5CBCB751F16D3560060E2C1 /* JSONModelTableViewCell.xib in Resources */,
 				B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */,
 				B545C9911F13F0A0008F191F /* MatchTableViewCell.xib in Resources */,
+				B55F20D61F368C8600770410 /* ParticipantTableViewCell.xib in Resources */,
+				B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,9 +393,11 @@
 				B537BC9B1F1401C80064E979 /* MatchesViewController.swift in Sources */,
 				B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */,
 				B5890A601F3679DE0046C18B /* Router.swift in Sources */,
+				B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */,
 				B545C99C1F13F0A0008F191F /* UINavigationControllerExtension.swift in Sources */,
 				B545C9961F13F0A0008F191F /* StoryboardExtension.swift in Sources */,
 				B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */,
+				B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */,
 				B545C9981F13F0A0008F191F /* UIBarBUttonItemExtension.swift in Sources */,
 				B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */,
 				B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */,
@@ -376,7 +405,10 @@
 				B5890A5A1F3642FE0046C18B /* Player.swift in Sources */,
 				B5CBCB7C1F1741460060E2C1 /* Roster.swift in Sources */,
 				B5890A541F36301B0046C18B /* TGDates.swift in Sources */,
+				B55F20D51F368C8600770410 /* ParticipantTableViewCell.swift in Sources */,
 				B5E6094D1F1957FF001D4D58 /* TableViewController.swift in Sources */,
+				B55F20D81F369BE000770410 /* ParticipantDetailViewController.swift in Sources */,
+				B55F20D11F36872E00770410 /* RosterTableViewCell.swift in Sources */,
 				B545C99B1F13F0A0008F191F /* UIImageExtension.swift in Sources */,
 				B545C9901F13F0A0008F191F /* MatchTableViewCell.swift in Sources */,
 				B545C99E1F13F0A0008F191F /* UITableViewCellExtension.swift in Sources */,

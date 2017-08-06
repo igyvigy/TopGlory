@@ -51,7 +51,6 @@ extension MatchesViewController: TableViewControllerDelegate {
     }
 
     func didSelect(_ model: Model, at indexPath: IndexPath) {
-        navigationController?.pushViewController(MatchesViewController.deploy(with: matches), animated: true)
-        
+        navigationController?.pushViewController(RostersViewController.deploy(with: matches[indexPath.row]), animated: true)
     }
 }
