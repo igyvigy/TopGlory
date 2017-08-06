@@ -26,9 +26,7 @@ class MatchTableViewCell: UITableViewCell {
         queueLabel.text = match.queue
         
         guard match.rosters.count > 1 else { return }
-        let left = match.rosters.filter({ $0.side?.dir == .left }).first
-        let right = match.rosters.filter({ $0.side?.dir == .right }).first
-        rosterViews[0].update(with: left)
-        rosterViews[1].update(with: right)
+        rosterViews[0].update(with: match.rosters[safe: 0])
+        rosterViews[1].update(with: match.rosters[safe: 1])
     }
 }

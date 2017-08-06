@@ -26,6 +26,7 @@ class MatchesViewController: TableViewController {
         dataSource = self
         delegate = self
         super.viewDidLoad()
+        title = "\(AppConfig.currentUserName ?? "") · last 24 hours"
     }
 }
 
