@@ -81,6 +81,7 @@ class Match: Model {
         rels.categories?.forEach({
             related.append(contentsOf: $0.data ?? [Model]())
         })
+        let _ = description
     }
 }
 

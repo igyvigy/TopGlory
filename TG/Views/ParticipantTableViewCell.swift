@@ -26,6 +26,7 @@ class ParticipantTableViewCell: UITableViewCell {
      @IBOutlet weak var wentAfkLabel: UILabel!
      @IBOutlet weak var afkTimeLabel: UILabel!
      @IBOutlet weak var skillTierLabel: UILabel!
+     @IBOutlet weak var stackView: UIStackView!
     
     func update(with participant: Participant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
@@ -38,6 +39,10 @@ class ParticipantTableViewCell: UITableViewCell {
         killsLabel.text = "\(participant.kills ?? 0)"
         deathsLabel.text = "\(participant.deaths ?? 0)"
         assistsLabel.text = "\(participant.assists ?? 0)"
+        guard !showPlayer else {
+            stackView.configureViews(for: [3,4,5,6,7,8,9,10], isHidden: true, animated: false, completion: {})
+            return }
+        stackView.configureViews(for: [3,4,5,6,7,8,9,10], isHidden: false, animated: false, completion: {})
         crystalCaptureLabel.text = "\(participant.crystalMineCaptures ?? 0)"
         goldCaptureLabel.text = "\(participant.goldMineCaptures ?? 0)"
         krakenCaptureLabel.text = "\(participant.krakenCaptures ?? 0)"

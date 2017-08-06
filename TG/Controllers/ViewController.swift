@@ -35,7 +35,7 @@ extension ViewController {
     @IBAction func didTapGoButton(_ sender: UIButton) {
         guard let name = playerTextField.text, name != "" else { return }
         saveLastPlayer(playerName: name)
-        Match.findWhere(withOwner: self, userName: name, loaderMessage: "loading matches", control: sender, onSuccess: { [weak self] matches in
+        Match.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
             let matchesVC = MatchesViewController.deploy(with: matches)
             self?.navigationController?.pushViewController(matchesVC, animated: true)
         })

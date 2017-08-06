@@ -103,5 +103,7 @@ class Roster: Model {
                 related.append(contentsOf: $0.data ?? [Model]())
             }
         })
+        let _ = isUserTeam
+        let _ = partisipantsString
     }
 }
