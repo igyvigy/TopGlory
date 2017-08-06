@@ -17,6 +17,7 @@ enum GameMode: String {
         case .casual: return "casual match"
         case .casual_aral: return "royal battle"
         case .ranked: return "ranked match"
+        default: return self.rawValue
         }
     }
 }
@@ -45,7 +46,9 @@ class Match: Model {
     public var spectators: [Model] {
         return related.filter({ $0.type == "spectators" })
     }
-    
+    public var description: String {
+        return "\(gameMode?.description ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
+    }
     init(model: Model) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()

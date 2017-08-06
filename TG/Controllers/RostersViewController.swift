@@ -34,6 +34,7 @@ class RostersViewController: TableViewController {
         dataSource = self
         delegate = self
         super.viewDidLoad()
+        title = match.description
     }
 }
 
