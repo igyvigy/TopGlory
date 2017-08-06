@@ -18,4 +18,12 @@ extension String {
         let empty: String? = nil
         return empty as Any
     }
+
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    func localizedWithFormat(arguments: CVarArg...) -> String {
+        return String.localizedStringWithFormat(self.localized, arguments)
+    }
 }

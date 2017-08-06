@@ -30,6 +30,11 @@
 		B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545C98E1F13F0A0008F191F /* UIViewExtension.swift */; };
 		B545C9A81F13F706008F191F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9A71F13F706008F191F /* Alamofire.framework */; };
 		B545C9B71F13FCDC008F191F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9B61F13FCDC008F191F /* SwiftyJSON.framework */; };
+		B555F7901F3749520091838A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F78F1F3749520091838A /* Item.swift */; };
+		B555F7921F3760390091838A /* EnumExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7911F3760390091838A /* EnumExtension.swift */; };
+		B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */; };
+		B555F7961F37613A0091838A /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */; };
+		B555F79E1F3767050091838A /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B555F79D1F3767050091838A /* AlamofireImage.framework */; };
 		B55F20D11F36872E00770410 /* RosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */; };
 		B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20D01F36872E00770410 /* RosterTableViewCell.xib */; };
 		B55F20D51F368C8600770410 /* ParticipantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */; };
@@ -38,6 +43,8 @@
 		B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */; };
 		B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */; };
 		B55F20E41F36BC6700770410 /* Catche.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F20E31F36BC6700770410 /* Catche.swift */; };
+		B55F20E81F371B9F00770410 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B55F20E61F371B9F00770410 /* Fabric.framework */; };
+		B55F20E91F371B9F00770410 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B55F20E71F371B9F00770410 /* Crashlytics.framework */; };
 		B5890A421F3617750046C18B /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A401F3617750046C18B /* ErrorService.swift */; };
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
@@ -93,6 +100,11 @@
 		B545C98E1F13F0A0008F191F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B545C9A71F13F706008F191F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		B545C9B61F13FCDC008F191F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		B555F78F1F3749520091838A /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		B555F7911F3760390091838A /* EnumExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnumExtension.swift; path = TG/EnumExtension.swift; sourceTree = SOURCE_ROOT; };
+		B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		B555F79D1F3767050091838A /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
 		B55F20CF1F36872E00770410 /* RosterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterTableViewCell.swift; sourceTree = "<group>"; };
 		B55F20D01F36872E00770410 /* RosterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterTableViewCell.xib; sourceTree = "<group>"; };
 		B55F20D31F368C8600770410 /* ParticipantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,6 +113,9 @@
 		B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
 		B55F20E31F36BC6700770410 /* Catche.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catche.swift; sourceTree = "<group>"; };
+		B55F20E61F371B9F00770410 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		B55F20E71F371B9F00770410 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		B55F20EA1F371CAE00770410 /* TG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TG.entitlements; sourceTree = "<group>"; };
 		B5890A401F3617750046C18B /* ErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
@@ -135,11 +150,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B555F79E1F3767050091838A /* AlamofireImage.framework in Frameworks */,
 				B5890A521F362EA00046C18B /* Whisper.framework in Frameworks */,
 				B5890A501F362E900046C18B /* PSOperations.framework in Frameworks */,
 				B5A91F681F2FC1C600C1B512 /* Hero.framework in Frameworks */,
 				B545C9B71F13FCDC008F191F /* SwiftyJSON.framework in Frameworks */,
 				B545C9A81F13F706008F191F /* Alamofire.framework in Frameworks */,
+				B55F20E81F371B9F00770410 /* Fabric.framework in Frameworks */,
+				B55F20E91F371B9F00770410 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +184,7 @@
 		B545C9661F13F03B008F191F /* TG */ = {
 			isa = PBXGroup;
 			children = (
+				B55F20EA1F371CAE00770410 /* TG.entitlements */,
 				B5890A461F361E620046C18B /* Configuration */,
 				B5890A3F1F3617750046C18B /* Networking */,
 				B545C9AA1F13F911008F191F /* Models */,
@@ -209,6 +228,8 @@
 				B55F20D41F368C8600770410 /* ParticipantTableViewCell.xib */,
 				B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */,
 				B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */,
+				B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */,
+				B555F7941F37613A0091838A /* ItemCollectionViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -228,6 +249,7 @@
 				B545C9891F13F0A0008F191F /* UINavigationControllerExtension.swift */,
 				B545C98A1F13F0A0008F191F /* UIStackViewExtension.swift */,
 				B545C98B1F13F0A0008F191F /* UITableViewCellExtension.swift */,
+				B555F7911F3760390091838A /* EnumExtension.swift */,
 				B545C98C1F13F0A0008F191F /* UITableViewExtension.swift */,
 				B545C98D1F13F0A0008F191F /* UIViewControllerExtension.swift */,
 				B545C98E1F13F0A0008F191F /* UIViewExtension.swift */,
@@ -239,6 +261,9 @@
 		B545C9A21F13F24E008F191F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B555F79D1F3767050091838A /* AlamofireImage.framework */,
+				B55F20E61F371B9F00770410 /* Fabric.framework */,
+				B55F20E71F371B9F00770410 /* Crashlytics.framework */,
 				B5890A511F362EA00046C18B /* Whisper.framework */,
 				B5890A4F1F362E900046C18B /* PSOperations.framework */,
 				B5A91F671F2FC1C600C1B512 /* Hero.framework */,
@@ -257,6 +282,7 @@
 				B5CBCB771F1741460060E2C1 /* Match.swift */,
 				B5CBCB781F1741460060E2C1 /* Roster.swift */,
 				B5CBCB791F1741460060E2C1 /* PrimaryData.swift */,
+				B555F78F1F3749520091838A /* Item.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +321,7 @@
 				B545C9611F13F03B008F191F /* Frameworks */,
 				B545C9621F13F03B008F191F /* Resources */,
 				B545C9A91F13F717008F191F /* Carthage */,
+				B55F20E51F371B5600770410 /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -319,6 +346,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = ZL58JZZ8KD;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -352,6 +384,7 @@
 				B5CBCB751F16D3560060E2C1 /* JSONModelTableViewCell.xib in Resources */,
 				B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */,
 				B545C9911F13F0A0008F191F /* MatchTableViewCell.xib in Resources */,
+				B555F7961F37613A0091838A /* ItemCollectionViewCell.xib in Resources */,
 				B55F20D61F368C8600770410 /* ParticipantTableViewCell.xib in Resources */,
 				B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */,
 			);
@@ -371,6 +404,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Hero.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Whisper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PSOperations.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -378,6 +412,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		B55F20E51F371B5600770410 /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 22909fdaa0f026e5f352d0365e3c845a7437eca8 2592b7472b5a416d03d6b9edc4235212cb75de70cb19ad1f71dd6e3b373684e0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -396,9 +444,11 @@
 				B537BC9B1F1401C80064E979 /* MatchesViewController.swift in Sources */,
 				B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */,
 				B5890A601F3679DE0046C18B /* Router.swift in Sources */,
+				B555F7901F3749520091838A /* Item.swift in Sources */,
 				B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */,
 				B545C99C1F13F0A0008F191F /* UINavigationControllerExtension.swift in Sources */,
 				B545C9961F13F0A0008F191F /* StoryboardExtension.swift in Sources */,
+				B555F7921F3760390091838A /* EnumExtension.swift in Sources */,
 				B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */,
 				B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */,
 				B545C9981F13F0A0008F191F /* UIBarBUttonItemExtension.swift in Sources */,
@@ -424,6 +474,7 @@
 				B55F20E41F36BC6700770410 /* Catche.swift in Sources */,
 				B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */,
 				B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */,
+				B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */,
 				B545C99F1F13F0A0008F191F /* UITableViewExtension.swift in Sources */,
 				B545C9A01F13F0A0008F191F /* UIViewControllerExtension.swift in Sources */,
 				B5CBCB7A1F1741460060E2C1 /* Model.swift in Sources */,
@@ -554,16 +605,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TG/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -572,16 +628,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TG/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

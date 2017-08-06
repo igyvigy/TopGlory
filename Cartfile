@@ -1,4 +1,5 @@
 github "Alamofire/Alamofire" ~> 4.4
+github "Alamofire/AlamofireImage"
 github "SwiftyJSON/SwiftyJSON"
 github "lkzhao/Hero"
 github "pluralsight/PSOperations"

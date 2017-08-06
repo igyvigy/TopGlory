@@ -18,4 +18,33 @@ extension UIView {
         view.frame = self.frame
         self.addSubview(view)
     }
+    
+    func addSubview(withConstraints subview:UIView){
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(subview)
+        var viewBindingsDict = [String: AnyObject]()
+        viewBindingsDict["subView"] = subview
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[subView]|", metrics: nil, views: viewBindingsDict))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView]|", metrics: nil, views: viewBindingsDict))
+    }
+    
+    func addSubview(centered subview:UIView){
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(subview)
+        var viewBindingsDict = [String: AnyObject]()
+        viewBindingsDict["superview"] = self
+        viewBindingsDict["subview"] = subview
+        let centerXOption = NSLayoutFormatOptions.alignAllCenterX
+        let centerYOption = NSLayoutFormatOptions.alignAllCenterY
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(<=1)-[subview]", options: centerYOption, metrics: nil, views: viewBindingsDict))
+        constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(<=1)-[subview]", options: centerXOption, metrics: nil, views: viewBindingsDict))
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    func addSizeConstraint(size: CGSize) {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
 }
