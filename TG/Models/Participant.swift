@@ -9,13 +9,19 @@
 import Foundation
 import SwiftyJSON
 
+enum ItemStatsModelType {
+    case itemSells, itemGrants, itemUses, header
+}
+
 class ItemStatsModel: Model {
     var name: String
     var count: Int
+    var modelType: ItemStatsModelType
     
-    init (name: String, count: Int) {
+    init (name: String, count: Int, modelType: ItemStatsModelType) {
         self.name = name
         self.count = count
+        self.modelType = modelType
         super.init(json: JSON.null)
     }
     
@@ -42,7 +48,7 @@ class ItemSells: ItemStats {}
 class ItemUses: ItemStats {}
 
 class Participant: Model {
-    var actor: String?
+    var actor: Actor?
     var shardId: String?
     var assists: Int?
     var crystalMineCaptures: Int?
@@ -102,7 +108,7 @@ class Participant: Model {
     
     private func decode() {
         guard let att = self.attributes as? JSON else { return }
-        self.actor = att["actor"].string
+        self.actor = Actor(string: att["actor"].stringValue)
         self.shardId = att["shardId"].string
         self.assists = att["stats"]["assists"].int
         self.crystalMineCaptures = att["stats"]["crystalMineCaptures"].int

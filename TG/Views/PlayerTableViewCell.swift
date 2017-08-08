@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayerTableViewCell: UITableViewCell {
+class PlayerTableViewCell: TGTableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var karmaLevelLabel: UILabel!
@@ -65,11 +65,14 @@ extension PlayerTableViewCell: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "statCell")
+        let cell = TGTableViewCell(style: .value1, reuseIdentifier: "statCell")
         let season = player?.seasonStats?.data[indexPath.row]
+        cell.selectionStyle = .none
         cell.textLabel?.text = "elo earned during season \(season?.number ?? 0)"
         cell.detailTextLabel?.text = String(format: "%.3f", season?.value ?? 0)
-        cell.contentView.backgroundColor = TGColors.tableViewLight
+        cell.textLabel?.textColor = .white
+        cell.detailTextLabel?.textColor = .lightGray
+        cell.contentView.backgroundColor = .almostBlack
         return cell
     }
 }

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ParticipantTableViewCell: UITableViewCell {
+class ParticipantTableViewCell: TGTableViewCell {
+    @IBOutlet weak var actorImageView: UIImageView!
      @IBOutlet weak var actorLabel: UILabel!
      @IBOutlet weak var skinLabel: UILabel!
      @IBOutlet weak var killsLabel: UILabel!
@@ -40,15 +41,25 @@ class ParticipantTableViewCell: UITableViewCell {
         collectionView.register(nib, forCellWithReuseIdentifier: "ItemCollectionViewCell")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.reloadData()
+    }
+    
     func update(with participant: Participant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
         self.participant = participant
-        collectionView.reloadData()
+        if collectionView.numberOfItems(inSection: 0) == 0 {
+            collectionView.reloadData()
+        }
         let actor = participant.actor
         let player = participant.playerName
-        var text = participant.isUser ? " (you) \(actor ?? "")" : actor
+        var text = participant.isUser ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text
+        if let url = URL(string: participant.actor?.imageUrl ?? "") {
+            actorImageView.af_setImage(withURL: url)
+        }
         skinLabel.text = participant.skinKey
         killsLabel.text = "\(participant.kills ?? 0)"
         deathsLabel.text = "\(participant.deaths ?? 0)"
@@ -80,10 +91,13 @@ extension ParticipantTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as! ItemCollectionViewCell
         let itemName = participant?.items?[indexPath.row]
-        let item = Array(Item.cases())
+        if let item = Array(Item.cases())
             .filter({ $0.name == itemName })
-            .first
-        cell.update(with: item)
+            .first {
+            cell.update(with: item)
+        } else {
+            print(itemName)
+        }
         return cell
     }
 }
@@ -92,13 +106,13 @@ extension ParticipantTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let cellCount = participant?.items?.count ?? 0
         let cellWidth = 50
-        let cellSpacing = 0
+        let cellSpacing = 10
         let totalCellWidth = cellWidth * cellCount
         let totalSpacingWidth = cellSpacing * (cellCount - 1)
         
-        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth))
         let rightInset = leftInset
         
-        return UIEdgeInsetsMake(0, leftInset, 0, rightInset)
+        return UIEdgeInsetsMake(0, leftInset, 0, 0)
     }
 }

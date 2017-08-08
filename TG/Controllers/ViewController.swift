@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 class ViewController: UIViewController {
     @IBOutlet weak var playerTextField: UITextField!
@@ -15,6 +16,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Hero.shared.setContainerColorForNextTransition(.black)
     }
     
     private func configure() {
@@ -26,7 +32,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func saveLastPlayer(playerName: String?) {
+    fileprivate func saveLastPlayer(playerName: String?) {
         UserDefaults.standard.set(playerName, forKey: Constants.lastUserDefaultsKey)
     }
 }

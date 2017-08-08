@@ -31,6 +31,15 @@ class TableViewController: UIViewController {
         guard let cells = dataSource?._cellIdentifiers else { return }
         tableView.register(cells)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        dataSource?._tableView.visibleCells.forEach({ cell in
+            if let cell = cell as? TGTableViewCell {
+                cell.viewDidLayoutSubviews()
+            }
+        })
+    }
 }
 
 extension TableViewController: UITableViewDelegate {

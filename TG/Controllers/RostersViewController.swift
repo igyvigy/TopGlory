@@ -10,7 +10,7 @@ import UIKit
 import Hero
 
 class RostersViewController: TableViewController {
-    class func deploy(with match: Match, completion: RosterCompletion? = nil) -> RostersViewController {
+    class func deploy(with match: Match, actionModels: [ActionModel]? = nil, completion: RosterCompletion? = nil) -> RostersViewController {
         let vc = RostersViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
         vc.match = match
@@ -22,12 +22,15 @@ class RostersViewController: TableViewController {
             })
         })
         vc.models = models
+        vc.actionModels = actionModels
         return vc
     }
     
     var completionHandler: RosterCompletion?
     var match: Match!
     var models: [Model]!
+    var actionModels: [ActionModel]?
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -35,6 +38,22 @@ class RostersViewController: TableViewController {
         delegate = self
         super.viewDidLoad()
         title = match.description
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "match data", style: .plain, target: self, action: #selector(showTelemetry(sender:)))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Hero.shared.setContainerColorForNextTransition(.black)
+    }
+    
+    @IBAction func showTelemetry(sender: UIBarButtonItem) {
+        guard let asset = match.assets.first else { return }
+        sender.isEnabled = false
+        asset.loadTelemetry(withOwner: self, loaderMessage: "loading match data", control: sender, onSuccess: { actionModels in
+            sender.isEnabled = true
+                self.navigationController?.pushViewController(RostersViewController.deploy(with: self.match, actionModels: actionModels), animated: true)
+            
+        })
     }
 }
 
@@ -48,7 +67,7 @@ extension RostersViewController: TableViewControllerDataSource {
     }
     
     var _models: [Model] {
-        return models
+        return actionModels ?? models
     }
 }
 
@@ -58,15 +77,23 @@ extension RostersViewController: TableViewControllerDelegate {
             let cell = RosterTableViewCell.dequeued(by: tableView)
             cell.update(with: model as? Roster)
             return cell
-        } else {
+        }
+        if model is Participant {
             let cell = ParticipantTableViewCell.dequeued(by: tableView)
             cell.update(with: model as? Participant, showPlayer: true)
             return cell
         }
+        if model is ActionModel {
+            let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+            cell.textLabel?.text = "\((model as? ActionModel)?.action ?? Action.Unknown)"
+            cell.textLabel?.numberOfLines = 0
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func didSelect(_ model: Model, at indexPath: IndexPath) {
-        guard let participant = models[indexPath.row] as? Participant else {
+        guard let participant = models[safe: indexPath.row] as? Participant, actionModels == nil else {
             return
         }
         navigationController?.pushViewController(ParticipantDetailViewController.deploy(with: participant), animated: true)

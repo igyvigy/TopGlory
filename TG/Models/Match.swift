@@ -35,8 +35,8 @@ class Match: Model {
     public var queue: String?
     
     private var related = [Model]()
-    public var assets: [Model] {
-        return related.filter({ $0.type == "asset" })
+    public var assets: [Asset] {
+        return related.filter({ $0.type == "asset" }).map({ Asset(model: $0) })
     }
     public var rosters: [Roster] {
         return related.filter({ $0.type == "roster" }).map({ Roster(model: $0) })

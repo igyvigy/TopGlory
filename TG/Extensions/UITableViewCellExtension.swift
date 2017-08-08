@@ -25,3 +25,22 @@ extension CellInitializer where Self: UITableViewCell {
         return cell as! Self
     }
 }
+
+class TGTableViewCell: UITableViewCell {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = .almostBlack
+        selectedBackgroundView = bgColorView
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = .almostBlack
+        selectedBackgroundView = bgColorView
+    }
+    
+    open func viewDidLayoutSubviews() {
+        
+    }
+}

@@ -12,5 +12,5 @@ class Catche {
     static var runtimeString = [String: String]()
     static var runtimeInt = [String: Int]()
     static var runtimeBool = [String: Bool]()
-    static var runtimeAny = [String: Int]()
+    static var runtimeAny = [String: Any]()
 }

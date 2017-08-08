@@ -19,14 +19,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MHG-hO-WnS">
-                        <rect key="frame" x="4" y="5.5" width="50" height="50.5"/>
+                        <rect key="frame" x="20" y="5.5" width="50" height="50.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="2oL-CM-FYa"/>
                             <constraint firstAttribute="height" constant="50" id="Nwa-sS-owW"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGy-F4-RDz">
-                        <rect key="frame" x="62" y="5" width="251" height="21"/>
+                        <rect key="frame" x="78" y="5" width="235" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="eZL-Xa-9YC"/>
                         </constraints>
@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPj-yo-eec">
-                        <rect key="frame" x="62" y="32" width="243" height="21"/>
+                        <rect key="frame" x="78" y="32" width="227" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="EGu-QJ-Nds"/>
                         </constraints>
@@ -44,6 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="qPj-yo-eec" firstAttribute="leading" secondItem="MHG-hO-WnS" secondAttribute="trailing" constant="8" id="0VT-rl-ev1"/>
                     <constraint firstItem="nGy-F4-RDz" firstAttribute="leading" secondItem="MHG-hO-WnS" secondAttribute="trailing" constant="8" id="1b7-ax-GHC"/>
@@ -51,7 +52,7 @@
                     <constraint firstAttribute="bottom" secondItem="MHG-hO-WnS" secondAttribute="bottom" constant="5.5" id="Hfe-IU-sH2"/>
                     <constraint firstItem="MHG-hO-WnS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IZo-db-k6g"/>
                     <constraint firstItem="MHG-hO-WnS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5.5" id="Q98-mi-aJ5"/>
-                    <constraint firstItem="MHG-hO-WnS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="agg-zg-3pe"/>
+                    <constraint firstItem="MHG-hO-WnS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="agg-zg-3pe"/>
                     <constraint firstItem="qPj-yo-eec" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-8" id="etz-2h-mWv"/>
                     <constraint firstAttribute="trailing" secondItem="nGy-F4-RDz" secondAttribute="trailing" constant="8" id="pzp-rs-eZc"/>
                     <constraint firstItem="nGy-F4-RDz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="tRL-su-rHV"/>

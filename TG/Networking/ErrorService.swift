@@ -84,8 +84,16 @@ struct TGResult<M: Model> {
             self.error = error
         } else if let json = transferObject.json {
             var responseObjects: [M] = []
-            let jsonObjects = json["data"]
-            for (_, objectJSON):(String, JSON) in jsonObjects {
+            
+            var jsonObjects = [JSON]()
+            
+            if let arrayValue = json["data"].array {
+                jsonObjects = arrayValue
+            } else {
+                jsonObjects = json.arrayValue
+            }
+
+            for objectJSON in jsonObjects {
                 let object = M(json: objectJSON, included: json["included"].arrayValue.map({ Model(json: $0) }))
                 responseObjects.append(object)
             }

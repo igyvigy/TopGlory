@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RosterTableViewCell: UITableViewCell {
+class RosterTableViewCell: TGTableViewCell {
     @IBOutlet weak var victoryLabel: UILabel!
     @IBOutlet weak var goldLabel: UILabel!
     @IBOutlet weak var acesLabel: UILabel!

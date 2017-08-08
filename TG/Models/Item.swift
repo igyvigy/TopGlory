@@ -99,7 +99,18 @@ enum Item: String, EnumCollection {
     voidBattery,
     warTreads,
     weaponBlade,
-    weaponInfusion
+    weaponInfusion,
+    
+    none
+    
+    init(string: String) {
+        if let item = Item(rawValue: string) {
+            self = item
+        } else {
+            print("item missing: \(string)")
+            self = .none
+        }
+    }
     
     var imageUrl: String {
         switch self {
@@ -253,6 +264,7 @@ enum Item: String, EnumCollection {
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/weapon-blade.png"
         case .weaponInfusion:
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/weapon-infusion.png"
+        case .none: return ""
         }
     }
     var name: String {
@@ -285,7 +297,7 @@ enum Item: String, EnumCollection {
         case .flare: return "Flare".localized
             
         case .flareGun: return "Flare Gun".localized
-        case .fountainOfRenewal: return "Fountain Of Renewal".localized
+        case .fountainOfRenewal: return "Fountain of Renewal".localized
         case .frostburn: return "Frostburn".localized
         case .halcyonChargers: return "Halcyon Chargers".localized
         case .halcyonPotion: return "Halcyon Potion".localized
@@ -335,6 +347,7 @@ enum Item: String, EnumCollection {
         case .warTreads: return "War Treads".localized
         case .weaponBlade: return "Weapon Blade".localized
         case .weaponInfusion: return "Weapon Infusion".localized
+        case .none: return "None".localized
         }
     }
     var category: ItemCategory {
@@ -417,6 +430,8 @@ enum Item: String, EnumCollection {
         case .warTreads: return .utility
         case .weaponBlade: return .weapon
         case .weaponInfusion: return .consumable
+            
+        case .none: return .ability
         }
     }
     var tier: Tier {
@@ -499,6 +514,8 @@ enum Item: String, EnumCollection {
         case .warTreads: return .one
         case .weaponBlade: return .one
         case .weaponInfusion: return .one
+            
+        case .none: return .one
         }
     }
     var price: Int {
@@ -581,6 +598,8 @@ enum Item: String, EnumCollection {
         case .warTreads: return 300
         case .weaponBlade: return 300
         case .weaponInfusion: return 300
+            
+        case .none: return 0
         }
     }
 }

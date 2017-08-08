@@ -17,14 +17,7 @@ class ParticipantDetailViewController: TableViewController {
     }
     
     var participant: Participant!
-    var models: [Model] {
-        let itemUses = participant.itemUses?.stats.map({ ItemStatsModel(name: $0.key, count: $0.value) })
-        var data = [participant.player!, participant] as [Model]
-        if let itemUses = itemUses, itemUses.count > 0 {
-            data.append(contentsOf: itemUses as [Model])
-        }
-        return data
-    }
+    var models = [Model]()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,12 +25,44 @@ class ParticipantDetailViewController: TableViewController {
         dataSource = self
         delegate = self
         super.viewDidLoad()
+        models = configureTableData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Hero.shared.setContainerColorForNextTransition(.black)
+    }
+    
+    private func configureTableData() -> [Model] {
+        var data = [participant.player!, participant] as [Model]
+        let itemUses = participant.itemUses?.stats
+            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemUses) })
+        if let itemUses = itemUses, itemUses.count > 0 {
+            let header = ItemStatsModel(name: "Used items".localized, count: itemUses.count, modelType: .header)
+            data.append(header)
+            data.append(contentsOf: itemUses as [Model])
+        }
+        let itemGrants = participant.itemGrants?.stats
+            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemGrants) })
+        if let itemGrants = itemGrants, itemGrants.count > 0 {
+            let header = ItemStatsModel(name: "Purchased items".localized, count: itemGrants.count, modelType: .header)
+            data.append(header)
+            data.append(contentsOf: itemGrants as [Model])
+        }
+        let itemSells = participant.itemSells?.stats
+            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemSells) })
+        if let itemSells = itemSells, itemSells.count > 0 {
+            let header = ItemStatsModel(name: "Sold items".localized, count: itemSells.count, modelType: .header)
+            data.append(header)
+            data.append(contentsOf: itemSells as [Model])
+        }
+        return data
     }
 }
 
 extension ParticipantDetailViewController: TableViewControllerDataSource {
     var _cellIdentifiers: [UITableViewCell.Type] {
-        return [ParticipantTableViewCell.self, PlayerTableViewCell.self, UsedItemTableViewCell.self]
+        return [ParticipantTableViewCell.self, PlayerTableViewCell.self, UsedItemTableViewCell.self, HeaderTableViewCell.self]
     }
     
     var _tableView: UITableView {
@@ -62,6 +87,13 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
             return cell
         }
         if let itemStatsModel = model as? ItemStatsModel {
+            
+            guard itemStatsModel.modelType != .header else {
+                let cell = HeaderTableViewCell.dequeued(by: tableView)
+                cell.update(with: itemStatsModel.name)
+                return cell
+            }
+            
             let cell = UsedItemTableViewCell.dequeued(by: tableView)
             let dropppedFirstSeven = itemStatsModel.name.chopPrefix(7).chopSuffix()
             if let item = Array(Item.cases())
@@ -70,13 +102,15 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
                 cell.update(
                     with: item.name,
                     imageString: item.imageUrl,
-                    count: itemStatsModel.count
+                    count: itemStatsModel.count,
+                    type: itemStatsModel.modelType
                 )
             } else {
                 cell.update(
                     with: itemStatsModel.name,
                     imageString: Item.oakheart.imageUrl,
-                    count: itemStatsModel.count
+                    count: itemStatsModel.count,
+                    type: itemStatsModel.modelType
                 )
             }
             return cell

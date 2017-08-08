@@ -51,7 +51,7 @@ class BaseRequestOperation: PSOperation {
                 return result.0
             })
             .responseJSON { [weak self] response in
-                //debugPrint(response)
+                debugPrint(response)
                 ErrorService.validateAlamofireJSONResponse(response, onSuccess: { json in
                     self?.transferObject.json = json
                     self?.finish()

@@ -29,9 +29,19 @@ struct Side {
     var dir: SideDir = .none
     var color: SideColor = .none
     
-    init (stringValue: String?) {
-        self.dir = stringValue?.range(of: "left") != nil ? .left : .right
-        self.color = stringValue?.range(of: "blue") != nil ? .blue : .red
+    init (string: String?) {
+        self.dir = string?.range(of: "left") != nil ? .left : .right
+        self.color = string?.range(of: "blue") != nil ? .blue : .red
+        guard let stringValue = string else { return }
+        switch stringValue {
+        case "1", "one", "left", "Left":
+            self.dir = .left
+            self.color = .blue
+        case "2", "two", "right", "Right":
+            self.dir = .right
+            self.color = .red
+        default: break
+        }
     }
 }
 
@@ -69,16 +79,15 @@ class Roster: Model {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
-    public var partisipantsString: String {
+    public var partisipantActors: [Actor] {
         let key = "roster\(id ?? "").partisipantsString"
-        if let catched = Catche.runtimeString[key] {
-            return catched
+        if let catched = Catche.runtimeAny[key] {
+            return catched as! [Actor]
         } else {
             let description = participants
-                .flatMap({ $0.actor })
-                .reduce("", {$0 == "" ? $1 : $0 + "," + $1})
-            Catche.runtimeString[key] = description
-            return description
+                .map({ $0.actor })
+            Catche.runtimeAny[key] = description
+            return description as! [Actor]
         }
     }
     
@@ -93,7 +102,7 @@ class Roster: Model {
         self.gold = att["stats"]["gold"].int
         self.heroKills = att["stats"]["heroKills"].int
         self.krakenCaptures = att["stats"]["krakenCaptures"].int
-        self.side = Side(stringValue: att["stats"]["side"].string)
+        self.side = Side(string: att["stats"]["side"].string)
         self.turretKills = att["stats"]["turretKills"].int
         self.turretsRemaining = att["stats"]["turretsRemaining"].int
         guard let rels = self.relationships, rels.categories?.count ?? 0 > 0 else { return }
@@ -104,6 +113,6 @@ class Roster: Model {
             }
         })
         let _ = isUserTeam
-        let _ = partisipantsString
+        let _ = partisipantActors
     }
 }

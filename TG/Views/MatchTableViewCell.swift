@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MatchTableViewCell: UITableViewCell {
+class MatchTableViewCell: TGTableViewCell {
 
     @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -19,7 +19,7 @@ class MatchTableViewCell: UITableViewCell {
     @IBOutlet var rosterViews: [RosterView]!
     
     func update(with match: Match) {
-        createdAtLabel.text = TGDateFormats.dateAndTime.string(from: match.createdAt?.dateFromISO8601WithoutTimeZone ?? .now)
+        createdAtLabel.text = (match.createdAt?.dateFromISO8601WithoutTimeZone ?? .now).timeFromNow()
         durationLabel.text = match.duration?.secondsFormatted
         gameModeLabel.text = match.description
         endGameReasonLabel.text = match.endGameReason

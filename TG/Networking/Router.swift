@@ -14,11 +14,13 @@ enum Router: RouterCompatible {
     
     case matches(parameters: Parameters)
     case match(id: String, parameters: Parameters)
+    case telemetry(urlString: String, contentType: String)
     
     var method: HTTPMethod {
         switch self {
         case .matches: return .get
         case .match: return .get
+        case .telemetry: return .get
         }
     }
     
@@ -26,6 +28,7 @@ enum Router: RouterCompatible {
         switch self {
         case .matches: return "/matches"
         case .match(let id, _): return "/matches/\(id)"
+        case .telemetry: return ""
         }
     }
         
@@ -49,6 +52,11 @@ enum Router: RouterCompatible {
         case .matches(let parameters),
              .match(_, let parameters):
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .telemetry(let urlString, let contentType):
+            urlRequest = URLRequest(url: URL(string: urlString)!)
+            urlRequest.httpMethod = method.rawValue
+            urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
 //        default:
 //            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
         }

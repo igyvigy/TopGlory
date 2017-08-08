@@ -28,6 +28,11 @@ class MatchesViewController: TableViewController {
         super.viewDidLoad()
         title = "\(AppConfig.currentUserName ?? "") · last 24 hours"
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Hero.shared.setContainerColorForNextTransition(.black)
+    }
 }
 
 extension MatchesViewController: TableViewControllerDataSource {
