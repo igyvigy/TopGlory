@@ -9,7 +9,9 @@
 import UIKit
 import Hero
 
-class MatchesViewController: TableViewController {
+class MatchesViewController: TableViewController, Refreshable {
+    lazy var refreshControl: UIRefreshControl = { UIRefreshControl() }()
+
     class func deploy(with matches: [Match], completion: MatchCompletion? = nil) -> MatchesViewController {
         let vc = MatchesViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
@@ -18,7 +20,11 @@ class MatchesViewController: TableViewController {
     }
     
     var completionHandler: MatchCompletion?
-    var matches = [Match]()
+    var matches = [Match]() {
+        didSet{
+            tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -27,11 +33,18 @@ class MatchesViewController: TableViewController {
         delegate = self
         super.viewDidLoad()
         title = "\(AppConfig.currentUserName ?? "") · last 24 hours"
+        configurePullToRefresh(for: tableView, action: #selector(loadMatches))
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Hero.shared.setContainerColorForNextTransition(.black)
+    }
+    
+    func loadMatches() {
+        Match.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
+            self?.matches = matches
+        })
     }
 }
 

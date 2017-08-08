@@ -90,7 +90,7 @@ extension Match {
     class func findWhere(withOwner owner: TGOwner? = nil,
                          userName: String? = nil,
                          stardDate: Date? = TGDates.last24Hours.now,
-                         endDate: Date? = .now,
+                         endDate: Date? = Date(),
                          loaderMessage: String? = nil,
                          control: Control? = nil,
                          onSuccess: @escaping ([Match]) -> Void,
@@ -101,6 +101,7 @@ extension Match {
             "filter[createdAt-end]": endDate?.iso8601 ?? "null",
             "sort": "-createdAt"
         ]
+        print(parameters)
         let router = Router.matches(parameters: parameters)
         let operation = JSONAPIArrayOperation<Match>(
             with: router,

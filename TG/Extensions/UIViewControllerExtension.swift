@@ -121,3 +121,21 @@ extension KeyboardHandlingViewController {
         keyboardHandlingDelegate?.keyboardWillHide()
     }
 }
+
+protocol Refreshable {
+    var refreshControl: UIRefreshControl { get }
+    func configurePullToRefresh(for tableView: UITableView, action: Selector)
+    func stopRefreshing()
+}
+
+extension Refreshable where Self: UIViewController {
+    func configurePullToRefresh(for tableView: UITableView, action: Selector) {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: action, for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    func stopRefreshing() {
+        refreshControl.endRefreshing()
+    }
+}

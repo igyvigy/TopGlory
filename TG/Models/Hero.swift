@@ -39,6 +39,7 @@ enum Actor: String {
     case phinn = "*Phinn*"
     
     case reim = "*Reim*"
+    case reza = "*Reza*"
     case ringo = "*Ringo*"
     case rona = "*Rona*"
     case samuel = "*Samuel*"
@@ -107,6 +108,7 @@ enum Actor: String {
         case .phinn: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/phinn.png"
             
         case .reim: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/reim.png"
+        case .reza: return "https://jd3sljkvzi-flywheel.netdna-ssl.com/wp-content/uploads/2017/08/Reza_Portrait.png"
         case .ringo: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/ringo.png"
         case .rona: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/rona.png"
         case .samuel: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/samuel.png"
