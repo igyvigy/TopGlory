@@ -20,12 +20,7 @@ class MatchesViewController: TableViewController, Refreshable {
     }
     
     var completionHandler: MatchCompletion?
-    var matches = [Match]() {
-        didSet{
-            tableView.reloadData()
-        }
-    }
-    
+    var matches = [Match]()
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
@@ -43,7 +38,9 @@ class MatchesViewController: TableViewController, Refreshable {
     
     func loadMatches() {
         Match.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
+            self?.stopRefreshing()
             self?.matches = matches
+            self?.tableView.reloadData()
         })
     }
 }
