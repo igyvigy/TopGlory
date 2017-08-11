@@ -31,7 +31,11 @@ class ParticipantTableViewCell: TGTableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var participant: Participant?
+    var participant: Participant? {
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,7 +52,9 @@ class ParticipantTableViewCell: TGTableViewCell {
     
     func update(with participant: Participant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
-        self.participant = participant
+        if self.participant?.id != participant.id {
+            self.participant = participant
+        }
         if collectionView.numberOfItems(inSection: 0) == 0 {
             collectionView.reloadData()
         }

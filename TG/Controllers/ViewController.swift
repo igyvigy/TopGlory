@@ -41,9 +41,30 @@ extension ViewController {
     @IBAction func didTapGoButton(_ sender: UIButton) {
         guard let name = playerTextField.text, name != "" else { return }
         saveLastPlayer(playerName: name)
-        Match.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
-            let matchesVC = MatchesViewController.deploy(with: matches)
-            self?.navigationController?.pushViewController(matchesVC, animated: true)
+//        Match.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
+//            let matchesVC = MatchesViewController.deploy(with: matches)
+//            self?.navigationController?.pushViewController(matchesVC, animated: true)
+//        })
+        Match.findWhere(
+            withOwner: self,
+            userName: name,
+            stardDate: TGDates.startOfYear.now,
+            loaderMessage: "getting matches from start of the year",
+            control: sender,
+            onSuccess: { matches in
+                matches.forEach { match in
+                    match.assets.forEach { asset in
+                        asset.loadTelemetry(onSuccess: { actionModels in
+                            actionModels.forEach { actionModel in
+                                switch actionModel.action ?? .Unknown {
+                                case .HeroSkinSelect(_, _, let skin):
+                                    print(skin)
+                                default: break
+                                }
+                            }
+                        })
+                    }
+                }
         })
     }
 }
