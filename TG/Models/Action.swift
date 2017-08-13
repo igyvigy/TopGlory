@@ -44,6 +44,9 @@ enum Action: EnumCollection {
         case .DealDamage: return "DealDamage"
         case .Executed: return "Executed"
         case .GoldFromGoldMine: return "GoldFromGoldMine"
+        case .GoldFromTowerKill: return "GoldFromTowerKill"
+        case .GoldFromKrakenKill: return "GoldFromKrakenKill"
+        case .NPCkillNPC: return "NPCkillNPC"
         case .Unknown: return "Unknown"
         }
     }
@@ -63,6 +66,9 @@ enum Action: EnumCollection {
     case Executed(time: Date, side: Side, actor: Actor, killed: Actor, killedTeam: String, gold: Int, isHero: Bool, targetIsHero: Bool, position: Position)
     case DealDamage(time: Date, side: Side, actor: Actor, target: Actor, source: String, damage: Int, delt: Int, isHero: Bool, targetIsHero: Bool)
     case GoldFromGoldMine(time: Date, side: Side, actor: Actor, amount: Int)
+    case GoldFromTowerKill(time: Date, side: Side, actor: Actor, amount: Int)
+    case GoldFromKrakenKill(time: Date, side: Side, actor: Actor, amount: Int)
+    case NPCkillNPC(time: Date, side: Side, actor: Actor, killed: Actor, killedTeam: String, gold: Int, isHero: Bool, targetIsHero: Bool, position: Position)
     case Unknown
 }
 
@@ -77,6 +83,16 @@ extension Action {
             let side = Side(string: json["payload"]["Team"].string)
             let amount = json["payload"]["Amount"].intValue
             return Action.GoldFromGoldMine(time: time, side: side, actor: actor, amount: amount)
+        case "GoldFromTowerKill":
+            let actor = Actor(string: json["payload"]["Actor"].stringValue)
+            let side = Side(string: json["payload"]["Team"].string)
+            let amount = json["payload"]["Amount"].intValue
+            return Action.GoldFromTowerKill(time: time, side: side, actor: actor, amount: amount)
+        case "GoldFromKrakenKill":
+            let actor = Actor(string: json["payload"]["Actor"].stringValue)
+            let side = Side(string: json["payload"]["Team"].string)
+            let amount = json["payload"]["Amount"].intValue
+            return Action.GoldFromKrakenKill(time: time, side: side, actor: actor, amount: amount)
         case "DealDamage":
             let actor = Actor(string: json["payload"]["Actor"].stringValue)
             let target = Actor(string: json["payload"]["Target"].stringValue)
@@ -87,6 +103,16 @@ extension Action {
             let isHero = json["payload"]["IsHero"].intValue == 1
             let targetIsHero = json["payload"]["TargetIsHero"].intValue == 1
             return Action.DealDamage(time: time, side: side, actor: actor, target: target, source: source, damage: damage, delt: delt, isHero: isHero, targetIsHero: targetIsHero)
+        case "NPCkillNPC":
+            let actor = Actor(string: json["payload"]["Actor"].stringValue)
+            let killed = Actor(string: json["payload"]["Killed"].stringValue)
+            let side = Side(string: json["payload"]["Team"].string)
+            let gold = Int(json["payload"]["Gold"].stringValue) ?? 0
+            let killedTeam = json["payload"]["KilledTeam"].stringValue
+            let isHero = json["payload"]["IsHero"].intValue == 1
+            let targetIsHero = json["payload"]["TargetIsHero"].intValue == 1
+            let position = Position(json: json["payload"]["Position"])
+            return Action.NPCkillNPC(time: time, side: side, actor: actor, killed: killed, killedTeam: killedTeam, gold: gold, isHero: isHero, targetIsHero: targetIsHero, position: position)
         case "KillActor":
             let actor = Actor(string: json["payload"]["Actor"].stringValue)
             let killed = Actor(string: json["payload"]["Killed"].stringValue)

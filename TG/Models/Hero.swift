@@ -62,7 +62,9 @@ enum Actor: String {
     case turret = "*Turret*"
     case vainTurret = "*VainTurret*"
     case blitzMiddleSentry = "*JungleMinion_Blitz_MiddleSentry*"
-    
+    case crakenCaptured = "*Kraken_Captured*"
+    case crakenJungle = "*Kraken_Jungle*"
+    case crystalMiner = "*JungleMinion_CrystalMiner*"
     case JungleMinionBlitzAllySentry = "*JungleMinion_Blitz_AllySentry*"
     case DefaultSmall = "*Neutral_JungleMinion_DefaultSmall*"
     case ElderTreeEnt = "*JungleMinion_ElderTreeEnt*"

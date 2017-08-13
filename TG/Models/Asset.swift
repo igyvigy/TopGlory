@@ -48,6 +48,7 @@ extension Asset {
         let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
         Alamofire.request(try! router.asURLRequest())
             .responseJSON { response in
+                debugPrint(response)
                 if let object = response.result.value {
                     let jsonArray = JSON(object).arrayValue
                     onSuccess(jsonArray.map({ ActionModel(json: $0) }))
