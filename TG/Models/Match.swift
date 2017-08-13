@@ -26,7 +26,7 @@ enum GameMode: String {
 class Match: Model {
     public var gameMode: GameMode?
     public var titleId: String?
-    public var createdAt: String?
+    public var createdAt: Date?
     public var patchVersion: String?
     public var shardId: String?
     public var duration: Int?
@@ -71,7 +71,7 @@ class Match: Model {
         guard let att = self.attributes as? JSON else { return }
         self.gameMode = GameMode(rawValue: att["gameMode"].string ?? "")
         self.titleId = att["titleId"].string
-        self.createdAt = att["createdAt"].string
+        self.createdAt = (att["createdAt"].string?.dateFromISO8601WithoutTimeZone ?? Date())
         self.patchVersion = att["patchVersion"].string
         self.shardId = att["shardId"].string
         self.endGameReason = att["stats"]["endGameReason"].string

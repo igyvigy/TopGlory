@@ -21,6 +21,7 @@ typealias ModelsCompletion = ([Model]) -> Void
 typealias MatchCompletion = (Match) -> Void
 typealias RosterCompletion = (Roster) -> Void
 
+
 enum TGError: Error {
     case critical(error: NSError)
     case warning(error: NSError)

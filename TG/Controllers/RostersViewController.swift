@@ -51,7 +51,9 @@ class RostersViewController: TableViewController {
         sender.isEnabled = false
         asset.loadTelemetry(withOwner: self, loaderMessage: "loading match data", control: sender, onSuccess: { actionModels in
             sender.isEnabled = true
-                self.navigationController?.pushViewController(RostersViewController.deploy(with: self.match, actionModels: actionModels), animated: true)
+                self.navigationController?.pushViewController(
+                    GraphViewController.deploy(with: actionModels.map({ $0.action ?? .Unknown }), match: self.match)
+                    , animated: true)
             
         })
     }
@@ -59,7 +61,7 @@ class RostersViewController: TableViewController {
 
 extension RostersViewController: TableViewControllerDataSource {
     var _cellIdentifiers: [UITableViewCell.Type] {
-        return [RosterTableViewCell.self, ParticipantTableViewCell.self]
+        return [RosterTableViewCell.self, ParticipantCell.self]
     }
     
     var _tableView: UITableView {
@@ -79,8 +81,8 @@ extension RostersViewController: TableViewControllerDelegate {
             return cell
         }
         if model is Participant {
-            let cell = ParticipantTableViewCell.dequeued(by: tableView)
-            cell.update(with: model as? Participant, showPlayer: true)
+            let cell = ParticipantCell.dequeued(by: tableView)
+            cell.update(with: model as? Participant)
             return cell
         }
         if model is ActionModel {

@@ -16,4 +16,11 @@ extension Int {
         output += "\(m) Minutes, \(s) Seconds"
         return output
     }
+    var secondsFormattedShort: String {
+        let (h, m, s) = (self / 3600, (self % 3600) / 60, (self % 3600) % 60)
+        var output = ""
+        if h > 0 { output += "\(h) Hours, "}
+        output += "\(m)m, \(s)s"
+        return output
+    }
 }

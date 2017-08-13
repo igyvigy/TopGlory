@@ -118,7 +118,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GYq-Aa-qjo" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="qUV-rd-jzX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="qUV-rd-jzX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.54332369570000005" green="0.7628648281" blue="0.29142639040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -208,6 +208,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jVm-Fa-Oyk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4172" y="37"/>
+        </scene>
+        <!--Graph View Controller-->
+        <scene sceneID="oL6-Bm-3I0">
+            <objects>
+                <viewController storyboardIdentifier="GraphViewController" id="CS6-XA-MaD" customClass="GraphViewController" customModule="TG" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m1u-ha-x0A"/>
+                        <viewControllerLayoutGuide type="bottom" id="5uo-Ra-1KF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cdb-lO-tkU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fje-Q6-2lh" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fje-Q6-2lh" firstAttribute="top" secondItem="m1u-ha-x0A" secondAttribute="bottom" id="HLM-RT-UUy"/>
+                            <constraint firstItem="fje-Q6-2lh" firstAttribute="leading" secondItem="Cdb-lO-tkU" secondAttribute="leading" id="PRb-je-3n0"/>
+                            <constraint firstItem="5uo-Ra-1KF" firstAttribute="top" secondItem="fje-Q6-2lh" secondAttribute="bottom" id="fcv-Fv-xjn"/>
+                            <constraint firstAttribute="trailing" secondItem="fje-Q6-2lh" secondAttribute="trailing" id="vxR-l8-khc"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="chartView" destination="fje-Q6-2lh" id="2PK-ye-f7x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ndX-me-8Ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5001" y="36"/>
         </scene>
     </scenes>
 </document>

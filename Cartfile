@@ -4,3 +4,5 @@ github "SwiftyJSON/SwiftyJSON"
 github "lkzhao/Hero"
 github "pluralsight/PSOperations"
 github "hyperoslo/Whisper"
+github "philackm/ScrollableGraphView" == 4.0.0
+github "danielgindi/Charts" == 3.0.2

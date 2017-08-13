@@ -10,25 +10,25 @@ import UIKit
 
 class ParticipantTableViewCell: TGTableViewCell {
     @IBOutlet weak var actorImageView: UIImageView!
-     @IBOutlet weak var actorLabel: UILabel!
-     @IBOutlet weak var skinLabel: UILabel!
-     @IBOutlet weak var killsLabel: UILabel!
-     @IBOutlet weak var deathsLabel: UILabel!
-     @IBOutlet weak var assistsLabel: UILabel!
-     @IBOutlet weak var crystalCaptureLabel: UILabel!
-     @IBOutlet weak var goldCaptureLabel: UILabel!
-     @IBOutlet weak var krakenCaptureLabel: UILabel!
-     @IBOutlet weak var goldLabel: UILabel!
-     @IBOutlet weak var farmLabel: UILabel!
-     @IBOutlet weak var turretsLabel: UILabel!
-     @IBOutlet weak var minionAllLabel: UILabel!
-     @IBOutlet weak var minionLaneLabel: UILabel!
-     @IBOutlet weak var minionJungleLabel: UILabel!
-     @IBOutlet weak var wentAfkLabel: UILabel!
-     @IBOutlet weak var afkTimeLabel: UILabel!
-     @IBOutlet weak var skillTierLabel: UILabel!
-     @IBOutlet weak var stackView: UIStackView!
-    
+    @IBOutlet weak var actorLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var winsLabel: UILabel!
+    @IBOutlet weak var killsLabel: UILabel!
+    @IBOutlet weak var deathsLabel: UILabel!
+    @IBOutlet weak var assistsLabel: UILabel!
+    @IBOutlet weak var crystalCaptureLabel: UILabel!
+    @IBOutlet weak var goldCaptureLabel: UILabel!
+    @IBOutlet weak var krakenCaptureLabel: UILabel!
+    @IBOutlet weak var goldLabel: UILabel!
+    @IBOutlet weak var farmLabel: UILabel!
+    @IBOutlet weak var turretsLabel: UILabel!
+    @IBOutlet weak var minionAllLabel: UILabel!
+    @IBOutlet weak var minionLaneLabel: UILabel!
+    @IBOutlet weak var minionJungleLabel: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var afkStampView: UIView!
+    @IBOutlet weak var afkStampLabel: UILabel!
+    @IBOutlet weak var afkStampImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var participant: Participant? {
@@ -63,29 +63,32 @@ class ParticipantTableViewCell: TGTableViewCell {
         var text = participant.isUser ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text
-        if let url = URL(string: participant.actor?.imageUrl ?? "") {
+        if let image = participant.skin?.image {
+            actorImageView.image = image
+        } else if let url = URL(string: participant.actor?.imageUrl ?? "") {
             actorImageView.af_setImage(withURL: url)
         }
-        skinLabel.text = participant.skinKey
+        rankLabel.text = "#\(participant.skillTier ?? 0)"
+        winsLabel.text = participant.playerWinsString
         killsLabel.text = "\(participant.kills ?? 0)"
         deathsLabel.text = "\(participant.deaths ?? 0)"
         assistsLabel.text = "\(participant.assists ?? 0)"
+        afkStampView.isHidden = !(participant.wentAfk ?? false)
+        afkStampLabel.text = participant.firstAfkTime?.secondsFormatted
         guard !showPlayer else {
-            stackView.configureViews(for: [4,5,6,7,8,9,10,11], isHidden: true, animated: false, completion: {})
+            stackView.configureViews(for: [5,6,7,8,9,10,11], isHidden: true, animated: false, completion: {})
             return }
-        stackView.configureViews(for: [4,5,6,7,8,9,10,11], isHidden: false, animated: false, completion: {})
+        stackView.configureViews(for: [5,6,7,8,9,10,11], isHidden: false, animated: false, completion: {})
         crystalCaptureLabel.text = "\(participant.crystalMineCaptures ?? 0)"
         goldCaptureLabel.text = "\(participant.goldMineCaptures ?? 0)"
         krakenCaptureLabel.text = "\(participant.krakenCaptures ?? 0)"
-        goldLabel.text = "\(participant.gold ?? 0)"
+        goldLabel.text = String(format: "%.0f", participant.gold ?? 0)
         farmLabel.text = "\(participant.farm ?? 0)"
         turretsLabel.text = "\(participant.turretCaptures ?? 0)"
         minionAllLabel.text = "\(participant.minionKills ?? 0)"
         minionLaneLabel.text = "\(participant.nonJungleMinionKills ?? 0)"
         minionJungleLabel.text = "\(participant.jungleKills ?? 0)"
-        wentAfkLabel.text = "\(participant.wentAfk ?? false)"
-        afkTimeLabel.text = "\(participant.firstAfkTime ?? 0)"
-        skillTierLabel.text = "\(participant.skillTier ?? 0)"
+        
     }
 }
 
@@ -96,14 +99,7 @@ extension ParticipantTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as! ItemCollectionViewCell
-        let itemName = participant?.items?[indexPath.row]
-        if let item = Array(Item.cases())
-            .filter({ $0.name == itemName })
-            .first {
-            cell.update(with: item)
-        } else {
-            print(itemName)
-        }
+        cell.update(with: participant?.itemObjects[safe: indexPath.row])
         return cell
     }
 }
@@ -116,9 +112,8 @@ extension ParticipantTableViewCell: UICollectionViewDelegateFlowLayout {
         let totalCellWidth = cellWidth * cellCount
         let totalSpacingWidth = cellSpacing * (cellCount - 1)
         
-        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth))
-        let rightInset = leftInset
-        
+        var leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth))
+        if leftInset < 0 { leftInset = 0 }
         return UIEdgeInsetsMake(0, leftInset, 0, 0)
     }
 }

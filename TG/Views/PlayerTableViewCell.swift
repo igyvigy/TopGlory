@@ -54,7 +54,7 @@ class PlayerTableViewCell: TGTableViewCell {
         let played = Double(player?.played ?? 0)
         let won = Double(player?.wins ?? 0)
         let percent = won/played*100
-        let formated = String(format: "%.3f", percent)
+        let formated = String(format: "%.0f", percent)
         return "(" + formated + "%" + ")"
     }
 }

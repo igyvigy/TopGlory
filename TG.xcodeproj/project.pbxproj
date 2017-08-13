@@ -82,6 +82,12 @@
 		B5E6094D1F1957FF001D4D58 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094C1F1957FF001D4D58 /* TableViewController.swift */; };
 		B5E6094F1F196085001D4D58 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094E1F196085001D4D58 /* NibLoadingView.swift */; };
 		B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E609501F1960EA001D4D58 /* RosterView.swift */; };
+		B5F841181F3F0F3A00212E8A /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */; };
+		B5F841191F3F0F3A00212E8A /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */; };
+		B5F8411B1F3F56D600212E8A /* ScrollableGraphView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */; };
+		B5F8411D1F3F571600212E8A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F8411C1F3F571600212E8A /* GraphViewController.swift */; };
+		B5F8411F1F3F68BB00212E8A /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F8411E1F3F68BB00212E8A /* Charts.framework */; };
+		B5F841211F3F93B100212E8A /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841201F3F93B100212E8A /* Side.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +169,12 @@
 		B5E6094C1F1957FF001D4D58 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B5E6094E1F196085001D4D58 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
 		B5E609501F1960EA001D4D58 /* RosterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
+		B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
+		B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
+		B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScrollableGraphView.framework; path = Carthage/Build/iOS/ScrollableGraphView.framework; sourceTree = "<group>"; };
+		B5F8411C1F3F571600212E8A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		B5F8411E1F3F68BB00212E8A /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
+		B5F841201F3F93B100212E8A /* Side.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F8411F1F3F68BB00212E8A /* Charts.framework in Frameworks */,
+				B5F8411B1F3F56D600212E8A /* ScrollableGraphView.framework in Frameworks */,
 				B555F79E1F3767050091838A /* AlamofireImage.framework in Frameworks */,
 				B5890A521F362EA00046C18B /* Whisper.framework in Frameworks */,
 				B5890A501F362E900046C18B /* PSOperations.framework in Frameworks */,
@@ -228,6 +242,7 @@
 				B58AF6091F3683C100E2F4BA /* RostersViewController.swift */,
 				B55F20D71F369BE000770410 /* ParticipantDetailViewController.swift */,
 				B5E6094C1F1957FF001D4D58 /* TableViewController.swift */,
+				B5F8411C1F3F571600212E8A /* GraphViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -246,6 +261,8 @@
 				B55F20D01F36872E00770410 /* RosterTableViewCell.xib */,
 				B56CA9C51F38F3CF00BBF645 /* ParticipantTableViewCell.swift */,
 				B55F20D41F368C8600770410 /* ParticipantTableViewCell.xib */,
+				B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */,
+				B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */,
 				B55F20DF1F36A27700770410 /* PlayerTableViewCell.swift */,
 				B55F20E01F36A27700770410 /* PlayerTableViewCell.xib */,
 				B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */,
@@ -285,6 +302,8 @@
 		B545C9A21F13F24E008F191F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5F8411E1F3F68BB00212E8A /* Charts.framework */,
+				B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */,
 				B555F79D1F3767050091838A /* AlamofireImage.framework */,
 				B55F20E61F371B9F00770410 /* Fabric.framework */,
 				B55F20E71F371B9F00770410 /* Crashlytics.framework */,
@@ -313,6 +332,7 @@
 				B555F7A91F3872130091838A /* Hero.swift */,
 				B555F7AB1F3872C20091838A /* Skin.swift */,
 				B555F7B11F38A0530091838A /* Ability.swift */,
+				B5F841201F3F93B100212E8A /* Side.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -413,6 +433,7 @@
 				B555F7A21F376F820091838A /* UsedItemTableViewCell.xib in Resources */,
 				B555F7A61F385C840091838A /* HeaderTableViewCell.xib in Resources */,
 				B545C96D1F13F03B008F191F /* Main.storyboard in Resources */,
+				B5F841191F3F0F3A00212E8A /* ParticipantCell.xib in Resources */,
 				B5CBCB751F16D3560060E2C1 /* JSONModelTableViewCell.xib in Resources */,
 				B5CBCB711F16BD250060E2C1 /* RosterView.xib in Resources */,
 				B545C9911F13F0A0008F191F /* MatchTableViewCell.xib in Resources */,
@@ -437,6 +458,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Whisper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PSOperations.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ScrollableGraphView.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -473,8 +496,10 @@
 				B545C9971F13F0A0008F191F /* StringExtension.swift in Sources */,
 				B545C9681F13F03B008F191F /* AppDelegate.swift in Sources */,
 				B5CBCB741F16D3560060E2C1 /* JSONModelTableViewCell.swift in Sources */,
+				B5F841181F3F0F3A00212E8A /* ParticipantCell.swift in Sources */,
 				B537BC9B1F1401C80064E979 /* MatchesViewController.swift in Sources */,
 				B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */,
+				B5F841211F3F93B100212E8A /* Side.swift in Sources */,
 				B5890A601F3679DE0046C18B /* Router.swift in Sources */,
 				B555F7901F3749520091838A /* Item.swift in Sources */,
 				B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */,
@@ -513,6 +538,7 @@
 				B555F7A11F376F820091838A /* UsedItemTableViewCell.swift in Sources */,
 				B555F7A81F3871DD0091838A /* Action.swift in Sources */,
 				B56CA9C61F38F3CF00BBF645 /* ParticipantTableViewCell.swift in Sources */,
+				B5F8411D1F3F571600212E8A /* GraphViewController.swift in Sources */,
 				B555F7B61F38CE860091838A /* Asset.swift in Sources */,
 				B545C99F1F13F0A0008F191F /* UITableViewExtension.swift in Sources */,
 				B555F7AC1F3872C20091838A /* Skin.swift in Sources */,
@@ -647,7 +673,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -670,7 +696,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

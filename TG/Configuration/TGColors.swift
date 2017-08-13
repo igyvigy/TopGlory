@@ -53,6 +53,21 @@ struct TGColors {
         return UIColor(hexString: "#F7F7F7")
     }
     
+    static var lightBlue: UIColor {
+        return UIColor(hexString: "#63A9F9")
+    }
+    
+    static var darkBlue: UIColor {
+        return UIColor(hexString: "#3D6A9D")
+    }
+    
+    static var lightRed: UIColor {
+        return UIColor(hexString: "#FF97AB")
+    }
+    
+    static var darkRed: UIColor {
+        return UIColor(hexString: "#9A2A24")
+    }
     
 }
 

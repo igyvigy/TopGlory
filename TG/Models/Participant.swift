@@ -69,7 +69,7 @@ class Participant: Model {
     var minionKills: Int?
     var nonJungleMinionKills: Int?
     var skillTier: Int?
-    var skinKey: String?
+    var skin: Skin?
     var turretCaptures: Int?
     var wentAfk: Bool?
     var winner: Bool?
@@ -94,6 +94,33 @@ class Participant: Model {
         }
     }
     
+    var playerWinsString: String {
+        let key = "participant\(id ?? "").playerVinsString"
+        if let catched = Catche.runtimeString[key] {
+            return catched
+        } else {
+            var percentOfWins: String {
+                let played = Double(player?.played ?? 0)
+                let won = Double(player?.wins ?? 0)
+                let percent = won/played*100
+                let formated = String(format: "%.0f", percent)
+                return percent <= 100 ? "wins: \(won) " + "(" + formated + "%" + ")" : "wins: \(won)"
+            }
+            Catche.runtimeString[key] = percentOfWins
+            return percentOfWins
+        }
+    }
+    var itemObjects: [Item] {
+        let key = "participant\(id ?? "").items"
+        if let catched = Catche.runtimeAny[key] {
+            return catched as! [Item]
+        } else {
+            let itemz = Array(Item.cases())
+                    .filter({ self.items?.contains($0.name) ?? false })
+            Catche.runtimeAny[key] = itemz
+            return itemz
+        }
+    }
     var isUser: Bool {
         return playerName == AppConfig.currentUserName
     }
@@ -129,7 +156,7 @@ class Participant: Model {
         self.minionKills = att["stats"]["minionKills"].int
         self.nonJungleMinionKills = att["stats"]["nonJungleMinionKills"].int
         self.skillTier = att["stats"]["skillTier"].int
-        self.skinKey = att["stats"]["skinKey"].string
+        self.skin = Skin(string: att["stats"]["skinKey"].stringValue)
         self.turretCaptures = att["stats"]["turretCaptures"].int
         self.wentAfk = att["stats"]["wentAfk"].bool
         self.winner = att["stats"]["winner"].bool

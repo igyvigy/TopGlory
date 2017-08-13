@@ -19,7 +19,7 @@ class MatchTableViewCell: TGTableViewCell {
     @IBOutlet var rosterViews: [RosterView]!
     
     func update(with match: Match) {
-        createdAtLabel.text = (match.createdAt?.dateFromISO8601WithoutTimeZone ?? .now).timeFromNow()
+        createdAtLabel.text = match.createdAt?.timeFromNow()
         durationLabel.text = match.duration?.secondsFormatted
         gameModeLabel.text = match.description
         endGameReasonLabel.text = match.endGameReason
