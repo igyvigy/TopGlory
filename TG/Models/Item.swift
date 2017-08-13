@@ -8,6 +8,12 @@
 
 import Foundation
 
+var itemList = Set<String>() {
+    didSet {
+        print(itemList.sorted(by: { $0 < $1 }))
+    }
+}
+
 enum ItemCategory {
     case ability,
     defense,
@@ -19,88 +25,91 @@ enum ItemCategory {
 enum Tier {
     case one, two, three
 }
-
+let allItems = ["Aegis", "Aftershock", "Alternating Current", "Atlas Pauldron", "Barbed Needle", "Blazing Salvo", "Bonesaw", "Book Of Eulogies", "Breaking Point", "Broken Myth", "Candy - Kissy", "Candy - Taunt", "Candy - VO Taunt", "Chronograph", "Clockwork", "Coat Of Plates", "Contraption", "Crucible", "Crystal Bit", "Crystal Infusion", "Dragonblood Contract", "Dragonheart", "Echo", "Eclipse Prism", "Energy Battery", "Eve Of Harvest", "Flare", "Flaregun", "Fountain of Renewal", "Frostburn", "Halcyon Chargers", "Halcyon Potion", "Heavy Prism", "Heavy Steel", "Hourglass", "Ironguard Contract", "Journey Boots", "Kinetic Shield", "Level Juice", "Lifespring", "Light Armor", "Light Shield", "Lucky Strike", "Metal Jacket", "Minion Candy", "Minions Foot", "Nullwave Gauntlet", "Oakheart", "Piercing Shard", "Piercing Spear", "Poisoned Shiv", "Pot Of Gold", "Protector Contract", "Reflex Block", "Scout Trap", "Serpent Mask", "Shatterglass", "Shiversteel", "Six Sins", "Slumbering Husk", "Sorrowblade", "Sprint Boots", "Stormcrown", "Stormguard Banner", "Swift Shooter", "Tension Bow", "Tornado Trigger", "Travel Boots", "Tyrants Monocle", "Void Battery", "War Treads", "Weapon Blade", "Weapon Infusion"]
 enum Item: String, EnumCollection {
     case
-    alternatingCurrent,
-    aegis,
-    aftershock,
-    atlasPauldron,
-    barbedNeedle,
-    blazingSalvo,
-    bonesaw,
-    bookOfEulogies,
+    alternatingCurrent = "Alternating Current",
+    aegis = "Aegis",
+    aftershock = "Aftershock",
+    atlasPauldron = "Atlas Pauldron",
+    barbedNeedle = "Barbed Needle",
+    blazingSalvo = "Blazing Salvo",
+    bonesaw = "Bonesaw",
+    bookOfEulogies = "Book Of Eulogies",
     
-    breakingPoint,
-    brokenMyth,
-    chronograph,
-    clockwork,
-    coatOfPlates,
-    contraption,
-    crucible,
-    crystalBit,
+    breakingPoint = "Breaking Point",
+    brokenMyth = "Broken Myth",
+    chronograph = "Chronograph",
+    clockwork = "Clockwork",
+    coatOfPlates = "Coat Of Plates",
+    contraption = "Contraption",
+    crucible = "Crucible",
+    crystalBit = "Crystal Bit",
     
-    crystalInfusion,
-    dragonbloodContract,
-    dragonheart,
-    echo,
-    eclipsePrism,
-    energyBattery,
-    eveOfHarvest,
-    flare,
+    crystalInfusion = "Crystal Infusion",
+    dragonbloodContract = "Dragonblood Contract",
+    dragonheart = "Dragonheart",
+    echo = "Echo",
+    eclipsePrism = "Eclipse Prism",
+    energyBattery = "Energy Battery",
+    eveOfHarvest = "Eve Of Harvest",
+    flare = "Flare",
     
-    flareGun,
-    fountainOfRenewal,
-    frostburn,
-    halcyonChargers,
-    halcyonPotion,
-    heavyPrism,
-    heavySteel,
-    hourglass,
+    flareGun = "Flaregun",
+    fountainOfRenewal = "Fountain of Renewal",
+    frostburn = "Frostburn",
+    halcyonChargers = "Halcyon Chargers",
+    halcyonPotion = "Halcyon Potion",
+    heavyPrism = "Heavy Prism",
+    heavySteel = "Heavy Steel",
+    hourglass = "Hourglass",
     
-    ironguardContract,
-    journeyBoots,
-    kineticShield,
-    levelJuice,
-    lifespring,
-    lightArmor,
-    lightShield,
-    luckyStrike,
+    ironguardContract = "Ironguard Contract",
+    journeyBoots = "Journey Boots",
+    kineticShield = "Kinetic Shield",
+    levelJuice = "Level Juice",
+    lifespring = "Lifespring",
+    lightArmor = "Light Armor",
+    lightShield = "Light Shield",
+    luckyStrike = "Lucky Strike",
     
-    metalJacket,
-    minionCandy,
-    minionsFoot,
-    nullwaveGauntlet,
-    oakheart,
-    piercingShard,
-    piercingSpear,
-    poisonedShiv,
+    metalJacket = "Metal Jacket",
+    minionCandy = "Minion Candy",
+    minionsFoot = "Minions Foot",
+    nullwaveGauntlet = "Nullwave Gauntlet",
+    oakheart = "Oakheart",
+    piercingShard = "Piercing Shard",
+    piercingSpear = "Piercing Spear",
+    poisonedShiv = "Poisoned Shiv",
     
-    potOfGold,
-    protectorContract,
-    reflexBlock,
-    scoutTrap,
-    serpentMask,
-    shatterglass,
-    shiversteel,
-    sixSins,
+    potOfGold = "Pot Of Gold",
+    protectorContract = "Protector Contract",
+    reflexBlock = "Reflex Block",
+    scoutTrap = "Scout Trap",
+    serpentMask = "Serpent Mask",
+    shatterglass = "Shatterglass",
+    shiversteel = "Shiversteel",
+    sixSins = "Six Sins",
     
-    slumberingHusk,
-    sorrowblade,
-    sprintBoots,
-    stormcrown,
-    stormguardBanner,
-    swiftShooter,
-    tensionBow,
-    tornadoTrigger,
+    slumberingHusk = "Slumbering Husk",
+    sorrowblade = "Sorrowblade",
+    sprintBoots = "Sprint Boots",
+    stormcrown = "Stormcrown",
+    stormguardBanner = "Stormguard Banner",
+    swiftShooter = "Swift Shooter",
+    tensionBow = "Tension Bow",
+    tornadoTrigger = "Tornado Trigger",
     
-    travelBoots,
-    tyrantsMonocle,
-    voidBattery,
-    warTreads,
-    weaponBlade,
-    weaponInfusion,
+    travelBoots = "Travel Boots",
+    tyrantsMonocle = "Tyrants Monocle",
+    voidBattery = "Void Battery",
+    warTreads = "War Treads",
+    weaponBlade = "Weapon Blade",
+    weaponInfusion = "Weapon Infusion",
     
+    candyVOTaunt = "Candy - VO Taunt",
+    candyTaunt = "Candy - Taunt",
+    candyKissy = "Candy - Kissy",
     none
     
     init(string: String) {
@@ -108,6 +117,9 @@ enum Item: String, EnumCollection {
             self = item
         } else {
             print("item missing: \(string)")
+            if !itemList.contains(string) {
+                itemList.insert(string)
+            }
             self = .none
         }
     }
@@ -264,6 +276,8 @@ enum Item: String, EnumCollection {
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/weapon-blade.png"
         case .weaponInfusion:
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/weapon-infusion.png"
+        case .candyVOTaunt, .candyTaunt, .candyKissy:
+            return "https://www.vaingloryfire.com/images/wikibase/icon/items/minion-candy.png"
         case .none: return ""
         }
     }
@@ -347,6 +361,8 @@ enum Item: String, EnumCollection {
         case .warTreads: return "War Treads".localized
         case .weaponBlade: return "Weapon Blade".localized
         case .weaponInfusion: return "Weapon Infusion".localized
+            
+        case .candyVOTaunt, .candyTaunt, .candyKissy: return "Candy - VO Taunt".localized
         case .none: return "None".localized
         }
     }
@@ -431,6 +447,7 @@ enum Item: String, EnumCollection {
         case .weaponBlade: return .weapon
         case .weaponInfusion: return .consumable
             
+        case .candyVOTaunt, .candyTaunt, .candyKissy: return .utility
         case .none: return .ability
         }
     }
@@ -515,6 +532,7 @@ enum Item: String, EnumCollection {
         case .weaponBlade: return .one
         case .weaponInfusion: return .one
             
+        case .candyVOTaunt, .candyTaunt, .candyKissy: return .one
         case .none: return .one
         }
     }
@@ -599,6 +617,7 @@ enum Item: String, EnumCollection {
         case .weaponBlade: return 300
         case .weaponInfusion: return 300
             
+        case .candyVOTaunt, .candyTaunt, .candyKissy: return 0
         case .none: return 0
         }
     }

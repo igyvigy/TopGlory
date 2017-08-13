@@ -64,6 +64,7 @@ enum Skin: String {
     Glaive_Skin_Prehistoric_T1 = "Glaive_Skin_Prehistoric_T1",
     Glaive_Skin_Prehistoric_T2 = "Glaive_Skin_Prehistoric_T2",
     Glaive_Skin_Prehistoric_T3 = "Glaive_Skin_Prehistoric_T3",
+    Glaive_Skin_Sorrowblade = "Glaive_Skin_Sorrowblade",
     Grace_DefaultSkin = "Grace_DefaultSkin",
     Grumpjaw_DefaultSkin = "Grumpjaw_DefaultSkin",
     Grumpjaw_Skin_Bulldog = "Grumpjaw_Skin_Bulldog",

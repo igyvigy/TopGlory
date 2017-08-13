@@ -90,7 +90,7 @@ extension Match {
     class func findWhere(withOwner owner: TGOwner? = nil,
                          userName: String? = nil,
                          stardDate: Date? = TGDates.last24Hours.now,
-                         endDate: Date? = Date(),
+                         endDate: Date? = Calendar.current.date(byAdding: DateComponents(second: -1), to: Date())!,
                          loaderMessage: String? = nil,
                          control: Control? = nil,
                          onSuccess: @escaping ([Match]) -> Void,

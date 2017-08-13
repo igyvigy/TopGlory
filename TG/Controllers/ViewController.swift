@@ -45,20 +45,18 @@ extension ViewController {
             let matchesVC = MatchesViewController.deploy(with: matches)
             self?.navigationController?.pushViewController(matchesVC, animated: true)
         })
-        
-        
-        
 //        Match.findWhere(
 //            withOwner: self,
 //            userName: name,
-//            stardDate: Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!,
+//            stardDate: Calendar.current.date(byAdding: DateComponents(day: -35), to: Date())!,
+//            endDate: Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!,
 //            loaderMessage: "getting matches from start of the year",
 //            control: sender,
 //            onSuccess: { matches in
 //                matches.forEach { match in
 //                    match.assets.forEach { asset in
 //                        asset.loadTelemetry(onSuccess: { actionModels in
-//                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "HeroSkinSelect" })
+//                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "UseAbility" })
 //                        })
 //                    }
 //                }

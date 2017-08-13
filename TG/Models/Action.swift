@@ -47,6 +47,7 @@ enum Action: EnumCollection {
         case .GoldFromTowerKill: return "GoldFromTowerKill"
         case .GoldFromKrakenKill: return "GoldFromKrakenKill"
         case .NPCkillNPC: return "NPCkillNPC"
+        case .HeroSwap: return "HeroSwap"
         case .Unknown: return "Unknown"
         }
     }
@@ -69,6 +70,7 @@ enum Action: EnumCollection {
     case GoldFromTowerKill(time: Date, side: Side, actor: Actor, amount: Int)
     case GoldFromKrakenKill(time: Date, side: Side, actor: Actor, amount: Int)
     case NPCkillNPC(time: Date, side: Side, actor: Actor, killed: Actor, killedTeam: String, gold: Int, isHero: Bool, targetIsHero: Bool, position: Position)
+    case HeroSwap(time: Date, swaps: [Swap])
     case Unknown
 }
 
@@ -77,7 +79,10 @@ extension Action {
         guard let id = json["type"].string else { return nil }
         let time = json["time"].stringValue.dateFromISO8601 ?? .now
         switch id {
-            
+        case "HeroSwap":
+            let jsonArray = json["payload"].arrayValue
+            let swaps = jsonArray.map { Swap(json: $0) }
+            return Action.HeroSwap(time: time, swaps: swaps)
         case "GoldFromGoldMine":
             let actor = Actor(string: json["payload"]["Actor"].stringValue)
             let side = Side(string: json["payload"]["Team"].string)

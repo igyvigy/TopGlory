@@ -40,7 +40,7 @@
 		B555F7A51F385C840091838A /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7A31F385C840091838A /* HeaderTableViewCell.swift */; };
 		B555F7A61F385C840091838A /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B555F7A41F385C840091838A /* HeaderTableViewCell.xib */; };
 		B555F7A81F3871DD0091838A /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7A71F3871DD0091838A /* Action.swift */; };
-		B555F7AA1F3872130091838A /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7A91F3872130091838A /* Hero.swift */; };
+		B555F7AA1F3872130091838A /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7A91F3872130091838A /* Actor.swift */; };
 		B555F7AC1F3872C20091838A /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7AB1F3872C20091838A /* Skin.swift */; };
 		B555F7B01F389AA40091838A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7AF1F389AA40091838A /* Position.swift */; };
 		B555F7B21F38A0530091838A /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7B11F38A0530091838A /* Ability.swift */; };
@@ -88,6 +88,7 @@
 		B5F8411D1F3F571600212E8A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F8411C1F3F571600212E8A /* GraphViewController.swift */; };
 		B5F8411F1F3F68BB00212E8A /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F8411E1F3F68BB00212E8A /* Charts.framework */; };
 		B5F841211F3F93B100212E8A /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841201F3F93B100212E8A /* Side.swift */; };
+		B5F841231F40799E00212E8A /* HeroSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841221F40799E00212E8A /* HeroSwap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,7 +127,7 @@
 		B555F7A31F385C840091838A /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B555F7A41F385C840091838A /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		B555F7A71F3871DD0091838A /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		B555F7A91F3872130091838A /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		B555F7A91F3872130091838A /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		B555F7AB1F3872C20091838A /* Skin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		B555F7AF1F389AA40091838A /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		B555F7B11F38A0530091838A /* Ability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 		B5F8411C1F3F571600212E8A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		B5F8411E1F3F68BB00212E8A /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
 		B5F841201F3F93B100212E8A /* Side.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
+		B5F841221F40799E00212E8A /* HeroSwap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroSwap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,10 +331,11 @@
 				B5CBCB791F1741460060E2C1 /* PrimaryData.swift */,
 				B555F78F1F3749520091838A /* Item.swift */,
 				B555F7A71F3871DD0091838A /* Action.swift */,
-				B555F7A91F3872130091838A /* Hero.swift */,
+				B555F7A91F3872130091838A /* Actor.swift */,
 				B555F7AB1F3872C20091838A /* Skin.swift */,
 				B555F7B11F38A0530091838A /* Ability.swift */,
 				B5F841201F3F93B100212E8A /* Side.swift */,
+				B5F841221F40799E00212E8A /* HeroSwap.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */,
 				B5F841211F3F93B100212E8A /* Side.swift in Sources */,
 				B5890A601F3679DE0046C18B /* Router.swift in Sources */,
+				B5F841231F40799E00212E8A /* HeroSwap.swift in Sources */,
 				B555F7901F3749520091838A /* Item.swift in Sources */,
 				B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */,
 				B545C99C1F13F0A0008F191F /* UINavigationControllerExtension.swift in Sources */,
@@ -508,7 +512,7 @@
 				B555F7921F3760390091838A /* EnumExtension.swift in Sources */,
 				B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */,
 				B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */,
-				B555F7AA1F3872130091838A /* Hero.swift in Sources */,
+				B555F7AA1F3872130091838A /* Actor.swift in Sources */,
 				B545C9981F13F0A0008F191F /* UIBarBUttonItemExtension.swift in Sources */,
 				B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */,
 				B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */,
