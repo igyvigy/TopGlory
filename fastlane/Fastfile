@@ -1,0 +1,62 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.53.1"
+
+generated_fastfile_id "d65d037f-db1f-4e09-ad2a-fb5ef44764cd"
+
+default_platform :ios
+
+
+ENV["APP_IDENTIFIER"] = "io.rolique.TG"
+ENV["FABRIC_API_TOKEN"] = "22909fdaa0f026e5f352d0365e3c845a7437eca8"
+ENV["FABRIC_API_SECRET"] = "2592b7472b5a416d03d6b9edc4235212cb75de70cb19ad1f71dd6e3b373684e0"
+ENV["SLACK_URL"] = "https://hooks.slack.com/services/IDS"
+
+desc "Register new device"
+
+lane :register_new_device do |options|
+  device_name = prompt(text: "Enter the device name: ")
+  device_udid = prompt(text: "Enter the device UDID: ")
+  userAppleId = prompt(text: "Enter the user apple id: ")
+  ENV["USERNAME"] = userAppleId
+  device_hash = {}
+  device_hash[device_name] = device_udid
+  register_devices(username: userAppleId, devices: device_hash)
+  refresh_profiles username: options[:userAppleId]
+end
+
+lane :refresh_profiles do |options|
+  match(type: "adhoc", username: options[:userAppleId], force_for_new_devices: true, app_identifier: ENV["APP_IDENTIFIER"])
+end
+
+lane :beta do |options|
+  userAppleId = prompt(text: "Enter the user apple id: ")
+  ENV["USERNAME"] = userAppleId
+  
+
+  gym(
+    scheme: "TG",
+    export_method: "ad-hoc"
+  )
+
+  increment_build_number
+
+  crashlytics(
+    groups: "TGUsers",
+    api_token: ENV["FABRIC_API_TOKEN"],
+    build_secret: ENV["FABRIC_API_SECRET"]
+  )
+
+  #slack(slack_url: ENV["SLACK_URL"])
+end
