@@ -39,6 +39,18 @@ class FirebaseHelper {
         }
     }
     
+    static func store(skin: Skin) {
+        let encoded = skin.encoded
+        updateValues(on: skinsReference, values: encoded)
+    }
+    
+    static func store(skins: [Skin], completion: @escaping () -> Void) {
+        skins.forEach { skin in
+            updateValues(on: skinsReference.child(skin.id ?? ""), values: skin.encoded)
+        }
+        completion()
+    }
+    
     static func storeUnknownSkinIdentifier(skinIdentifier: String) {
         updateValues(on: unknownSkinsReference, values: [skinIdentifier: skinIdentifier])
     }
@@ -83,6 +95,18 @@ class FirebaseHelper {
         )
     }
     
+    static func getAllUnknownActors(completion: @escaping ([String]) -> Void) {
+        unknownActorsReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        (child as? DataSnapshot)?.key ?? ""
+                    })
+                }
+            }
+        )
+    }
+    
     static func getAllItems(completion: @escaping ([Item]) -> Void) {
         itemsReference
             .observeSingleEvent(of: .value, with: { snap in
@@ -107,6 +131,54 @@ class FirebaseHelper {
         )
     }
     
+    static func getAllUnknownGameModes(completion: @escaping ([String]) -> Void) {
+        unknownGameModesReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        (child as? DataSnapshot)?.key ?? ""
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllUnknownSkins(completion: @escaping ([String]) -> Void) {
+        unknownSkinsReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        (child as? DataSnapshot)?.key ?? ""
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllUnknownItemImages(completion: @escaping ([String]) -> Void) {
+        unknownItemsReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        (child as? DataSnapshot)?.key ?? ""
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllUnknownItemIdentifiers(completion: @escaping ([String]) -> Void) {
+        unknownItemStatsIdReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        (child as? DataSnapshot)?.key ?? ""
+                    })
+                }
+            }
+        )
+    }
+    
     static func getSkin(with id: String, completion: @escaping (Skin) -> Void) {
         skinsReference
             .child(id)
@@ -116,6 +188,10 @@ class FirebaseHelper {
                 }
             }
         )
+    }
+    
+    static func update(image: UIImage, for skin: Skin, completion: @escaping () -> Void) {
+        processSkins([(skin, image)], completion: completion)
     }
     
 }
@@ -165,7 +241,7 @@ fileprivate extension FirebaseHelper {
         completion()
     }
     
-    static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any]) {
+    static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any?]) {
         ref.updateChildValues(values)
     }
     

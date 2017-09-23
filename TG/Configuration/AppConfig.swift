@@ -19,33 +19,68 @@ struct AppConfig {
     
     private init(){}
     
-    var skinCatche: [AnyHashable: Skin] = [:] {
-        didSet {
-            print("skinCatche: \(skinCatche)")
-        }
+    var skinCatche: [AnyHashable: Skin] = [:]
+    var actorCatche: [AnyHashable: Actor] = [:]
+    var itemCatche: [AnyHashable: Item] = [:]
+    var gameModeCatche: [AnyHashable: GameMode] = [:]
+    var skinUnknownCatche: [AnyHashable: String] = [:]
+    var actorUnknownCatche: [AnyHashable: String] = [:]
+    var itemUnknownImageCatche: [AnyHashable: String] = [:]
+    var itemUnknownIdentifierCatche: [AnyHashable: String] = [:]
+    var gameModeUnknownCatche: [AnyHashable: String] = [:]
+    
+    var skins: [Skin] {
+        return Array(skinCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
     }
-    var actorCatche: [AnyHashable: Actor] = [:] {
-        didSet {
-            print("actorCatche: \(actorCatche)")
-        }
+    var actors: [Actor] {
+        return Array(actorCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
     }
-    var itemCatche: [AnyHashable: Item] = [:] {
-        didSet {
-            print("itemCatche: \(itemCatche)")
-        }
+    var items: [Item] {
+        return Array(itemCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
     }
-    var gameModeCatche: [AnyHashable: GameMode] = [:] {
-        didSet {
-            print("gameModeCatche: \(gameModeCatche)")
-        }
+    var gameModes: [GameMode] {
+        return Array(gameModeCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
     }
+    var newSkins: [String] {
+        return Array(skinUnknownCatche.values).sorted(by: { $0 < $1 })
+    }
+    var newActors: [String] {
+        return Array(actorUnknownCatche.values).sorted(by: { $0 < $1 })
+    }
+    var newItemImages: [String] {
+        return Array(itemUnknownImageCatche.values).sorted(by: { $0 < $1 })
+    }
+    var newItemIds: [String] {
+        return Array(itemUnknownIdentifierCatche.values).sorted(by: { $0 < $1 })
+    }
+    var newGameModes: [String] {
+        return Array(gameModeUnknownCatche.values).sorted(by: { $0 < $1 })
+    }
+    
+    
     var finishedToFetchData = false {
         didSet {
             print("finishedToFetchData: \(finishedToFetchData)")
         }
     }
     
-    func fetchData(completion: @escaping () -> Void) {
+    func fetchAll(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        fetchData(isFinal: false) {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchUnknownData(isFinal: false) {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            AppConfig.current.finishedToFetchData = true
+            completion()
+        }
+    }
+    
+    func fetchData(isFinal: Bool = true, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         fetchActors {
@@ -64,35 +99,96 @@ struct AppConfig {
             dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            AppConfig.current.finishedToFetchData = true
+            if isFinal {
+                AppConfig.current.finishedToFetchData = true
+            }
             completion()
         }
     }
     
-    fileprivate func fetchSkins(completion: @escaping () -> Void) {
+    func fetchUnknownData(isFinal: Bool = true, completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        fetchUnknownActors {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchUnknownItemImages {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchUnknownItemIdentifiers {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchUnknownGameModes {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchUnknownSkins {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            if isFinal {
+                AppConfig.current.finishedToFetchData = true
+            }
+            completion()
+        }
+    }
+}
+
+fileprivate extension AppConfig {
+    func fetchSkins(completion: @escaping () -> Void) {
         FirebaseHelper.getAllSkins { skins in
             skins.forEach { AppConfig.current.skinCatche[$0.id ?? ""] = $0 }
             completion()
         }
     }
-    
-    fileprivate func fetchActors(completion: @escaping () -> Void) {
+    func fetchActors(completion: @escaping () -> Void) {
         FirebaseHelper.getAllActors { actors in
             actors.forEach { AppConfig.current.actorCatche[$0.id ?? ""] = $0 }
             completion()
         }
     }
-    
-    fileprivate func fetchGameModes(completion: @escaping () -> Void) {
+    func fetchGameModes(completion: @escaping () -> Void) {
         FirebaseHelper.getAllGameModes { gameModes in
             gameModes.forEach { AppConfig.current.gameModeCatche[$0.id ?? ""] = $0 }
             completion()
         }
     }
-    
-    fileprivate func fetchItems(completion: @escaping () -> Void) {
+    func fetchItems(completion: @escaping () -> Void) {
         FirebaseHelper.getAllItems { items in
             items.forEach { AppConfig.current.itemCatche[$0.id ?? ""] = $0 }
+            completion()
+        }
+    }
+    func fetchUnknownActors(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllUnknownActors { actorIds in
+            actorIds.forEach { AppConfig.current.actorUnknownCatche[$0] = $0 }
+            completion()
+        }
+    }
+    func fetchUnknownItemImages(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllUnknownItemImages { itemIds in
+            itemIds.forEach { AppConfig.current.itemUnknownImageCatche[$0] = $0 }
+            completion()
+        }
+    }
+    func fetchUnknownItemIdentifiers(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllUnknownItemIdentifiers { itemIds in
+            itemIds.forEach { AppConfig.current.itemUnknownIdentifierCatche[$0] = $0 }
+            completion()
+        }
+    }
+    func fetchUnknownGameModes(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllUnknownGameModes { gameModIds in
+            gameModIds.forEach { AppConfig.current.gameModeUnknownCatche[$0] = $0 }
+            completion()
+        }
+    }
+    func fetchUnknownSkins(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllUnknownSkins { actorIds in
+            actorIds.forEach { AppConfig.current.skinUnknownCatche[$0] = $0 }
             completion()
         }
     }

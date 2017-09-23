@@ -168,6 +168,11 @@
 		B5E6094D1F1957FF001D4D58 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094C1F1957FF001D4D58 /* TableViewController.swift */; };
 		B5E6094F1F196085001D4D58 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094E1F196085001D4D58 /* NibLoadingView.swift */; };
 		B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E609501F1960EA001D4D58 /* RosterView.swift */; };
+		B5F6387F1F7668CC00E80DEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5F6387E1F7668CC00E80DEC /* GoogleService-Info.plist */; };
+		B5F638811F7672B600E80DEC /* EditSkinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F638801F7672B600E80DEC /* EditSkinViewController.swift */; };
+		B5F638831F7678C400E80DEC /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B555F79D1F3767050091838A /* AlamofireImage.framework */; };
+		B5F638841F76790000E80DEC /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54901D51F760A1B00542AD4 /* UIImageViewExtension.swift */; };
+		B5F638851F76814700E80DEC /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9A71F13F706008F191F /* Alamofire.framework */; };
 		B5F841181F3F0F3A00212E8A /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */; };
 		B5F841191F3F0F3A00212E8A /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */; };
 		B5F8411B1F3F56D600212E8A /* ScrollableGraphView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */; };
@@ -305,6 +310,8 @@
 		B5E6094C1F1957FF001D4D58 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B5E6094E1F196085001D4D58 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
 		B5E609501F1960EA001D4D58 /* RosterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
+		B5F6387E1F7668CC00E80DEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5F638801F7672B600E80DEC /* EditSkinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSkinViewController.swift; sourceTree = "<group>"; };
 		B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
 		B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScrollableGraphView.framework; path = Carthage/Build/iOS/ScrollableGraphView.framework; sourceTree = "<group>"; };
@@ -349,6 +356,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F638851F76814700E80DEC /* Alamofire.framework in Frameworks */,
+				B5F638831F7678C400E80DEC /* AlamofireImage.framework in Frameworks */,
 				B5775C711F7649D5005EC458 /* FirebaseAuth.framework in Frameworks */,
 				B5775C721F7649D5005EC458 /* FirebaseCore.framework in Frameworks */,
 				B5775C731F7649D5005EC458 /* FirebaseCoreDiagnostics.framework in Frameworks */,
@@ -522,9 +531,11 @@
 				B54901961F75560B00542AD4 /* AppDelegate.swift */,
 				B5775CC91F765553005EC458 /* ContentManagerListCell.swift */,
 				B54901981F75560B00542AD4 /* TableViewController.swift */,
+				B5F638801F7672B600E80DEC /* EditSkinViewController.swift */,
 				B549019A1F75560B00542AD4 /* Main.storyboard */,
 				B549019D1F75560B00542AD4 /* Assets.xcassets */,
 				B549019F1F75560B00542AD4 /* LaunchScreen.storyboard */,
+				B5F6387E1F7668CC00E80DEC /* GoogleService-Info.plist */,
 				B54901A21F75560B00542AD4 /* Info.plist */,
 			);
 			path = TGContentManager;
@@ -649,6 +660,7 @@
 				B54901901F75560B00542AD4 /* Sources */,
 				B54901911F75560B00542AD4 /* Frameworks */,
 				B54901921F75560B00542AD4 /* Resources */,
+				B5F638821F76787400E80DEC /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -731,6 +743,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F6387F1F7668CC00E80DEC /* GoogleService-Info.plist in Resources */,
 				B54901A11F75560B00542AD4 /* LaunchScreen.storyboard in Resources */,
 				B549019E1F75560B00542AD4 /* Assets.xcassets in Resources */,
 				B54901A61F75561900542AD4 /* Assets.xcassets in Resources */,
@@ -776,6 +789,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 22909fdaa0f026e5f352d0365e3c845a7437eca8 2592b7472b5a416d03d6b9edc4235212cb75de70cb19ad1f71dd6e3b373684e0";
+		};
+		B5F638821F76787400E80DEC /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -866,6 +895,7 @@
 			files = (
 				B5775CA21F764E92005EC458 /* Player.swift in Sources */,
 				B5775CC41F7650DE005EC458 /* Action.swift in Sources */,
+				B5F638841F76790000E80DEC /* UIImageViewExtension.swift in Sources */,
 				B5775CA01F764E92005EC458 /* Model.swift in Sources */,
 				B5775CA41F764E92005EC458 /* Roster.swift in Sources */,
 				B54901D21F7561E000542AD4 /* DocumentsHelper.swift in Sources */,
@@ -875,6 +905,7 @@
 				B5775CC11F764FD1005EC458 /* Catche.swift in Sources */,
 				B54901991F75560B00542AD4 /* TableViewController.swift in Sources */,
 				B5775CB11F764EFC005EC458 /* UIBarBUttonItemExtension.swift in Sources */,
+				B5F638811F7672B600E80DEC /* EditSkinViewController.swift in Sources */,
 				B5775CAD1F764EFC005EC458 /* DateExtensions.swift in Sources */,
 				B54901CF1F7561D900542AD4 /* FirebaseHelper.swift in Sources */,
 				B5775CA81F764E92005EC458 /* Skin.swift in Sources */,
@@ -1101,6 +1132,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Firebase",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = TGContentManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1118,6 +1150,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Firebase",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = TGContentManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

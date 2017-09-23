@@ -16,8 +16,10 @@ var skinList = Set<String>() {
 
 class Skin: Model {
     var url: String?
+    var name: String?
     required init(dict: [String: Any?]) {
         self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
         super.init(dict: dict)
         self.type = "Skin"
         self.id = dict["id"] as? String
@@ -31,6 +33,15 @@ class Skin: Model {
         super.init(dict: [:])
         self.id = id
         self.type = "Skin"
+    }
+    
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "name": name,
+            "url": url
+        ]
+        return dict
     }
 }
 

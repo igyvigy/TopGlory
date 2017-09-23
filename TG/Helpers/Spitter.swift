@@ -77,8 +77,8 @@ class Spitter {
     static func showConfirmation(_ title: String = "Are you sure?", message: String? = nil, owner: UIViewController? = nil, confirmCompletion: @escaping () -> Void) {
         MultiActionAlert(style: .alert, title: title, message: message, buttonTitles: ["Ok", "Cancel"], actionStyles: [.destructive, .cancel], actions: [ {confirmCompletion()}, {} ], owner: owner ?? pvc()).showAlert()
     }
-    static func showAlert(_ title: String? = nil, message: String?, buttonTitles: [String], actions: [(() -> Void)?], owner: UIViewController) {
-        MultiActionAlert(style: UIAlertControllerStyle.alert, title: title, message: message, buttonTitles: buttonTitles, actions: actions, owner: owner).showAlert()
+    static func showAlert(_ title: String? = nil, message: String?, buttonTitles: [String], actions: [(() -> Void)?], styles: [UIAlertActionStyle]? = nil, owner: UIViewController) {
+        MultiActionAlert(style: UIAlertControllerStyle.alert, title: title, message: message, buttonTitles: buttonTitles, actionStyles: styles, actions: actions, owner: owner).showAlert()
     }
     static func showSheet(_ title: String? = nil, message: String?, buttonTitles: [String], actions: [(() -> Void)?], styles: [UIAlertActionStyle]? = nil, owner: UIViewController) {
         MultiActionAlert(style: UIAlertControllerStyle.actionSheet, title: title, message: message, buttonTitles: buttonTitles, actionStyles: styles, actions: actions, owner: owner).showAlert()
@@ -101,7 +101,7 @@ class Spitter {
         }
     }
     private static func displayOk (vc: UIViewController, completion: @escaping () -> Void) {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "ic_ok"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "afk_stamp_empty"))
         imageView.center = vc.view.center
         vc.view.addSubview(imageView)
         vc.view.bringSubview(toFront: imageView)
