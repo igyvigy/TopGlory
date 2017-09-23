@@ -194,6 +194,9 @@ class FirebaseHelper {
         processSkins([(skin, image)], completion: completion)
     }
     
+    static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any?]) {
+        ref.updateChildValues(values)
+    }
 }
 
 fileprivate extension FirebaseHelper {
@@ -240,11 +243,7 @@ fileprivate extension FirebaseHelper {
         }
         completion()
     }
-    
-    static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any?]) {
-        ref.updateChildValues(values)
-    }
-    
+
     static func uploadImage(_ image: UIImage?, completion: @escaping StorageHelper.UploadImageInfoCompletion) {
         guard let image = image else {
             completion(StorageHelper.UploadImageInfo(nil, nil, nil))

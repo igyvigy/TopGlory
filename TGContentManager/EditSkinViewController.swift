@@ -66,7 +66,7 @@ class EditSkinViewController: UIViewController {
     }
     
     var idChanged: Bool {
-        return identifierTextField.text != initialName
+        return initialName != nil ? identifierTextField.text != initialName : false
     }
     
     var imageChanged: Bool {

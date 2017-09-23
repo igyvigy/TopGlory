@@ -16,6 +16,11 @@ class FActionModel: Model {
     required init(dict: [String : Any?]) {
         super.init(dict: dict)
     }
+    
+    init (action: Action?) {
+        self.action = action
+        super.init(dict: [:])
+    }
 }
 
 class Asset: Model {

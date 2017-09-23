@@ -10,12 +10,13 @@ import Foundation
 import SwiftyJSON
 
 extension ItemStats {
-    init(json: JSON) {
+    convenience init(json: JSON) {
         let statsDict = json.dictionaryValue
-        stats = [String: Int]()
+        var stats = [String: Int]()
         for key in statsDict.keys {
             stats[key] = statsDict[key]?.intValue
         }
+        self.init(stats: stats)
     }
 }
 

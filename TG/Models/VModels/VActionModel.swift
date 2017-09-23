@@ -10,9 +10,9 @@ import Foundation
 import SwiftyJSON
 
 extension FActionModel {
-    init(json: JSON) {
-        self.action = Action.create(with: json) ?? .Unknown
-        super.init(dict: [:])
+    convenience init(json: JSON) {
+        let action = Action.create(with: json) ?? .Unknown
+        self.init(action: action)
     }
 }
 

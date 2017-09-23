@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-extension HeroSwap {
+extension Swap {
     init (json: JSON) {
         hero = Actor(string: json["Hero"].stringValue)
         playerId = json["Player"].string
