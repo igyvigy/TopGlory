@@ -10,4 +10,9 @@ import Foundation
 
 struct Constants {
     static let lastUserDefaultsKey = "lastPlayerName"
+    static let kUploadsImagesPath = "uploads/images"
+    static let kUploadsVideosPath = "uploads/videos"
+
 }
+
+let kEmptyStringValue = ""

@@ -23,7 +23,58 @@ enum GameMode: String {
     }
 }
 
-class Match: Model {
+class Match: FModel {
+    var gameMode: GameMode?
+    var titleId: String?
+    var createdAt: Date?
+    var patchVersion: String?
+    var shardId: String?
+    var duration: Int?
+    var endGameReason: String?
+    var queue: String?
+    var rosters = [FRoster]()
+    var assets = [FAsset]()
+    var description: String?
+    var userWon: Bool?
+    
+    required init(dict: [String: Any]) {
+        self.gameMode = GameMode(rawValue: dict["gameMode"] as? String ?? kEmptyStringValue)
+        self.titleId = dict["titleId"] as? String
+        self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
+        self.patchVersion = dict["patchVersion"] as? String
+        self.shardId = dict["shardId"] as? String
+        self.endGameReason = dict["endGameReason"] as? String
+        self.queue = dict["queue"] as? String
+        self.duration = dict["duration"] as? Int
+        self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { FAsset(dict: $0) }
+        self.rosters = (dict["rosters"] as? [[String: Any]] ?? [[String: Any]]()).map { FRoster(dict: $0) }
+        self.description = dict["description"] as? String
+        self.userWon = dict["userWon"] as? Bool
+        super.init(dict: dict)
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "gameMode": gameMode?.description,
+            "titleId": titleId,
+            "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
+            "patchVersion": patchVersion,
+            "shardId": shardId,
+            "endGameReason": endGameReason,
+            "queue": queue,
+            "duration": duration,
+            "assets": assets.map { $0.encoded },
+            "rosters": rosters.map { $0.encoded },
+            "description": description,
+            "userWon": userWon
+        ]
+        return dict
+    }
+}
+
+class VMatch: VModel {
     public var gameMode: GameMode?
     public var titleId: String?
     public var createdAt: Date?
@@ -34,17 +85,17 @@ class Match: Model {
     public var endGameReason: String?
     public var queue: String?
     
-    private var related = [Model]()
+    private var related = [VModel]()
     public var assets: [Asset] {
         return related.filter({ $0.type == "asset" }).map({ Asset(model: $0) })
     }
     public var rosters: [Roster] {
         return related.filter({ $0.type == "roster" }).map({ Roster(model: $0) })
     }
-    public var rounds: [Model] {
+    public var rounds: [VModel] {
         return related.filter({ $0.type == "rounds" })
     }
-    public var spectators: [Model] {
+    public var spectators: [VModel] {
         return related.filter({ $0.type == "spectators" })
     }
     public var description: String {
@@ -57,14 +108,39 @@ class Match: Model {
             return description
         }
     }
-    init(model: Model) {
+    
+    var userWon: Bool {
+        return rosters.filter({ $0.isUserTeam }).first?.won ?? false
+    }
+    
+    init(model: VModel) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
     
-    required init(json: JSON, included: [Model]? = nil) {
+    required init(json: JSON, included: [VModel]? = nil) {
         super.init(json: json, included: included)
         decode()
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "gameMode": gameMode?.description,
+            "titleId": titleId,
+            "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
+            "patchVersion": patchVersion,
+            "shardId": shardId,
+            "endGameReason": endGameReason,
+            "queue": queue,
+            "duration": duration,
+            "assets": assets.map { $0.encoded },
+            "rosters": rosters.map { $0.encoded },
+            "description": description,
+            "userWon": userWon
+        ]
+        return dict
     }
     
     private func decode() {
@@ -80,13 +156,13 @@ class Match: Model {
         guard let rels = self.relationships, rels.categories?.count ?? 0 > 0 else { return }
         related = []
         rels.categories?.forEach({
-            related.append(contentsOf: $0.data ?? [Model]())
+            related.append(contentsOf: $0.data ?? [VModel]())
         })
         let _ = description
     }
 }
 
-extension Match {
+extension VMatch {
     class func findWhere(withOwner owner: TGOwner? = nil,
                          userName: String? = nil,
                          stardDate: Date? = TGDates.last24Hours.now,
@@ -103,13 +179,15 @@ extension Match {
         ]
         print(parameters)
         let router = Router.matches(parameters: parameters)
-        let operation = JSONAPIArrayOperation<Match>(
+        let operation = JSONAPIArrayOperation<VMatch>(
             with: router,
             completion: APIManager.resultHandlerService().completionForArray(
                 withOwner: owner,
                 loaderMessage: loaderMessage,
                 control: control,
-                onSuccess: onSuccess,
+                onSuccess: { matches in
+                    onSuccess( matches.map { match in Match(dict: match.encoded ) } )
+            },
                 onError: onError))
         APIManager.operationQueue().addOperation(operation)
     }
@@ -117,11 +195,11 @@ extension Match {
     func fetch(withOwner owner: TGOwner? = nil,
                loaderMessage: String? = nil,
                control: Control? = nil,
-               onSuccess: @escaping (Match) -> Void,
+               onSuccess: @escaping (VMatch) -> Void,
                onError: Completion? = nil) {
         let parameters: Parameters = [:]
         let router = Router.match(id: id ?? "",parameters: parameters)
-        let operation = JSONAPIObjectOperation<Match>(
+        let operation = JSONAPIObjectOperation<VMatch>(
             with: router,
             completion: APIManager.resultHandlerService().completionForObject(
                 withOwner: owner,

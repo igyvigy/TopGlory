@@ -14,7 +14,24 @@ var skinList = Set<String>() {
     }
 }
 
-enum Skin: String {
+class Skin: FModel {
+    var url: String?
+    required init(dict: [String: Any]) {
+        self.url = dict["url"] as? String
+        super.init(dict: dict)
+        self.type = "Skin"
+        self.id = dict["id"] as? String
+    }
+    
+    init(id: String) {
+        self.url = AppConfig.current.skinCatche[id]?.url
+        super.init(dict: [:])
+        self.id = id
+        self.type = "Skin"
+    }
+}
+
+enum SkinType: String, EnumCollection {
     case
     none = "none",
     Adagio_DefaultSkin = "Adagio_DefaultSkin",
@@ -167,9 +184,10 @@ enum Skin: String {
     
     
     init(string: String) {
-        if let skin = Skin(rawValue: string) {
+        if let skin = SkinType(rawValue: string) {
             self = skin
         } else {
+            FirebaseHelper.storeUnknownSkinIdentifier(skinIdentifier: string)
             print("skin missing: \(string)")
             if !skinList.contains(string) {
                 skinList.insert(string)

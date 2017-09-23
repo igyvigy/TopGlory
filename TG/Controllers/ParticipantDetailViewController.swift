@@ -10,14 +10,14 @@ import UIKit
 import Hero
 
 class ParticipantDetailViewController: TableViewController {
-    class func deploy(with participant: Participant) -> ParticipantDetailViewController {
+    class func deploy(with participant: FParticipant) -> ParticipantDetailViewController {
         let vc = ParticipantDetailViewController.instantiateFromStoryboardId(.main)
         vc.participant = participant
         return vc
     }
     
-    var participant: Participant!
-    var models = [Model]()
+    var participant: FParticipant!
+    var models = [FModel]()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -33,28 +33,28 @@ class ParticipantDetailViewController: TableViewController {
         Hero.shared.setContainerColorForNextTransition(.black)
     }
     
-    private func configureTableData() -> [Model] {
-        var data = [participant.player!, participant] as [Model]
+    private func configureTableData() -> [FModel] {
+        var data = [participant.player!, participant] as [FModel]
         let itemUses = participant.itemUses?.stats
             .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemUses) })
         if let itemUses = itemUses, itemUses.count > 0 {
             let header = ItemStatsModel(name: "Used items".localized, count: itemUses.count, modelType: .header)
             data.append(header)
-            data.append(contentsOf: itemUses as [Model])
+            data.append(contentsOf: itemUses as [FModel])
         }
         let itemGrants = participant.itemGrants?.stats
             .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemGrants) })
         if let itemGrants = itemGrants, itemGrants.count > 0 {
             let header = ItemStatsModel(name: "Purchased items".localized, count: itemGrants.count, modelType: .header)
             data.append(header)
-            data.append(contentsOf: itemGrants as [Model])
+            data.append(contentsOf: itemGrants as [FModel])
         }
         let itemSells = participant.itemSells?.stats
             .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemSells) })
         if let itemSells = itemSells, itemSells.count > 0 {
             let header = ItemStatsModel(name: "Sold items".localized, count: itemSells.count, modelType: .header)
             data.append(header)
-            data.append(contentsOf: itemSells as [Model])
+            data.append(contentsOf: itemSells as [FModel])
         }
         return data
     }
@@ -69,19 +69,19 @@ extension ParticipantDetailViewController: TableViewControllerDataSource {
         return tableView
     }
     
-    var _models: [Model] {
+    var _models: [FModel] {
         return models
     }
 }
 
 extension ParticipantDetailViewController: TableViewControllerDelegate {
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
-        if let player = model as? Player {
+    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell? {
+        if let player = model as? FPlayer {
             let cell = PlayerTableViewCell.dequeued(by: tableView)
             cell.update(with: player)
             return cell
         }
-        if let participant = model as? Participant {
+        if let participant = model as? FParticipant {
             let cell = ParticipantTableViewCell.dequeued(by: tableView)
             cell.update(with: participant)
             return cell
@@ -101,14 +101,14 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
                 .first {
                 cell.update(
                     with: item.name,
-                    imageString: item.imageUrl,
+                    imageString: item.imageUrl ?? kEmptyStringValue,
                     count: itemStatsModel.count,
                     type: itemStatsModel.modelType
                 )
             } else {
                 cell.update(
                     with: itemStatsModel.name,
-                    imageString: Item.oakheart.imageUrl,
+                    imageString: Item.oakheart.imageUrl ?? kEmptyStringValue,
                     count: itemStatsModel.count,
                     type: itemStatsModel.modelType
                 )
@@ -118,7 +118,7 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
         return UITableViewCell()
     }
     
-    func didSelect(_ model: Model, at indexPath: IndexPath) {
+    func didSelect(_ model: FModel, at indexPath: IndexPath) {
         
     }
 }

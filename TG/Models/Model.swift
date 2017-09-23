@@ -13,15 +13,27 @@ enum Link {
     case `selff`(link: String), next(link: String)
 }
 
-class Model {
+class FModel {
+    var id: String?
+    var type: String?
+    required init (dict: [String: Any]) {
+        self.id = dict["id"] as? String
+        self.type = dict["type"] as? String
+    }
+    var encoded: [String : Any] {
+        return ["id": id ?? kEmptyStringValue, "type": type ?? kEmptyStringValue]
+    }
+}
+
+class VModel {
     var id: String?
     var type: String?
     var attributes: Any?
     var relationships: Relationships?
     
-    var rels: [Model] {
-        var rels = [Model]()
-        relationships?.categories?.forEach { rels.append(contentsOf: $0.data ?? [Model]()) }
+    var rels: [VModel] {
+        var rels = [VModel]()
+        relationships?.categories?.forEach { rels.append(contentsOf: $0.data ?? [VModel]()) }
         return rels
     }
     
@@ -35,7 +47,7 @@ class Model {
         self.relationships = relationships
     }
     
-    required init (json: JSON, included: [Model]? = nil) {
+    required init (json: JSON, included: [VModel]? = nil) {
         var jsonModel = [String: JSON]()
         if let data = json["data"].dictionary {
             jsonModel = data
@@ -47,10 +59,15 @@ class Model {
         self.attributes = jsonModel["attributes"]
         self.relationships = Relationships(json: jsonModel["relationships"] ?? JSON.null, included: included)
     }
+    
+    var encoded: [String: Any] {
+        return [:]
+    }
+    
 }
 
-extension Model {
-    func update(with model: Model) {
+extension VModel {
+    func update(with model: VModel) {
         self.id = model.id
         self.type = model.type
         self.attributes = model.attributes
@@ -81,22 +98,32 @@ extension Model {
         }
         return output
     }
+    
+//    static func mapDict(_ dict: [String: Any?], _ sequence: @escaping (String, Any?) -> (String, Any?)) -> [String: Any] {
+//        var newDict = [String: Any]()
+//        dict.keys.forEach { key in
+//            let value: Any? = dict[key] as Any
+//            let map = sequence(key, value)
+//            newDict[map.0] = map.1
+//        }
+//        return newDict
+//    }
 }
 
 class Category {
     var name: String?
-    var data: [Model]?
-    var included: [Model]?
+    var data: [VModel]?
+    var included: [VModel]?
     var links: Links?
     
-    init (name: String? = nil, json: JSON, included: [Model]? = nil) {
+    init (name: String? = nil, json: JSON, included: [VModel]? = nil) {
         
         self.name = name
-        self.included = json["included"].arrayValue.map({ Model(json: $0, included: included) })
+        self.included = json["included"].arrayValue.map({ VModel(json: $0, included: included) })
         if let arrayValue = json["data"].array {
-            self.data = arrayValue.map({ Model(json: $0, included: included) })
+            self.data = arrayValue.map({ VModel(json: $0, included: included) })
         } else {
-            self.data = [Model(json: json["data"], included: included)]
+            self.data = [VModel(json: json["data"], included: included)]
         }
         if let injectedIncluded = included {
             updateData(with: injectedIncluded)
@@ -106,7 +133,7 @@ class Category {
         }
     }
     
-    func updateData(with included: [Model]) {
+    func updateData(with included: [VModel]) {
         data?.forEach { storedModel in
             if let includedModel = included.filter({ ($0.id == storedModel.id) && ($0.type == storedModel.type) }).first {
                 storedModel.update(with: includedModel)
@@ -131,7 +158,7 @@ class Links {
 class Relationships {
     var categories: [Category]?
     
-    init (json: JSON, included: [Model]? = nil) {
+    init (json: JSON, included: [VModel]? = nil) {
         var categories = [Category]()
         for (categoryName, dataJSON) in json.dictionaryValue {
             categories.append(Category(name: categoryName, json: dataJSON, included: included))
@@ -139,7 +166,7 @@ class Relationships {
         self.categories = categories
     }
     
-    func update(with includes: [Model]) {
+    func update(with includes: [VModel]) {
         categories?.forEach({ category in
             category.updateData(with: includes)
         })

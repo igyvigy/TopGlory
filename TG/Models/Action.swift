@@ -9,7 +9,19 @@
 import Foundation
 import SwiftyJSON
 
-class ActionModel: Model {
+class FActionModel: FModel {
+    var action: Action?
+    init(json: JSON) {
+        self.action = Action.create(with: json) ?? .Unknown
+        super.init(dict: [:])
+    }
+    
+    required init(dict: [String : Any]) {
+        super.init(dict: dict)
+    }
+}
+
+class ActionModel: VModel {
     var action: Action?
     
     init(json: JSON) {
@@ -17,7 +29,7 @@ class ActionModel: Model {
         super.init(json: JSON.null)
     }
     
-    required convenience init(json: JSON, included: [Model]?) {
+    required convenience init(json: JSON, included: [VModel]?) {
         self.init(json: JSON.null, included: included)
         action = Action.create(with: json) ?? .Unknown
     }
@@ -54,7 +66,7 @@ enum Action: EnumCollection {
     
     case HeroBan(time: Date, actor: Actor, side: Side)
     case HeroSelect(time: Date, actor: Actor, side: Side, playerId: String, playerName: String)
-    case HeroSkinSelect(time: Date, actor: Actor, skin: Skin)
+    case HeroSkinSelect(time: Date, actor: Actor, skin: SkinType)
     case PlayerFirstSpawn(time: Date, side: Side)
     case LevelUp(time: Date, side: Side, actor: Actor, level: Int, gold: Int)
     case BuyItem(time: Date, side: Side, actor: Actor, item: Item, price: Int, remainingGold: Int, position: Position)
@@ -202,7 +214,7 @@ extension Action {
             return Action.HeroSelect(time: time, actor: actor, side: side, playerId: playerId, playerName: playerName)
         case "HeroSkinSelect":
             let actor = Actor(string: json["payload"]["Hero"].stringValue)
-            let skin = Skin(string: json["payload"]["Skin"].stringValue)
+            let skin = SkinType(string: json["payload"]["Skin"].stringValue)
             return Action.HeroSkinSelect(time: time, actor: actor, skin: skin)
         default:
             print("found unhandled action: \(id)")

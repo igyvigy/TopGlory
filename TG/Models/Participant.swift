@@ -9,11 +9,11 @@
 import Foundation
 import SwiftyJSON
 
-enum ItemStatsModelType {
+enum ItemStatsModelType: String {
     case itemSells, itemGrants, itemUses, header
 }
 
-class ItemStatsModel: Model {
+class ItemStatsModel: FModel {
     var name: String
     var count: Int
     var modelType: ItemStatsModelType
@@ -22,14 +22,16 @@ class ItemStatsModel: Model {
         self.name = name
         self.count = count
         self.modelType = modelType
-        super.init(json: JSON.null)
+        super.init(dict: [:])
     }
     
-    required convenience init(json: JSON, included: [Model]?) {
-        self.init(json: json, included: included)
-        name = ""
-        count = 0
+    required init(dict: [String : Any]) {
+        self.name = dict["name"] as? String ?? ""
+        self.count = dict["count"] as? Int ?? 0
+        self.modelType = ItemStatsModelType(rawValue: dict["modelType"] as? String ?? "") ?? .itemGrants
+        super.init(dict: dict)
     }
+    
 }
 
 class ItemStats {
@@ -41,13 +43,16 @@ class ItemStats {
             stats[key] = statsDict[key]?.intValue
         }
     }
+    init(stats: [String: Int]) {
+        self.stats = stats
+    }
     
 }
 class ItemGrants: ItemStats {}
 class ItemSells: ItemStats {}
 class ItemUses: ItemStats {}
 
-class Participant: Model {
+class FParticipant: FModel {
     var actor: Actor?
     var shardId: String?
     var assists: Int?
@@ -69,12 +74,117 @@ class Participant: Model {
     var minionKills: Int?
     var nonJungleMinionKills: Int?
     var skillTier: Int?
-    var skin: Skin?
+    var skin: SkinType?
+    var turretCaptures: Int?
+    var wentAfk: Bool?
+    var winner: Bool?
+    var player: FPlayer?
+    var playerName: String?
+    var playerWinsString: String?
+    var itemObjects: [Item]?
+    var isUser: Bool?
+    
+    required init(dict: [String: Any]) {
+        self.actor = Actor(string: dict["actor"] as? String ?? "")
+        self.shardId = dict["shardId"] as? String
+        self.assists = dict["assists"] as? Int
+        self.crystalMineCaptures = dict["crystalMineCaptures"] as? Int
+        self.deaths = dict["deaths"] as? Int
+        self.farm = dict["farm"] as? Double
+        self.firstAfkTime = dict["firstAfkTime"] as? Int
+        self.gold = dict["gold"] as? Double
+        self.goldMineCaptures = dict["goldMineCaptures"] as? Int
+        self.itemGrants = ItemGrants(stats: dict["itemGrants"] as? [String: Int] ?? [String: Int]())
+        self.itemSells = ItemSells(stats: dict["itemSells"] as? [String: Int] ?? [String: Int]())
+        self.itemUses = ItemUses(stats: dict["itemUses"] as? [String: Int] ?? [String: Int]())
+        self.items = dict["items"] as? [String]
+        self.jungleKills = dict["jungleKills"] as? Int
+        self.karmaLevel = dict["karmaLevel"] as? Int
+        self.kills = dict["kills"] as? Int
+        self.krakenCaptures = dict["krakenCaptures"] as? Int
+        self.level = dict["level"] as? Int
+        self.minionKills = dict["minionKills"] as? Int
+        self.nonJungleMinionKills = dict["nonJungleMinionKills"] as? Int
+        self.skillTier = dict["skillTier"] as? Int
+        self.skin = SkinType(string: dict["skin"] as? String ?? "")
+        self.turretCaptures = dict["turretCaptures"] as? Int
+        self.wentAfk = dict["wentAfk"] as? Bool
+        self.winner = dict["winner"] as? Bool
+        self.isUser = dict["isUser"] as? Bool
+        self.player = FPlayer(dict: dict["player"] as? [String: Any] ?? [String: Any]())
+        self.playerName = dict["playerName"] as? String
+        self.playerWinsString = dict["playerWinsString"] as? String
+        self.itemObjects = (dict["itemObjects"] as? [String] ?? [""]).map { Item(string: $0) }
+        super.init(dict: dict)
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "actor": actor?.r,
+            "shardId": shardId,
+            "assists": assists,
+            "crystalMineCaptures": crystalMineCaptures,
+            "deaths": deaths,
+            "farm": farm,
+            "firstAfkTime": firstAfkTime,
+            "gold": gold,
+            "goldMineCaptures": goldMineCaptures,
+            "itemGrants": itemGrants?.stats,
+            "itemSells": itemSells?.stats,
+            "itemUses": itemUses?.stats,
+            "items": items,
+            "jungleKills": jungleKills,
+            "karmaLevel": karmaLevel,
+            "kills": kills,
+            "krakenCaptures": krakenCaptures,
+            "level": level,
+            "minionKills": minionKills,
+            "nonJungleMinionKills": nonJungleMinionKills,
+            "skillTier": skillTier,
+            "skin": skin?.r,
+            "turretCaptures": turretCaptures,
+            "wentAfk": wentAfk,
+            "winner": winner,
+            "isUser": isUser,
+            "player": player?.encoded,
+            "playerName": playerName,
+            "playerWinsString": playerWinsString,
+            "itemObjects": itemObjects?.map { $0.r }
+        ]
+        return dict
+    }
+}
+
+class Participant: VModel {
+    var actor: Actor?
+    var shardId: String?
+    var assists: Int?
+    var crystalMineCaptures: Int?
+    var deaths: Int?
+    var farm: Double?
+    var firstAfkTime: Int?
+    var gold: Double?
+    var goldMineCaptures: Int?
+    var itemGrants: ItemGrants?
+    var itemSells: ItemSells?
+    var itemUses: ItemUses?
+    var items: [String]?
+    var jungleKills: Int?
+    var karmaLevel: Int?
+    var kills: Int?
+    var krakenCaptures: Int?
+    var level: Int?
+    var minionKills: Int?
+    var nonJungleMinionKills: Int?
+    var skillTier: Int?
+    var skin: SkinType?
     var turretCaptures: Int?
     var wentAfk: Bool?
     var winner: Bool?
     
-    private var related = [Model]()
+    private var related = [VModel]()
     
     public var player: Player? {
         return related
@@ -124,13 +234,51 @@ class Participant: Model {
     var isUser: Bool {
         return playerName == AppConfig.currentUserName
     }
-    init (model: Model) {
+    init (model: VModel) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
     
-    required init(json: JSON, included: [Model]? = nil) {
+    required init(json: JSON, included: [VModel]? = nil) {
         super.init(json: json, included: included)
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "actor": actor?.r,
+            "shardId": shardId,
+            "assists": assists,
+            "crystalMineCaptures": crystalMineCaptures,
+            "deaths": deaths,
+            "farm": farm,
+            "firstAfkTime": firstAfkTime,
+            "gold": gold,
+            "goldMineCaptures": goldMineCaptures,
+            "itemGrants": itemGrants?.stats,
+            "itemSells": itemSells?.stats,
+            "itemUses": itemUses?.stats,
+            "items": items,
+            "jungleKills": jungleKills,
+            "karmaLevel": karmaLevel,
+            "kills": kills,
+            "krakenCaptures": krakenCaptures,
+            "level": level,
+            "minionKills": minionKills,
+            "nonJungleMinionKills": nonJungleMinionKills,
+            "skillTier": skillTier,
+            "skin": skin?.r,
+            "turretCaptures": turretCaptures,
+            "wentAfk": wentAfk,
+            "winner": winner,
+            "isUser": isUser,
+            "player": player?.encoded,
+            "playerName": playerName,
+            "playerWinsString": playerWinsString,
+            "itemObjects": itemObjects.map { $0.r }
+        ]
+        return dict
     }
     
     private func decode() {
@@ -156,14 +304,14 @@ class Participant: Model {
         self.minionKills = att["stats"]["minionKills"].int
         self.nonJungleMinionKills = att["stats"]["nonJungleMinionKills"].int
         self.skillTier = att["stats"]["skillTier"].int
-        self.skin = Skin(string: att["stats"]["skinKey"].stringValue)
+        self.skin = SkinType(string: att["stats"]["skinKey"].stringValue)
         self.turretCaptures = att["stats"]["turretCaptures"].int
         self.wentAfk = att["stats"]["wentAfk"].bool
         self.winner = att["stats"]["winner"].bool
         guard let rels = self.relationships, rels.categories?.count ?? 0 > 0 else { return }
         related = []
         rels.categories?.forEach({
-            related.append(contentsOf: $0.data ?? [Model]())
+            related.append(contentsOf: $0.data ?? [VModel]())
         })
         let _ = playerName
     }

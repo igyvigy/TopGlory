@@ -24,7 +24,7 @@ class JSONModelTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func update(with model: Model) {
+    func update(with model: VModel) {
         appendField(key: "type", val: model.type ?? "none")
         appendField(key: "id", val: model.id ?? "none")
         guard let attributes = model.parseAttributes() else { return }

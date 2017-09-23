@@ -23,4 +23,16 @@ extension UIColor {
     static var almostBlack: UIColor {
         return UIColor(hexString: "#191919")
     }
+    
+    static var random: UIColor {
+        let red = 0.1 + (Double(arc4random_uniform(74)) / 100)
+        let green = 0.1 + (Double(arc4random_uniform(74)) / 100)
+        let blue = 0.1 + (Double(arc4random_uniform(74)) / 100)
+        
+        return UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: 1)
+    }
+    
+    static var defaultTint: UIColor {
+        return UIColor(hexString: "#007AFF")
+    }
 }

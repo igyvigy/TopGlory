@@ -8,11 +8,11 @@
 
 import UIKit
 
-enum SideDir {
+enum SideDir: String {
     case left, right, none
 }
 
-enum SideColor {
+enum SideColor: String {
     case red, blue, none
     
     var uiColor: UIColor {
@@ -28,6 +28,12 @@ struct Side: Hashable {
     var dir: SideDir = .none
     var color: SideColor = .none
     
+    init (identifier: String) {
+        let components = identifier.components(separatedBy: "-")
+        self.dir = SideDir(rawValue: components[0]) ?? .none
+        self.color = SideColor(rawValue: components[1]) ?? .none
+    }
+    
     init (string: String?) {
         self.dir = string?.range(of: "left") != nil ? .left : .right
         self.color = string?.range(of: "blue") != nil ? .blue : .red
@@ -41,6 +47,10 @@ struct Side: Hashable {
             self.color = .red
         default: break
         }
+    }
+    
+    var identifier: String {
+        return "\(dir.r)-\(color.r)"
     }
     
     var damageColor: UIColor {

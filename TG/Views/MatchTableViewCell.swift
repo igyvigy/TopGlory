@@ -22,6 +22,7 @@ class MatchTableViewCell: TGTableViewCell {
         createdAtLabel.text = match.createdAt?.timeFromNow()
         durationLabel.text = match.duration?.secondsFormatted
         gameModeLabel.text = match.description
+        gameModeLabel.textColor = match.userWon ?? false ? .green : .red
         endGameReasonLabel.text = match.endGameReason
         queueLabel.text = match.queue
         

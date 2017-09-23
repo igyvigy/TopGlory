@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        AppConfig.current.fetchData {}
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,12 +40,19 @@ class ViewController: UIViewController {
 
 extension ViewController {
     @IBAction func didTapGoButton(_ sender: UIButton) {
-        guard let name = playerTextField.text, name != "" else { return }
+        guard let name = playerTextField.text, name != "", AppConfig.current.finishedToFetchData else { return }
         saveLastPlayer(playerName: name)
-        Match.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
+//        FirebaseHelper.createRecordsForKnownSkins()
+//        FirebaseHelper.createRecordsForKnownActors()
+//        FirebaseHelper.createRecordsForKnownItems()
+        FirebaseHelper.getAllSkins { skins in
+            dump(skins)
+        }
+        VMatch.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
             let matchesVC = MatchesViewController.deploy(with: matches)
             self?.navigationController?.pushViewController(matchesVC, animated: true)
         })
+        
 //        Match.findWhere(
 //            withOwner: self,
 //            userName: name,
@@ -54,11 +62,16 @@ extension ViewController {
 //            control: sender,
 //            onSuccess: { matches in
 //                matches.forEach { match in
-//                    match.assets.forEach { asset in
-//                        asset.loadTelemetry(onSuccess: { actionModels in
-//                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "UseAbility" })
-//                        })
+//                    match.rosters.forEach { roster in
+//                        roster.participants.forEach {
+//                            let _ = $0.skin
+//                        }
 //                    }
+////                    match.assets.forEach { asset in
+////                        asset.loadTelemetry(onSuccess: { actionModels in
+////                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "UseAbility" })
+////                        })
+////                    }
 //                }
 //        })
     }

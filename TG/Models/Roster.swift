@@ -9,7 +9,36 @@
 import UIKit
 import SwiftyJSON
 
-class Roster: Model {
+class FRoster: FModel {
+    var won: Bool?
+    var acesEarned: Int?
+    var gold: Int?
+    var heroKills: Int?
+    var krakenCaptures: Int?
+    var side: Side?
+    var turretKills: Int?
+    var turretsRemaining: Int?
+    var participants: [FParticipant]?
+    var isUserTeam: Bool?
+    var partisipantActors: [Actor]?
+    
+    required init(dict: [String: Any]) {
+        self.won = dict["won"] as? Bool
+        self.acesEarned = dict["acesEarned"] as? Int
+        self.gold = dict["gold"] as? Int
+        self.heroKills = dict["heroKills"] as? Int
+        self.krakenCaptures = dict["krakenCaptures"] as? Int
+        self.side =  Side(identifier: dict["side"] as? String ?? "")
+        self.turretKills = dict["turretKills"] as? Int
+        self.turretsRemaining = dict["turretsRemaining"] as? Int
+        self.participants = (dict["participants"] as? [[String: Any]] ?? [[String: Any]]()).map { FParticipant(dict: $0) }
+        self.isUserTeam = dict["isUserTeam"] as? Bool
+        self.partisipantActors = (dict["partisipantActors"] as? [String] ?? [String]()).map { Actor(string: $0) }
+        super.init(dict: dict)
+    }
+}
+
+class Roster: VModel {
     var won: Bool?
     var acesEarned: Int?
     var gold: Int?
@@ -19,12 +48,12 @@ class Roster: Model {
     var turretKills: Int?
     var turretsRemaining: Int?
     
-    private var related = [Model]()
+    private var related = [VModel]()
     
     public var participants: [Participant] {
         return related.filter({ $0.type == "participant" }).map({ Participant(model: $0) })
     }
-    public var team: [Model] {
+    public var team: [VModel] {
         return related.filter({ $0.type == "team" })
     }
     var isUserTeam: Bool {
@@ -39,7 +68,7 @@ class Roster: Model {
             return isUserTeam
         }
     }
-    init (model: Model) {
+    init (model: VModel) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
@@ -55,8 +84,27 @@ class Roster: Model {
         }
     }
     
-    required init(json: JSON, included: [Model]? = nil) {
+    required init(json: JSON, included: [VModel]? = nil) {
         super.init(json: json, included: included)
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "won": won,
+            "acesEarned": acesEarned,
+            "gold": gold,
+            "heroKills": heroKills,
+            "krakenCaptures": krakenCaptures,
+            "side": side?.identifier,
+            "turretKills": turretKills,
+            "turretsRemaining": turretsRemaining,
+            "participants": participants.map { $0.encoded },
+            "isUserTeam": isUserTeam,
+            "partisipantActors": partisipantActors.map { $0.r }
+        ]
+        return dict
     }
     
     private func decode() {
@@ -73,7 +121,7 @@ class Roster: Model {
         related = []
         rels.categories?.forEach({
             if $0.data?.count ?? 0 > 0 {
-                related.append(contentsOf: $0.data ?? [Model]())
+                related.append(contentsOf: $0.data ?? [VModel]())
             }
         })
         let _ = isUserTeam

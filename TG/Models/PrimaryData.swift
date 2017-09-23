@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-typealias PrimaryData = [Model]
+typealias PrimaryData = [VModel]
 
 
 

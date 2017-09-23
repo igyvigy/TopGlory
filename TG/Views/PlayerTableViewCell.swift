@@ -23,7 +23,7 @@ class PlayerTableViewCell: TGTableViewCell {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var player: Player?
+    var player: FPlayer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +34,7 @@ class PlayerTableViewCell: TGTableViewCell {
         tableView.dataSource = self
     }
     
-    func update(with player: Player) {
+    func update(with player: FPlayer) {
         self.player = player
         tableView.reloadData()
         nameLabel.text = player.name

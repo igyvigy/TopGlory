@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Actor: String {
+enum Actor: String, EnumCollection {
     case adagio = "*Adagio*"
     case alpha = "*Alpha*"
     case ardan = "*Ardan*"
@@ -92,7 +92,7 @@ enum Actor: String {
         }
     }
     
-    var imageUrl: String {
+    var imageUrl: String? {
         switch self {
         case .adagio:
             return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/adagio.png"
@@ -134,11 +134,20 @@ enum Actor: String {
             
         case .vox: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/vox.png"
             
-        default: return "https://www.vaingloryfire.com/images/wikibase/icon/heroes/joule.png"
+        default: return nil
         }
     }
     
     var name: String {
         return rawValue.chopPrefix().chopSuffix()
+    }
+    
+    var encoded: [String: Any] {
+        let dict: [String: Any] = [
+            "id": rawValue,
+            "imageUrl": imageUrl ?? kEmptyStringValue,
+            "name": name
+        ]
+        return dict
     }
 }

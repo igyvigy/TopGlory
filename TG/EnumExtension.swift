@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension RawRepresentable {
+    var r: RawValue {
+        return rawValue
+    }
+}
+
 protocol EnumCollection : Hashable {}
 extension EnumCollection {
     static func cases() -> AnySequence<Self> {

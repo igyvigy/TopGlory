@@ -10,14 +10,14 @@ import UIKit
 import Hero
 
 class RostersViewController: TableViewController {
-    class func deploy(with match: Match, actionModels: [ActionModel]? = nil, completion: RosterCompletion? = nil) -> RostersViewController {
+    class func deploy(with match: Match, actionModels: [FActionModel]? = nil, completion: RosterCompletion? = nil) -> RostersViewController {
         let vc = RostersViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
         vc.match = match
-        var models = [Model]()
+        var models = [FModel]()
         match.rosters.forEach({ roster in
             models.append(roster)
-            roster.participants.forEach({ participant in
+            roster.participants?.forEach({ participant in
                 models.append(participant)
             })
         })
@@ -28,8 +28,8 @@ class RostersViewController: TableViewController {
     
     var completionHandler: RosterCompletion?
     var match: Match!
-    var models: [Model]!
-    var actionModels: [ActionModel]?
+    var models: [FModel]!
+    var actionModels: [FActionModel]?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -68,34 +68,34 @@ extension RostersViewController: TableViewControllerDataSource {
         return tableView
     }
     
-    var _models: [Model] {
+    var _models: [FModel] {
         return actionModels ?? models
     }
 }
 
 extension RostersViewController: TableViewControllerDelegate {
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
-        if model is Roster {
+    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell? {
+        if model is FRoster {
             let cell = RosterTableViewCell.dequeued(by: tableView)
-            cell.update(with: model as? Roster)
+            cell.update(with: model as? FRoster)
             return cell
         }
-        if model is Participant {
+        if model is FParticipant {
             let cell = ParticipantCell.dequeued(by: tableView)
-            cell.update(with: model as? Participant)
+            cell.update(with: model as? FParticipant)
             return cell
         }
-        if model is ActionModel {
+        if model is FActionModel {
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
-            cell.textLabel?.text = "\((model as? ActionModel)?.action ?? Action.Unknown)"
+            cell.textLabel?.text = "\((model as? FActionModel)?.action ?? Action.Unknown)"
             cell.textLabel?.numberOfLines = 0
             return cell
         }
         return UITableViewCell()
     }
     
-    func didSelect(_ model: Model, at indexPath: IndexPath) {
-        guard let participant = models[safe: indexPath.row] as? Participant, actionModels == nil else {
+    func didSelect(_ model: FModel, at indexPath: IndexPath) {
+        guard let participant = models[safe: indexPath.row] as? FParticipant, actionModels == nil else {
             return
         }
         navigationController?.pushViewController(ParticipantDetailViewController.deploy(with: participant), animated: true)

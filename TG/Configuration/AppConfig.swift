@@ -14,4 +14,24 @@ struct AppConfig {
     static var currentUserName: String? {
         return UserDefaults.standard.string(forKey: Constants.lastUserDefaultsKey)
     }
+    static var current: AppConfig = { return AppConfig() }()
+    
+    private init(){}
+    
+    var skinCatche: [AnyHashable: Skin] = [:]
+    var finishedToFetchData = false
+    
+    func fetchData(completion: @escaping () -> Void) {
+        fetchSkins {
+            AppConfig.current.finishedToFetchData = true
+            completion()
+        }
+    }
+    
+    fileprivate func fetchSkins(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllSkins { skins in
+            skins.forEach { AppConfig.current.skinCatche[$0.id ?? ""] = $0 }
+            completion()
+        }
+    }
 }

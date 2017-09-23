@@ -14,7 +14,7 @@ var itemList = Set<String>() {
     }
 }
 
-enum ItemCategory {
+enum ItemCategory: String {
     case ability,
     defense,
     weapon,
@@ -22,7 +22,7 @@ enum ItemCategory {
     consumable
 }
 
-enum Tier {
+enum Tier: String {
     case one, two, three
 }
 let allItems = ["Aegis", "Aftershock", "Alternating Current", "Atlas Pauldron", "Barbed Needle", "Blazing Salvo", "Bonesaw", "Book Of Eulogies", "Breaking Point", "Broken Myth", "Candy - Kissy", "Candy - Taunt", "Candy - VO Taunt", "Chronograph", "Clockwork", "Coat Of Plates", "Contraption", "Crucible", "Crystal Bit", "Crystal Infusion", "Dragonblood Contract", "Dragonheart", "Echo", "Eclipse Prism", "Energy Battery", "Eve Of Harvest", "Flare", "Flaregun", "Fountain of Renewal", "Frostburn", "Halcyon Chargers", "Halcyon Potion", "Heavy Prism", "Heavy Steel", "Hourglass", "Ironguard Contract", "Journey Boots", "Kinetic Shield", "Level Juice", "Lifespring", "Light Armor", "Light Shield", "Lucky Strike", "Metal Jacket", "Minion Candy", "Minions Foot", "Nullwave Gauntlet", "Oakheart", "Piercing Shard", "Piercing Spear", "Poisoned Shiv", "Pot Of Gold", "Protector Contract", "Reflex Block", "Scout Trap", "Serpent Mask", "Shatterglass", "Shiversteel", "Six Sins", "Slumbering Husk", "Sorrowblade", "Sprint Boots", "Stormcrown", "Stormguard Banner", "Swift Shooter", "Tension Bow", "Tornado Trigger", "Travel Boots", "Tyrants Monocle", "Void Battery", "War Treads", "Weapon Blade", "Weapon Infusion"]
@@ -124,7 +124,7 @@ enum Item: String, EnumCollection {
         }
     }
     
-    var imageUrl: String {
+    var imageUrl: String? {
         switch self {
         case .alternatingCurrent:
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/alternating-current.png"
@@ -278,7 +278,7 @@ enum Item: String, EnumCollection {
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/weapon-infusion.png"
         case .candyVOTaunt, .candyTaunt, .candyKissy:
             return "https://www.vaingloryfire.com/images/wikibase/icon/items/minion-candy.png"
-        case .none: return ""
+        case .none: return nil
         }
     }
     var name: String {

@@ -31,7 +31,7 @@ class ParticipantTableViewCell: TGTableViewCell {
     @IBOutlet weak var afkStampImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var participant: Participant? {
+    var participant: FParticipant? {
         didSet{
             collectionView.reloadData()
         }
@@ -50,7 +50,7 @@ class ParticipantTableViewCell: TGTableViewCell {
         collectionView.reloadData()
     }
     
-    func update(with participant: Participant?, showPlayer: Bool = false) {
+    func update(with participant: FParticipant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
         if self.participant?.id != participant.id {
             self.participant = participant
@@ -59,8 +59,8 @@ class ParticipantTableViewCell: TGTableViewCell {
             collectionView.reloadData()
         }
         let actor = participant.actor
-        let player = participant.playerName
-        var text = participant.isUser ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
+        let player = participant.playerName ?? ""
+        var text = (participant.isUser ?? false) ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text
         if let image = participant.skin?.image {
@@ -99,7 +99,7 @@ extension ParticipantTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as! ItemCollectionViewCell
-        cell.update(with: participant?.itemObjects[safe: indexPath.row])
+        cell.update(with: participant?.itemObjects?[safe: indexPath.row])
         return cell
     }
 }

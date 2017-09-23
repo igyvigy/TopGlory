@@ -11,7 +11,7 @@ import Hero
 
 class MatchesViewController: TableViewController, Refreshable {
     lazy var refreshControl: UIRefreshControl = { UIRefreshControl() }()
-
+    
     class func deploy(with matches: [Match], completion: MatchCompletion? = nil) -> MatchesViewController {
         let vc = MatchesViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
@@ -37,7 +37,7 @@ class MatchesViewController: TableViewController, Refreshable {
     }
     
     func loadMatches() {
-        Match.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
+        VMatch.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
             self?.stopRefreshing()
             self?.matches = matches
             self?.tableView.reloadData()
@@ -54,19 +54,19 @@ extension MatchesViewController: TableViewControllerDataSource {
         return tableView
     }
     
-    var _models: [Model] {
+    var _models: [FModel] {
         return matches
     }
 }
 
 extension MatchesViewController: TableViewControllerDelegate {
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
+    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell? {
         let cell = MatchTableViewCell.dequeued(by: tableView)
         cell.update(with: matches[indexPath.row])
         return cell
     }
 
-    func didSelect(_ model: Model, at indexPath: IndexPath) {
+    func didSelect(_ model: FModel, at indexPath: IndexPath) {
         navigationController?.pushViewController(RostersViewController.deploy(with: matches[indexPath.row]), animated: true)
     }
 }

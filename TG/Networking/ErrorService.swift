@@ -16,9 +16,9 @@ typealias ErrorCompletion = (TGError) -> Void
 typealias JSONCompletion = (JSON) -> Void
 typealias StringCompletion = (String) -> Void
 typealias DateCompletion = (Date) -> Void
-typealias MatchesCompletion = ([Match]) -> Void
-typealias ModelsCompletion = ([Model]) -> Void
-typealias MatchCompletion = (Match) -> Void
+typealias MatchesCompletion = ([VMatch]) -> Void
+typealias ModelsCompletion = ([VModel]) -> Void
+typealias MatchCompletion = (VMatch) -> Void
 typealias RosterCompletion = (Roster) -> Void
 
 
@@ -73,12 +73,12 @@ enum TGResultType {
     case jsonApiObject, jsonApiArray
 }
 
-struct TGResult<M: Model> {
+struct TGResult<M: VModel> {
     var type: TGResultType = .jsonApiObject
     var value: M?
     var values: [M]?
     var error: TGError?
-
+    
     init (jsonApiArray transferObject: TransferObject) {
         type = .jsonApiArray
         if let error = transferObject.error {
@@ -95,7 +95,7 @@ struct TGResult<M: Model> {
             }
 
             for objectJSON in jsonObjects {
-                let object = M(json: objectJSON, included: json["included"].arrayValue.map({ Model(json: $0) }))
+                let object = M(json: objectJSON, included: json["included"].arrayValue.map({ VModel(json: $0) }))
                 responseObjects.append(object)
             }
             values = responseObjects
@@ -107,7 +107,7 @@ struct TGResult<M: Model> {
         if let error = transferObject.error {
             self.error = error
         } else if let json = transferObject.json {
-            value = M(json: json["data"], included: json["included"].arrayValue.map({ Model(json: $0) }))
+            value = M(json: json["data"], included: json["included"].arrayValue.map({ VModel(json: $0) }))
         }
     }
 }
@@ -118,7 +118,7 @@ class ResultHandlerService {
     
     var loaderQueue = [String?]()
     
-    func completionForObject<M: Model>(withOwner
+    func completionForObject<M: VModel>(withOwner
                                        owner: TGOwner? = nil,
                                        loaderMessage: String? = nil,
                                        control: Control? = nil,
@@ -161,7 +161,7 @@ class ResultHandlerService {
         }
     }
     
-    func completionForArray<M: Model>(withOwner
+    func completionForArray<M: VModel>(withOwner
                                       owner: TGOwner? = nil,
                                       loaderMessage: String? = nil,
                                       control: Control? = nil,
@@ -239,7 +239,7 @@ class ErrorService {
         }
     }
     
-    static func unwrapResult<M: Model>(forObject result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping (M) -> Void, onError: StringCompletion? = nil) {
+    static func unwrapResult<M: VModel>(forObject result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping (M) -> Void, onError: StringCompletion? = nil) {
         switch result.type {
         case .jsonApiObject:
             DispatchQueue.main.async {
@@ -258,7 +258,7 @@ class ErrorService {
         }
     }
     
-    static func unwrapResult<M: Model>(forArray result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping ([M]) -> Void, onError: StringCompletion? = nil) {
+    static func unwrapResult<M: VModel>(forArray result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping ([M]) -> Void, onError: StringCompletion? = nil) {
         switch result.type {
         case .jsonApiArray:
             DispatchQueue.main.async {

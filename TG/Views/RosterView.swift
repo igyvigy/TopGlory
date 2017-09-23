@@ -22,7 +22,7 @@ class RosterView: NibLoadingView {
     @IBOutlet var participantsImageViews: [UIImageView]!
     @IBOutlet var playerNamesLabels: [UILabel]!
     
-    func update(with roster: Roster?) {
+    func update(with roster: FRoster?) {
         guard let roster = roster else { return }
         victoryLabel.text = roster.won ?? false ? "won" : "lost"
         backView.backgroundColor = roster.side?.color.uiColor
@@ -32,10 +32,12 @@ class RosterView: NibLoadingView {
         krakenCapturesLabel.text = "\(roster.krakenCaptures ?? 0)"
         turretsKilledLabel.text = "\(roster.turretKills ?? 0)"
         turretsRemainsLabel.text = "\(roster.turretsRemaining ?? 0)"
-        for (idx, participant) in roster.participants.enumerated() {
+        
+        yourTeamLabel.isHidden = !(roster.isUserTeam ?? false)
+        guard let participants = roster.participants else { return }
+        for (idx, participant) in participants.enumerated() {
             participantsImageViews[safe: idx]?.image = participant.skin?.image
             playerNamesLabels[safe: idx]?.text = participant.playerName
         }
-        yourTeamLabel.isHidden = !roster.isUserTeam
     }
 }

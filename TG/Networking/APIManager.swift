@@ -63,7 +63,7 @@ class BaseRequestOperation: PSOperation {
     }
 }
 
-class JSONAPIObjectOperation<M: Model>: GroupOperation {
+class JSONAPIObjectOperation<M: VModel>: GroupOperation {
     var completion: (TGResult<M>) -> Void
     var transferObject: TransferObject
     init(with router: RouterCompatible, completion: @escaping (TGResult<M>) -> Void) {
@@ -71,12 +71,13 @@ class JSONAPIObjectOperation<M: Model>: GroupOperation {
         self.completion = completion
         let requestOperation = BaseRequestOperation(transferObject: transferObject, path: router)
         let parseOperation = JSONAPIObjectParseOperations<M>(transferObject: transferObject, completion: completion)
-        super.init(operations: requestOperation >>> parseOperation )
+        let firebaseUpdateOperation = FirebaseUpdateOperation<M>(transferObject: transferObject)
+        super.init(operations: requestOperation >>> parseOperation >>> firebaseUpdateOperation )
         addObserver(NetworkObserver())
     }
 }
 
-class JSONAPIArrayOperation<M: Model>: GroupOperation {
+class JSONAPIArrayOperation<M: VModel>: GroupOperation {
     var completion: (TGResult<M>) -> Void
     var transferObject: TransferObject
     init(with router: RouterCompatible, completion: @escaping (TGResult<M>) -> Void) {
@@ -84,12 +85,13 @@ class JSONAPIArrayOperation<M: Model>: GroupOperation {
         self.completion = completion
         let requestOperation = BaseRequestOperation(transferObject: transferObject, path: router)
         let parseOperation = JSONAPIParseResponseArrayOperation<M>(transferObject: transferObject, completion: completion)
-        super.init(operations: requestOperation >>> parseOperation )
+        let firebaseUpdateOperation = FirebaseUpdateOperation<M>(transferObject: transferObject)
+        super.init(operations: requestOperation >>> parseOperation >>> firebaseUpdateOperation )
         addObserver(NetworkObserver())
     }
 }
 
-class JSONAPIObjectParseOperations<M: Model>: PSOperation {
+class JSONAPIObjectParseOperations<M: VModel>: PSOperation {
     var completion: (TGResult<M>) -> Void
     var transferObject: TransferObject
     init(transferObject: TransferObject, completion: @escaping (TGResult<M>) -> Void) {
@@ -100,13 +102,15 @@ class JSONAPIObjectParseOperations<M: Model>: PSOperation {
     }
     override func execute() {
         DispatchQueue.main.async {
-            self.completion(TGResult(jsonApiObject: self.transferObject))
+            let result: TGResult<M> = TGResult(jsonApiObject: self.transferObject)
+            self.transferObject.object = result.value
+            self.completion(result)
         }
         self.finish()
     }
 }
 
-class JSONAPIParseResponseArrayOperation<M: Model>: PSOperation {
+class JSONAPIParseResponseArrayOperation<M: VModel>: PSOperation {
     var completion: ((TGResult<M>) -> Void)
     var transferObject: TransferObject
     init(transferObject: TransferObject, completion: @escaping ((TGResult<M>) -> Void) ) {
@@ -117,7 +121,27 @@ class JSONAPIParseResponseArrayOperation<M: Model>: PSOperation {
     }
     override func execute() {
         DispatchQueue.main.async {
-            self.completion(TGResult(jsonApiArray: self.transferObject))
+            let result: TGResult<M> = TGResult(jsonApiArray: self.transferObject)
+            self.transferObject.object = result.values
+            self.completion(result)
+        }
+        self.finish()
+    }
+}
+
+class FirebaseUpdateOperation<M: VModel>: PSOperation {
+    var transferObject: TransferObject
+
+    init (transferObject: TransferObject) {
+        self.transferObject = transferObject
+        super.init()
+        addObserver(NetworkObserver())
+    }
+    override func execute() {
+        if let model = self.transferObject.object as? M {
+            FirebaseHelper.save(model: model)
+        } else if let models = self.transferObject.object as? [M] {
+            models.forEach { model in FirebaseHelper.save(model: model) }
         }
         self.finish()
     }

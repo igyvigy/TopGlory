@@ -11,7 +11,9 @@ import SwiftyJSON
 import Alamofire
 
 typealias TelemetryCompletion = ([ActionModel]) -> Void
-class Asset: Model {
+typealias TelemetryFCompletion = ([FActionModel]) -> Void
+
+class FAsset: FModel {
     var url: String?
     var contentType: String?
     var createdAt: Date?
@@ -19,13 +21,81 @@ class Asset: Model {
     var filename: String?
     var name: String?
     
-    init (model: Model) {
+    required init(dict: [String: Any]) {
+        self.url = dict["url"] as? String
+        self.contentType = dict["contentType"] as? String
+        self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
+        self.description = dict["description"] as? String
+        self.filename = dict["filename"] as? String
+        self.name = dict["name"] as? String
+        super.init(dict: dict)
+        self.id = dict["id"] as? String
+        self.type = dict["type"] as? String
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "url": url,
+            "contentType": contentType,
+            "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
+            "description": description,
+            "filename": filename,
+            "name": name
+        ]
+        return dict
+    }
+}
+
+extension FAsset {
+    func loadTelemetry(withOwner owner: TGOwner? = nil,
+                       loaderMessage: String? = nil,
+                       control: Control? = nil,
+                       onSuccess: @escaping TelemetryFCompletion,
+                       onError: Completion? = nil) {
+        let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
+        Alamofire.request(try! router.asURLRequest())
+            .responseJSON { response in
+                debugPrint(response)
+                if let object = response.result.value {
+                    let jsonArray = JSON(object).arrayValue
+                    onSuccess(jsonArray.map({ FActionModel(json: $0) }))
+                }
+        }
+    }
+    
+}
+
+class Asset: VModel {
+    var url: String?
+    var contentType: String?
+    var createdAt: Date?
+    var description: String?
+    var filename: String?
+    var name: String?
+    
+    init (model: VModel) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
     
-    required init(json: JSON, included: [Model]? = nil) {
+    required init(json: JSON, included: [VModel]? = nil) {
         super.init(json: json, included: included)
+    }
+    
+    override var encoded: [String : Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "type": type,
+            "url": url,
+            "contentType": contentType,
+            "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
+            "description": description,
+            "filename": filename,
+            "name": name
+        ]
+        return dict
     }
     
     private func decode() {
