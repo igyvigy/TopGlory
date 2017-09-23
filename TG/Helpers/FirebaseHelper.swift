@@ -22,12 +22,6 @@ class FirebaseHelper {
         FirebaseApp.configure()
     }
     
-    static func createRecordsForKnownSkins() {
-        processSkins(Array(SkinType.cases())) {
-            print("skins processing finished")
-        }
-    }
-    
     static func createRecordsForKnownActors() {
         processActors(Array(Actor.cases())) {
             print("actors processing finished")
@@ -112,7 +106,7 @@ fileprivate extension FirebaseHelper {
         completion()
     }
     
-    static func processSkins(_ skins: [SkinType], completion: @escaping () -> Void) {
+    static func processSkins(_ skins: [(Skin, UIImage)], completion: @escaping () -> Void) {
         //        skins.forEach { skin in
         //            updateValues(on: skinsReference.child(skin.r), values: ["id": skin.r])
         //        }
@@ -124,12 +118,12 @@ fileprivate extension FirebaseHelper {
             return
         }
         let skin = skins.removeFirst()
-        uploadImage(skin.image, completion: { (url, image, _) in
+        uploadImage(skin.1, completion: { (url, image, _) in
             guard let url = url, let _ = image else {
                 processSkins(skins, completion: completion)
                 
                 return }
-            updateValues(on: skinsReference.child(skin.r), values: ["url": url.absoluteString])
+            updateValues(on: skinsReference.child(skin.0.id ?? ""), values: ["url": url.absoluteString])
             if skins.isEmpty {
                 completion()
             } else {

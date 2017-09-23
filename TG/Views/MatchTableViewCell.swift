@@ -18,6 +18,14 @@ class MatchTableViewCell: TGTableViewCell {
     
     @IBOutlet var rosterViews: [RosterView]!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        rosterViews.forEach {
+            $0.prepareForReuse()
+        }
+    }
+    
     func update(with match: Match) {
         createdAtLabel.text = match.createdAt?.timeFromNow()
         durationLabel.text = match.duration?.secondsFormatted

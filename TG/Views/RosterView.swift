@@ -22,6 +22,14 @@ class RosterView: NibLoadingView {
     @IBOutlet var participantsImageViews: [UIImageView]!
     @IBOutlet var playerNamesLabels: [UILabel]!
     
+    func prepareForReuse() {
+//        participantsImageViews.forEach { imageView in
+//            imageView.layer.removeAllAnimations()
+//            imageView.image = nil
+//            imageView.af_cancelImageRequest()
+//        }
+    }
+    
     func update(with roster: FRoster?) {
         guard let roster = roster else { return }
         victoryLabel.text = roster.won ?? false ? "won" : "lost"
@@ -36,7 +44,9 @@ class RosterView: NibLoadingView {
         yourTeamLabel.isHidden = !(roster.isUserTeam ?? false)
         guard let participants = roster.participants else { return }
         for (idx, participant) in participants.enumerated() {
-            participantsImageViews[safe: idx]?.image = participant.skin?.image
+            if let skinUrl = URL(string: participant.skin?.url ?? "") {
+                participantsImageViews[safe: idx]?.af_setImage(withURL: skinUrl)
+            }
             playerNamesLabels[safe: idx]?.text = participant.playerName
         }
     }

@@ -63,8 +63,8 @@ class ParticipantTableViewCell: TGTableViewCell {
         var text = (participant.isUser ?? false) ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text
-        if let image = participant.skin?.image {
-            actorImageView.image = image
+        if let skinUrl = URL(string: participant.skin?.url ?? "") {
+            actorImageView.af_setImage(withURL: skinUrl)
         } else if let url = URL(string: participant.actor?.imageUrl ?? "") {
             actorImageView.af_setImage(withURL: url)
         }

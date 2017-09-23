@@ -74,7 +74,7 @@ class FParticipant: FModel {
     var minionKills: Int?
     var nonJungleMinionKills: Int?
     var skillTier: Int?
-    var skin: SkinType?
+    var skin: Skin?
     var turretCaptures: Int?
     var wentAfk: Bool?
     var winner: Bool?
@@ -106,7 +106,7 @@ class FParticipant: FModel {
         self.minionKills = dict["minionKills"] as? Int
         self.nonJungleMinionKills = dict["nonJungleMinionKills"] as? Int
         self.skillTier = dict["skillTier"] as? Int
-        self.skin = SkinType(string: dict["skin"] as? String ?? "")
+        self.skin = Skin(id: dict["skin"] as? String ?? "")
         self.turretCaptures = dict["turretCaptures"] as? Int
         self.wentAfk = dict["wentAfk"] as? Bool
         self.winner = dict["winner"] as? Bool
@@ -143,7 +143,7 @@ class FParticipant: FModel {
             "minionKills": minionKills,
             "nonJungleMinionKills": nonJungleMinionKills,
             "skillTier": skillTier,
-            "skin": skin?.r,
+            "skin": skin?.id,
             "turretCaptures": turretCaptures,
             "wentAfk": wentAfk,
             "winner": winner,
@@ -179,7 +179,7 @@ class Participant: VModel {
     var minionKills: Int?
     var nonJungleMinionKills: Int?
     var skillTier: Int?
-    var skin: SkinType?
+    var skin: Skin?
     var turretCaptures: Int?
     var wentAfk: Bool?
     var winner: Bool?
@@ -268,7 +268,7 @@ class Participant: VModel {
             "minionKills": minionKills,
             "nonJungleMinionKills": nonJungleMinionKills,
             "skillTier": skillTier,
-            "skin": skin?.r,
+            "skin": skin?.id,
             "turretCaptures": turretCaptures,
             "wentAfk": wentAfk,
             "winner": winner,
@@ -304,7 +304,7 @@ class Participant: VModel {
         self.minionKills = att["stats"]["minionKills"].int
         self.nonJungleMinionKills = att["stats"]["nonJungleMinionKills"].int
         self.skillTier = att["stats"]["skillTier"].int
-        self.skin = SkinType(string: att["stats"]["skinKey"].stringValue)
+        self.skin = Skin(id: att["stats"]["skinKey"].stringValue)
         self.turretCaptures = att["stats"]["turretCaptures"].int
         self.wentAfk = att["stats"]["wentAfk"].bool
         self.winner = att["stats"]["winner"].bool
