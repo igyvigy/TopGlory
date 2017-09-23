@@ -18,12 +18,11 @@ enum GameMode: String {
         case .casual_aral: return "royal battle"
         case .ranked: return "ranked match"
         case .blitz_pvp_ranked: return "blitz pvp"
-        default: return self.rawValue
         }
     }
 }
 
-class Match: FModel {
+class Match: Model {
     var gameMode: GameMode?
     var titleId: String?
     var createdAt: Date?
@@ -32,12 +31,12 @@ class Match: FModel {
     var duration: Int?
     var endGameReason: String?
     var queue: String?
-    var rosters = [FRoster]()
-    var assets = [FAsset]()
+    var rosters = [Roster]()
+    var assets = [Asset]()
     var description: String?
     var userWon: Bool?
     
-    required init(dict: [String: Any]) {
+    required init(dict: [String: Any?]) {
         self.gameMode = GameMode(rawValue: dict["gameMode"] as? String ?? kEmptyStringValue)
         self.titleId = dict["titleId"] as? String
         self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
@@ -46,15 +45,15 @@ class Match: FModel {
         self.endGameReason = dict["endGameReason"] as? String
         self.queue = dict["queue"] as? String
         self.duration = dict["duration"] as? Int
-        self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { FAsset(dict: $0) }
-        self.rosters = (dict["rosters"] as? [[String: Any]] ?? [[String: Any]]()).map { FRoster(dict: $0) }
+        self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { Asset(dict: $0) }
+        self.rosters = (dict["rosters"] as? [[String: Any]] ?? [[String: Any]]()).map { Roster(dict: $0) }
         self.description = dict["description"] as? String
         self.userWon = dict["userWon"] as? Bool
         super.init(dict: dict)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "gameMode": gameMode?.description,
@@ -86,11 +85,11 @@ class VMatch: VModel {
     public var queue: String?
     
     private var related = [VModel]()
-    public var assets: [Asset] {
-        return related.filter({ $0.type == "asset" }).map({ Asset(model: $0) })
+    public var assets: [VAsset] {
+        return related.filter({ $0.type == "asset" }).map({ VAsset(model: $0) })
     }
-    public var rosters: [Roster] {
-        return related.filter({ $0.type == "roster" }).map({ Roster(model: $0) })
+    public var rosters: [VRoster] {
+        return related.filter({ $0.type == "roster" }).map({ VRoster(model: $0) })
     }
     public var rounds: [VModel] {
         return related.filter({ $0.type == "rounds" })
@@ -123,8 +122,8 @@ class VMatch: VModel {
         decode()
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "gameMode": gameMode?.description,
@@ -186,7 +185,7 @@ extension VMatch {
                 loaderMessage: loaderMessage,
                 control: control,
                 onSuccess: { matches in
-                    onSuccess( matches.map { match in Match(dict: match.encoded ) } )
+                    onSuccess( matches.map { match in Match(dict: match.encoded) } )
             },
                 onError: onError))
         APIManager.operationQueue().addOperation(operation)

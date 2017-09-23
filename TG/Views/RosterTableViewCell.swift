@@ -18,7 +18,7 @@ class RosterTableViewCell: TGTableViewCell {
     @IBOutlet weak var turretsRemainsLabel: UILabel!
     @IBOutlet weak var backView: UIView!
     
-    func update(with roster: FRoster?) {
+    func update(with roster: Roster?) {
         guard let roster = roster else { return }
         let text = roster.won ?? false ? "winner" : "looser"
         victoryLabel.text = (roster.isUserTeam ?? false) ? text + " (your team)" : text

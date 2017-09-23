@@ -31,7 +31,7 @@ class ParticipantTableViewCell: TGTableViewCell {
     @IBOutlet weak var afkStampImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var participant: FParticipant? {
+    var participant: Participant? {
         didSet{
             collectionView.reloadData()
         }
@@ -50,7 +50,7 @@ class ParticipantTableViewCell: TGTableViewCell {
         collectionView.reloadData()
     }
     
-    func update(with participant: FParticipant?, showPlayer: Bool = false) {
+    func update(with participant: Participant?, showPlayer: Bool = false) {
         guard let participant = participant else { return }
         if self.participant?.id != participant.id {
             self.participant = participant

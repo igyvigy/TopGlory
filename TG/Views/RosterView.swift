@@ -29,7 +29,7 @@ class RosterView: NibLoadingView {
 //        }
     }
     
-    func update(with roster: FRoster?) {
+    func update(with roster: Roster?) {
         guard let roster = roster else { return }
         victoryLabel.text = roster.won ?? false ? "won" : "lost"
         backView.backgroundColor = roster.side?.color.uiColor

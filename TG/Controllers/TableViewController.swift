@@ -10,13 +10,13 @@ import UIKit
 
 protocol TableViewControllerDataSource: class {
     var _tableView: UITableView { get }
-    var _models: [FModel] { get }
+    var _models: [Model] { get }
     var _cellIdentifiers: [UITableViewCell.Type] { get }
 }
 
 protocol TableViewControllerDelegate: class {
-    func didSelect(_ model: FModel, at indexPath: IndexPath)
-    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell?
+    func didSelect(_ model: Model, at indexPath: IndexPath)
+    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell?
 }
 
 class TableViewController: UIViewController {

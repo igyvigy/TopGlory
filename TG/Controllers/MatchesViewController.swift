@@ -54,19 +54,19 @@ extension MatchesViewController: TableViewControllerDataSource {
         return tableView
     }
     
-    var _models: [FModel] {
+    var _models: [Model] {
         return matches
     }
 }
 
 extension MatchesViewController: TableViewControllerDelegate {
-    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell? {
+    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
         let cell = MatchTableViewCell.dequeued(by: tableView)
         cell.update(with: matches[indexPath.row])
         return cell
     }
 
-    func didSelect(_ model: FModel, at indexPath: IndexPath) {
+    func didSelect(_ model: Model, at indexPath: IndexPath) {
         navigationController?.pushViewController(RostersViewController.deploy(with: matches[indexPath.row]), animated: true)
     }
 }

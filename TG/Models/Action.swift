@@ -9,14 +9,14 @@
 import Foundation
 import SwiftyJSON
 
-class FActionModel: FModel {
+class FActionModel: Model {
     var action: Action?
     init(json: JSON) {
         self.action = Action.create(with: json) ?? .Unknown
         super.init(dict: [:])
     }
     
-    required init(dict: [String : Any]) {
+    required init(dict: [String : Any?]) {
         super.init(dict: dict)
     }
 }

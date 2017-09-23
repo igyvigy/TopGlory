@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class FRoster: FModel {
+class Roster: Model {
     var won: Bool?
     var acesEarned: Int?
     var gold: Int?
@@ -18,11 +18,11 @@ class FRoster: FModel {
     var side: Side?
     var turretKills: Int?
     var turretsRemaining: Int?
-    var participants: [FParticipant]?
+    var participants: [Participant]?
     var isUserTeam: Bool?
     var partisipantActors: [Actor]?
     
-    required init(dict: [String: Any]) {
+    required init(dict: [String: Any?]) {
         self.won = dict["won"] as? Bool
         self.acesEarned = dict["acesEarned"] as? Int
         self.gold = dict["gold"] as? Int
@@ -31,14 +31,33 @@ class FRoster: FModel {
         self.side =  Side(identifier: dict["side"] as? String ?? "")
         self.turretKills = dict["turretKills"] as? Int
         self.turretsRemaining = dict["turretsRemaining"] as? Int
-        self.participants = (dict["participants"] as? [[String: Any]] ?? [[String: Any]]()).map { FParticipant(dict: $0) }
+        self.participants = (dict["participants"] as? [[String: Any]] ?? [[String: Any]]()).map { Participant(dict: $0) }
         self.isUserTeam = dict["isUserTeam"] as? Bool
         self.partisipantActors = (dict["partisipantActors"] as? [String] ?? [String]()).map { Actor(string: $0) }
         super.init(dict: dict)
     }
+    
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "type": type,
+            "won": won,
+            "acesEarned": acesEarned,
+            "gold": gold,
+            "heroKills": heroKills,
+            "krakenCaptures": krakenCaptures,
+            "side": side?.identifier,
+            "turretKills": turretKills,
+            "turretsRemaining": turretsRemaining,
+            "participants": participants?.map { $0.encoded },
+            "isUserTeam": isUserTeam,
+            "partisipantActors": partisipantActors?.map { $0.r }
+        ]
+        return dict
+    }
 }
 
-class Roster: VModel {
+class VRoster: VModel {
     var won: Bool?
     var acesEarned: Int?
     var gold: Int?
@@ -50,8 +69,8 @@ class Roster: VModel {
     
     private var related = [VModel]()
     
-    public var participants: [Participant] {
-        return related.filter({ $0.type == "participant" }).map({ Participant(model: $0) })
+    public var participants: [VParticipant] {
+        return related.filter({ $0.type == "participant" }).map({ VParticipant(model: $0) })
     }
     public var team: [VModel] {
         return related.filter({ $0.type == "team" })
@@ -88,8 +107,8 @@ class Roster: VModel {
         super.init(json: json, included: included)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "won": won,

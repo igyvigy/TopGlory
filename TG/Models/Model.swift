@@ -13,14 +13,14 @@ enum Link {
     case `selff`(link: String), next(link: String)
 }
 
-class FModel {
+class Model {
     var id: String?
     var type: String?
-    required init (dict: [String: Any]) {
+    required init (dict: [String: Any?]) {
         self.id = dict["id"] as? String
         self.type = dict["type"] as? String
     }
-    var encoded: [String : Any] {
+    var encoded: [String : Any?] {
         return ["id": id ?? kEmptyStringValue, "type": type ?? kEmptyStringValue]
     }
 }
@@ -60,7 +60,7 @@ class VModel {
         self.relationships = Relationships(json: jsonModel["relationships"] ?? JSON.null, included: included)
     }
     
-    var encoded: [String: Any] {
+    var encoded: [String: Any?] {
         return [:]
     }
     

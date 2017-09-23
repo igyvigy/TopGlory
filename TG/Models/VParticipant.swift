@@ -13,7 +13,7 @@ enum ItemStatsModelType: String {
     case itemSells, itemGrants, itemUses, header
 }
 
-class ItemStatsModel: FModel {
+class ItemStatsModel: Model {
     var name: String
     var count: Int
     var modelType: ItemStatsModelType
@@ -25,7 +25,7 @@ class ItemStatsModel: FModel {
         super.init(dict: [:])
     }
     
-    required init(dict: [String : Any]) {
+    required init(dict: [String : Any?]) {
         self.name = dict["name"] as? String ?? ""
         self.count = dict["count"] as? Int ?? 0
         self.modelType = ItemStatsModelType(rawValue: dict["modelType"] as? String ?? "") ?? .itemGrants
@@ -52,7 +52,7 @@ class ItemGrants: ItemStats {}
 class ItemSells: ItemStats {}
 class ItemUses: ItemStats {}
 
-class FParticipant: FModel {
+class Participant: Model {
     var actor: Actor?
     var shardId: String?
     var assists: Int?
@@ -78,13 +78,13 @@ class FParticipant: FModel {
     var turretCaptures: Int?
     var wentAfk: Bool?
     var winner: Bool?
-    var player: FPlayer?
+    var player: Player?
     var playerName: String?
     var playerWinsString: String?
     var itemObjects: [Item]?
     var isUser: Bool?
     
-    required init(dict: [String: Any]) {
+    required init(dict: [String: Any?]) {
         self.actor = Actor(string: dict["actor"] as? String ?? "")
         self.shardId = dict["shardId"] as? String
         self.assists = dict["assists"] as? Int
@@ -111,15 +111,15 @@ class FParticipant: FModel {
         self.wentAfk = dict["wentAfk"] as? Bool
         self.winner = dict["winner"] as? Bool
         self.isUser = dict["isUser"] as? Bool
-        self.player = FPlayer(dict: dict["player"] as? [String: Any] ?? [String: Any]())
+        self.player = Player(dict: dict["player"] as? [String: Any] ?? [String: Any]())
         self.playerName = dict["playerName"] as? String
         self.playerWinsString = dict["playerWinsString"] as? String
         self.itemObjects = (dict["itemObjects"] as? [String] ?? [""]).map { Item(string: $0) }
         super.init(dict: dict)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "actor": actor?.r,
@@ -157,7 +157,7 @@ class FParticipant: FModel {
     }
 }
 
-class Participant: VModel {
+class VParticipant: VModel {
     var actor: Actor?
     var shardId: String?
     var assists: Int?
@@ -186,10 +186,10 @@ class Participant: VModel {
     
     private var related = [VModel]()
     
-    public var player: Player? {
+    public var player: VPlayer? {
         return related
             .filter({ $0.type == "player" })
-            .map({ Player(model: $0) })
+            .map({ VPlayer(model: $0) })
             .first
     }
     
@@ -243,8 +243,8 @@ class Participant: VModel {
         super.init(json: json, included: included)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "actor": actor?.r,

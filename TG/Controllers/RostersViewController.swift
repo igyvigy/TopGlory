@@ -14,7 +14,7 @@ class RostersViewController: TableViewController {
         let vc = RostersViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
         vc.match = match
-        var models = [FModel]()
+        var models = [Model]()
         match.rosters.forEach({ roster in
             models.append(roster)
             roster.participants?.forEach({ participant in
@@ -28,7 +28,7 @@ class RostersViewController: TableViewController {
     
     var completionHandler: RosterCompletion?
     var match: Match!
-    var models: [FModel]!
+    var models: [Model]!
     var actionModels: [FActionModel]?
     
     @IBOutlet weak var tableView: UITableView!
@@ -68,21 +68,21 @@ extension RostersViewController: TableViewControllerDataSource {
         return tableView
     }
     
-    var _models: [FModel] {
+    var _models: [Model] {
         return actionModels ?? models
     }
 }
 
 extension RostersViewController: TableViewControllerDelegate {
-    func cell(for model: FModel, at indexPath: IndexPath) -> UITableViewCell? {
-        if model is FRoster {
+    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
+        if model is Roster {
             let cell = RosterTableViewCell.dequeued(by: tableView)
-            cell.update(with: model as? FRoster)
+            cell.update(with: model as? Roster)
             return cell
         }
-        if model is FParticipant {
+        if model is Participant {
             let cell = ParticipantCell.dequeued(by: tableView)
-            cell.update(with: model as? FParticipant)
+            cell.update(with: model as? Participant)
             return cell
         }
         if model is FActionModel {
@@ -94,8 +94,8 @@ extension RostersViewController: TableViewControllerDelegate {
         return UITableViewCell()
     }
     
-    func didSelect(_ model: FModel, at indexPath: IndexPath) {
-        guard let participant = models[safe: indexPath.row] as? FParticipant, actionModels == nil else {
+    func didSelect(_ model: Model, at indexPath: IndexPath) {
+        guard let participant = models[safe: indexPath.row] as? Participant, actionModels == nil else {
             return
         }
         navigationController?.pushViewController(ParticipantDetailViewController.deploy(with: participant), animated: true)

@@ -14,9 +14,9 @@ var skinList = Set<String>() {
     }
 }
 
-class Skin: FModel {
+class Skin: Model {
     var url: String?
-    required init(dict: [String: Any]) {
+    required init(dict: [String: Any?]) {
         self.url = dict["url"] as? String
         super.init(dict: dict)
         self.type = "Skin"

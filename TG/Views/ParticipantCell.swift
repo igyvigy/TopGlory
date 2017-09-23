@@ -23,7 +23,7 @@ class ParticipantCell: TGTableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var participant: FParticipant? {
+    var participant: Participant? {
         didSet{
             collectionView.reloadData()
         }
@@ -42,7 +42,7 @@ class ParticipantCell: TGTableViewCell {
         collectionView.reloadData()
     }
     
-    func update(with participant: FParticipant?) {
+    func update(with participant: Participant?) {
         guard let participant = participant else { return }
         if self.participant?.id != participant.id {
             self.participant = participant

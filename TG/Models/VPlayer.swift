@@ -48,7 +48,7 @@ struct SeasonStats {
     }
 }
 
-class FPlayer: FModel {
+class Player: Model {
     var name: String?
     var shardId: String?
     var seasonStats: SeasonStats?
@@ -62,9 +62,9 @@ class FPlayer: FModel {
     var winStreak: Int?
     var wins: Int?
     var xp: Int?
-    var assets: [FModel]?
+    var assets: [Model]?
     
-    required init(dict: [String : Any]) {
+    required init(dict: [String : Any?]) {
         self.name = dict["name"] as? String
         self.shardId = dict["shardId"] as? String
         self.seasonStats = SeasonStats(dictArray: dict["seasonStats"] as? [[String : Any]] ?? [[String : Any]]())
@@ -78,12 +78,12 @@ class FPlayer: FModel {
         self.winStreak = dict["winStreak"] as? Int
         self.wins = dict["wins"] as? Int
         self.xp = dict["xp"] as? Int
-        self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { FModel(dict: $0) }
+        self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { Model(dict: $0) }
         super.init(dict: dict)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "name": name,
@@ -105,7 +105,7 @@ class FPlayer: FModel {
     }
 }
 
-class Player: VModel {
+class VPlayer: VModel {
     var name: String?
     var shardId: String?
     var seasonStats: SeasonStats?
@@ -135,8 +135,8 @@ class Player: VModel {
         super.init(json: json, included: included)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "name": name,

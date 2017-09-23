@@ -13,7 +13,7 @@ import Alamofire
 typealias TelemetryCompletion = ([ActionModel]) -> Void
 typealias TelemetryFCompletion = ([FActionModel]) -> Void
 
-class FAsset: FModel {
+class Asset: Model {
     var url: String?
     var contentType: String?
     var createdAt: Date?
@@ -21,7 +21,7 @@ class FAsset: FModel {
     var filename: String?
     var name: String?
     
-    required init(dict: [String: Any]) {
+    required init(dict: [String: Any?]) {
         self.url = dict["url"] as? String
         self.contentType = dict["contentType"] as? String
         self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
@@ -33,8 +33,8 @@ class FAsset: FModel {
         self.type = dict["type"] as? String
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "url": url,
@@ -48,7 +48,7 @@ class FAsset: FModel {
     }
 }
 
-extension FAsset {
+extension Asset {
     func loadTelemetry(withOwner owner: TGOwner? = nil,
                        loaderMessage: String? = nil,
                        control: Control? = nil,
@@ -67,7 +67,7 @@ extension FAsset {
     
 }
 
-class Asset: VModel {
+class VAsset: VModel {
     var url: String?
     var contentType: String?
     var createdAt: Date?
@@ -84,8 +84,8 @@ class Asset: VModel {
         super.init(json: json, included: included)
     }
     
-    override var encoded: [String : Any] {
-        let dict: [String: Any] = [
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
             "id": id,
             "type": type,
             "url": url,
@@ -109,7 +109,7 @@ class Asset: VModel {
     }
 }
 
-extension Asset {
+extension VAsset {
     func loadTelemetry(withOwner owner: TGOwner? = nil,
                        loaderMessage: String? = nil,
                        control: Control? = nil,

@@ -19,7 +19,7 @@ typealias DateCompletion = (Date) -> Void
 typealias MatchesCompletion = ([VMatch]) -> Void
 typealias ModelsCompletion = ([VModel]) -> Void
 typealias MatchCompletion = (VMatch) -> Void
-typealias RosterCompletion = (Roster) -> Void
+typealias RosterCompletion = (VRoster) -> Void
 
 
 enum TGError: Error {
