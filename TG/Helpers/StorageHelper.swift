@@ -66,20 +66,20 @@ final class StorageHelper {
         }
     }
     
-    static func loadImage(withUrl url: String, completion: @escaping (Image?) -> Void) {
-        let storageRef = Storage.storage().reference()
-        let imagesRef = storageRef.child(url)
-        
-        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-        imagesRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            guard let data = data, let image = UIImage(data: data), error == nil else {
-                completion(nil)
-                
-                return
-            }
-            
-            let im = Image(uiImage: image, urlString: url)
-            completion(im)
-        }
-    }
+//    static func loadImage(withUrl url: String, completion: @escaping (Image?) -> Void) {
+//        let storageRef = Storage.storage().reference()
+//        let imagesRef = storageRef.child(url)
+//        
+//        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+//        imagesRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+//            guard let data = data, let image = UIImage(data: data), error == nil else {
+//                completion(nil)
+//                
+//                return
+//            }
+//            
+//            let im = Image(uiImage: image, url: url)
+//            completion(im)
+//        }
+//    }
 }

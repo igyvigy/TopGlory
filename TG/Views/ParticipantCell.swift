@@ -56,9 +56,9 @@ class ParticipantCell: TGTableViewCell {
         text = player + " " + (text ?? "")
         actorLabel.text = "#\(participant.skillTier ?? 0)  " + (text ?? "")
         if let skinUrl = URL(string: participant.skin?.url ?? "") {
-            actorImageView.af_setImage(withURL: skinUrl)
+            actorImageView.setImage(withURL: skinUrl)
         } else if let url = URL(string: participant.actor?.imageUrl ?? "") {
-            actorImageView.af_setImage(withURL: url)
+            actorImageView.setImage(withURL: url)
         }
         winsLabel.text = participant.playerWinsString
         killsLabel.text = "\(participant.kills ?? 0)"

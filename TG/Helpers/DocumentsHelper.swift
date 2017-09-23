@@ -8,6 +8,36 @@
 
 import UIKit
 
+class ImageViewCatche {
+    static let current = ImageViewCatche()
+    private init() {}
+    private let isUsingPersistence = true
+    private var _runtimeCatche = [URL: Image]()
+    func imageFor(_ url: URL) -> Image? {
+        if let imageFromCatche = _runtimeCatche[url] {
+            return imageFromCatche
+        } else if isUsingPersistence {
+            if let image = DocumentsHelper.getImageFromCatche(withUrl: url) {
+                _runtimeCatche[url] = image
+                return image
+            } else { return nil }
+        } else { return nil }
+    }
+    func save(_ image: Image?) {
+        guard let image = image, let url = image.imageUrl else { return }
+        if _runtimeCatche[url] != nil {
+            return
+        } else {
+            _runtimeCatche[url] = image
+            if isUsingPersistence {
+                DispatchQueue.global(qos: .background).async {
+                    DocumentsHelper.saveToImageCatche(image: image)
+                }
+            }
+        }
+    }
+}
+
 class DocumentsHelper {
     
     private static let accessTokenKey = "Access_Token", refreshTokenKey = "Refresh_Token"
@@ -37,8 +67,8 @@ class DocumentsHelper {
         return result
     }
     
-    @discardableResult static func saveToImageCatche(image: Image, url: URL) -> Bool {
-        guard let img = image.image else { return false }
+    @discardableResult static func saveToImageCatche(image: Image) -> Bool {
+        guard let img = image.image, let url = image.imageUrl else { return false }
         let manager = FileManager()
         if !manager.fileExists(atPath: getDocumentsDirectory() + DBKeys.catchedImages, isDirectory: nil) {
             try! manager.createDirectory(atPath: getDocumentsDirectory() + DBKeys.catchedImages, withIntermediateDirectories: true, attributes: nil)
@@ -48,7 +78,7 @@ class DocumentsHelper {
     
     static func getImageFromCatche(withUrl url: URL) -> Image? {
         if let img = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory() + DBKeys.catchedImages + url.lastPathComponent) as? UIImage {
-            return Image(uiImage: img, urlString: url.absoluteString)
+            return Image(uiImage: img, url: url)
         }
         return nil
     }

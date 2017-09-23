@@ -25,6 +25,9 @@ class Skin: FModel {
     
     init(id: String) {
         self.url = AppConfig.current.skinCatche[id]?.url
+        if url == nil {
+            FirebaseHelper.storeUnknownSkinIdentifier(skinIdentifier: id)
+        }
         super.init(dict: [:])
         self.id = id
         self.type = "Skin"
@@ -187,7 +190,7 @@ enum SkinType: String, EnumCollection {
         if let skin = SkinType(rawValue: string) {
             self = skin
         } else {
-            FirebaseHelper.storeUnknownSkinIdentifier(skinIdentifier: string)
+            
             print("skin missing: \(string)")
             if !skinList.contains(string) {
                 skinList.insert(string)

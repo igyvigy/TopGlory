@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class ItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var reusableImageView: UIImageView!
@@ -19,6 +18,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
 
     func update(with item: Item?) {
         guard let url = URL(string: item?.imageUrl ?? "") else { return }
-        reusableImageView.af_setImage(withURL: url)
+        reusableImageView.setImage(withURL: url)
     }
 }

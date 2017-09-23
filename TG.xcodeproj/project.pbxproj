@@ -59,6 +59,7 @@
 		B54901D11F7561DE00542AD4 /* Spitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54901C51F755C3F00542AD4 /* Spitter.swift */; };
 		B54901D21F7561E000542AD4 /* DocumentsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54901C41F755C3F00542AD4 /* DocumentsHelper.swift */; };
 		B54901D41F75633B00542AD4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B54901D31F75633B00542AD4 /* GoogleService-Info.plist */; };
+		B54901D61F760A1B00542AD4 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54901D51F760A1B00542AD4 /* UIImageViewExtension.swift */; };
 		B555F7901F3749520091838A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F78F1F3749520091838A /* Item.swift */; };
 		B555F7921F3760390091838A /* EnumExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7911F3760390091838A /* EnumExtension.swift */; };
 		B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */; };
@@ -172,6 +173,7 @@
 		B54901CB1F755F8000542AD4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		B54901CD1F75614800542AD4 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		B54901D31F75633B00542AD4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B54901D51F760A1B00542AD4 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		B555F78F1F3749520091838A /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B555F7911F3760390091838A /* EnumExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnumExtension.swift; path = TG/EnumExtension.swift; sourceTree = SOURCE_ROOT; };
 		B555F7931F37613A0091838A /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				B545C98C1F13F0A0008F191F /* UITableViewExtension.swift */,
 				B545C98D1F13F0A0008F191F /* UIViewControllerExtension.swift */,
 				B545C98E1F13F0A0008F191F /* UIViewExtension.swift */,
+				B54901D51F760A1B00542AD4 /* UIImageViewExtension.swift */,
 				B5890A491F3622360046C18B /* OperationsExtension.swift */,
 			);
 			path = Extensions;
@@ -702,6 +705,7 @@
 				B55F20E41F36BC6700770410 /* Catche.swift in Sources */,
 				B54901CE1F75614800542AD4 /* FirebaseHelper.swift in Sources */,
 				B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */,
+				B54901D61F760A1B00542AD4 /* UIImageViewExtension.swift in Sources */,
 				B5890A4E1F3622C40046C18B /* AppConfig.swift in Sources */,
 				B555F7951F37613A0091838A /* ItemCollectionViewCell.swift in Sources */,
 				B555F7A11F376F820091838A /* UsedItemTableViewCell.swift in Sources */,

@@ -97,7 +97,7 @@ fileprivate extension FirebaseHelper {
             updateValues(on: itemsReference.child(item.r), values: [
                 "id": item.r,
                 "name": item.name,
-                "url": item.imageUrl ?? "null",
+                "url": item.imageUrl,
                 "category": item.category.r,
                 "tier": item.tier.r,
                 "price": item.price
@@ -134,11 +134,10 @@ fileprivate extension FirebaseHelper {
     
     static func processActors(_ actors: [Actor], completion: @escaping () -> Void) {
         actors.forEach { actor in
-            guard let imageUrl = actor.imageUrl else { return }
             updateValues(on: actorsReference.child(actor.r), values: [
                 "id": actor.r,
                 "name": actor.name,
-                "url": imageUrl
+                "url": actor.imageUrl
                 ])
         }
         completion()

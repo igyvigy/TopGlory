@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class RosterView: NibLoadingView {
     @IBOutlet weak var victoryLabel: UILabel!
@@ -44,8 +43,9 @@ class RosterView: NibLoadingView {
         yourTeamLabel.isHidden = !(roster.isUserTeam ?? false)
         guard let participants = roster.participants else { return }
         for (idx, participant) in participants.enumerated() {
+            participantsImageViews[safe: idx]?.image = nil
             if let skinUrl = URL(string: participant.skin?.url ?? "") {
-                participantsImageViews[safe: idx]?.af_setImage(withURL: skinUrl)
+                participantsImageViews[safe: idx]?.setImage(withURL: skinUrl)
             }
             playerNamesLabels[safe: idx]?.text = participant.playerName
         }

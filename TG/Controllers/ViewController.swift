@@ -42,37 +42,37 @@ extension ViewController {
     @IBAction func didTapGoButton(_ sender: UIButton) {
         guard let name = playerTextField.text, name != "", AppConfig.current.finishedToFetchData else { return }
         saveLastPlayer(playerName: name)
-//        FirebaseHelper.createRecordsForKnownSkins()
-//        FirebaseHelper.createRecordsForKnownActors()
-//        FirebaseHelper.createRecordsForKnownItems()
-        FirebaseHelper.getAllSkins { skins in
-            dump(skins)
-        }
+
+        FirebaseHelper.createRecordsForKnownActors()
+        FirebaseHelper.createRecordsForKnownItems()
+        
         VMatch.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
             let matchesVC = MatchesViewController.deploy(with: matches)
             self?.navigationController?.pushViewController(matchesVC, animated: true)
         })
         
-//        Match.findWhere(
+//        VMatch.findWhere(
 //            withOwner: self,
 //            userName: name,
 //            stardDate: Calendar.current.date(byAdding: DateComponents(day: -35), to: Date())!,
 //            endDate: Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!,
 //            loaderMessage: "getting matches from start of the year",
 //            control: sender,
-//            onSuccess: { matches in
-//                matches.forEach { match in
-//                    match.rosters.forEach { roster in
-//                        roster.participants.forEach {
-//                            let _ = $0.skin
-//                        }
-//                    }
-////                    match.assets.forEach { asset in
-////                        asset.loadTelemetry(onSuccess: { actionModels in
-////                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "UseAbility" })
-////                        })
+//            onSuccess: { [weak self] matches in
+//                let matchesVC = MatchesViewController.deploy(with: matches)
+//                self?.navigationController?.pushViewController(matchesVC, animated: true)
+////                matches.forEach { match in
+////                    match.rosters.forEach { roster in
+////                        roster.participants.forEach {
+////                            let _ = $0.skin
+////                        }
 ////                    }
-//                }
+//////                    match.assets.forEach { asset in
+//////                        asset.loadTelemetry(onSuccess: { actionModels in
+//////                            let _ = actionModels.map({ $0.action }).filter({ $0?.id == "UseAbility" })
+//////                        })
+//////                    }
+////                }
 //        })
     }
 }

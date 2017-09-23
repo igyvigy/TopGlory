@@ -47,13 +47,13 @@ struct Image {
         imageUrl = URL(string: dict[Image.Fields.imageUrl.r] as? String ?? kEmptyStringValue)
     }
     
-    init(uiImage: UIImage, urlString: String, type: MediaType = .photo) {
+    init(uiImage: UIImage, url: URL, type: MediaType = .photo) {
         self.type = type
         width = uiImage.size.width
         height = uiImage.size.height
         image = uiImage
         videoUrl = nil
-        imageUrl = URL(string: urlString)
+        imageUrl = url
     }
     
     init(media: Media, urlString: String) {

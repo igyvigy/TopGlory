@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class UsedItemTableViewCell: TGTableViewCell {
     @IBOutlet weak var itemImageView: UIImageView!
@@ -16,7 +15,7 @@ class UsedItemTableViewCell: TGTableViewCell {
     
     func update(with name: String, imageString: String, count: Int, type: ItemStatsModelType) {
         if let url = URL(string: imageString) {
-            itemImageView.af_setImage(withURL: url)
+            itemImageView.setImage(withURL: url)
         }
         itemNameLabel.text = name
         var action = ""
