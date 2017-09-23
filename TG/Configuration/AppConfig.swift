@@ -1,3 +1,4 @@
+
 //
 //  AppConfig.swift
 //  TG
@@ -33,6 +34,11 @@ struct AppConfig {
             print("itemCatche: \(itemCatche)")
         }
     }
+    var gameModeCatche: [AnyHashable: GameMode] = [:] {
+        didSet {
+            print("gameModeCatche: \(gameModeCatche)")
+        }
+    }
     var finishedToFetchData = false {
         didSet {
             print("finishedToFetchData: \(finishedToFetchData)")
@@ -47,6 +53,10 @@ struct AppConfig {
         }
         dispatchGroup.enter()
         fetchItems {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchGameModes {
             dispatchGroup.leave()
         }
         dispatchGroup.enter()
@@ -69,6 +79,13 @@ struct AppConfig {
     fileprivate func fetchActors(completion: @escaping () -> Void) {
         FirebaseHelper.getAllActors { actors in
             actors.forEach { AppConfig.current.actorCatche[$0.id ?? ""] = $0 }
+            completion()
+        }
+    }
+    
+    fileprivate func fetchGameModes(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllGameModes { gameModes in
+            gameModes.forEach { AppConfig.current.gameModeCatche[$0.id ?? ""] = $0 }
             completion()
         }
     }

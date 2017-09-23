@@ -10,7 +10,35 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-enum GameMode: String {
+class GameMode: Model {
+    var name: String?
+    
+    required init(dict: [String : Any?]) {
+        name = dict["name"] as? String
+        super.init(dict: dict)
+        type = "GameMode"
+    }
+    
+    init(string: String) {
+        self.name = AppConfig.current.gameModeCatche[string]?.name
+        if name == nil {
+            FirebaseHelper.storeUnknownGameModeIdentifier(gameModeIdentifier: string)
+        }
+        super.init(dict: [:])
+        self.id = string
+        self.type = "GameMode"
+    }
+    
+    override var encoded: [String : Any?] {
+        return [
+            "name": name,
+            "id": id,
+            "type": type
+        ]
+    }
+}
+
+enum GameModeType: String {
     case casual_aral, casual, ranked, blitz_pvp_ranked
     var description: String {
         switch self {
@@ -37,7 +65,7 @@ class Match: Model {
     var userWon: Bool?
     
     required init(dict: [String: Any?]) {
-        self.gameMode = GameMode(rawValue: dict["gameMode"] as? String ?? kEmptyStringValue)
+        self.gameMode = GameMode(string: dict["gameMode"] as? String ?? kEmptyStringValue)
         self.titleId = dict["titleId"] as? String
         self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
         self.patchVersion = dict["patchVersion"] as? String
@@ -56,7 +84,7 @@ class Match: Model {
         let dict: [String: Any?] = [
             "id": id,
             "type": type,
-            "gameMode": gameMode?.description,
+            "gameMode": gameMode?.id,
             "titleId": titleId,
             "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
             "patchVersion": patchVersion,
@@ -102,7 +130,7 @@ class VMatch: VModel {
         if let catched = Catche.runtimeString[key] {
             return catched
         } else {
-            let description = "\(gameMode?.description ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
+            let description = "\(gameMode?.name ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
             Catche.runtimeString[key] = description
             return description
         }
@@ -126,7 +154,7 @@ class VMatch: VModel {
         let dict: [String: Any?] = [
             "id": id,
             "type": type,
-            "gameMode": gameMode?.description,
+            "gameMode": gameMode?.id,
             "titleId": titleId,
             "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
             "patchVersion": patchVersion,
@@ -144,7 +172,7 @@ class VMatch: VModel {
     
     private func decode() {
         guard let att = self.attributes as? JSON else { return }
-        self.gameMode = GameMode(rawValue: att["gameMode"].string ?? "")
+        self.gameMode = GameMode(string: att["gameMode"].string ?? "")
         self.titleId = att["titleId"].string
         self.createdAt = (att["createdAt"].string?.dateFromISO8601WithoutTimeZone ?? Date())
         self.patchVersion = att["patchVersion"].string

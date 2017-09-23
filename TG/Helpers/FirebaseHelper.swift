@@ -16,9 +16,11 @@ class FirebaseHelper {
     static var unknownSkinsReference = ref.child("public/unknown_skins")
     static var unknownActorsReference = ref.child("public/unknown_actors")
     static var unknownItemsReference = ref.child("public/unknown_items")
+    static var unknownGameModesReference = ref.child("public/unknown_game_modes")
     static var unknownItemStatsIdReference = ref.child("public/unknown_item_stats_id")
     static var actorsReference = ref.child("public/actors")
     static var itemsReference = ref.child("public/items")
+    static var gameModesReference = ref.child("public/game_mode")
     static var historyReference = ref.child("history")
     
     static func configure() {
@@ -43,6 +45,10 @@ class FirebaseHelper {
     
     static func storeUnknownActorIdentifier(actorIdentifier: String) {
         updateValues(on: unknownActorsReference, values: [actorIdentifier: actorIdentifier])
+    }
+    
+    static func storeUnknownGameModeIdentifier(gameModeIdentifier: String) {
+        updateValues(on: unknownGameModesReference, values: [gameModeIdentifier: gameModeIdentifier])
     }
     
     static func storeUnknownItemIdentifier(itemIdentifier: String, isItemStatsId: Bool = false) {
@@ -95,6 +101,18 @@ class FirebaseHelper {
                 DispatchQueue.main.async {
                     completion(snap.children.map { child in
                         Item(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllGameModes(completion: @escaping ([GameMode]) -> Void) {
+        gameModesReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        GameMode(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
                     })
                 }
             }
