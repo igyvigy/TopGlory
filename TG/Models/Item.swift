@@ -25,8 +25,59 @@ enum ItemCategory: String {
 enum Tier: String {
     case one, two, three
 }
-let allItems = ["Aegis", "Aftershock", "Alternating Current", "Atlas Pauldron", "Barbed Needle", "Blazing Salvo", "Bonesaw", "Book Of Eulogies", "Breaking Point", "Broken Myth", "Candy - Kissy", "Candy - Taunt", "Candy - VO Taunt", "Chronograph", "Clockwork", "Coat Of Plates", "Contraption", "Crucible", "Crystal Bit", "Crystal Infusion", "Dragonblood Contract", "Dragonheart", "Echo", "Eclipse Prism", "Energy Battery", "Eve Of Harvest", "Flare", "Flaregun", "Fountain of Renewal", "Frostburn", "Halcyon Chargers", "Halcyon Potion", "Heavy Prism", "Heavy Steel", "Hourglass", "Ironguard Contract", "Journey Boots", "Kinetic Shield", "Level Juice", "Lifespring", "Light Armor", "Light Shield", "Lucky Strike", "Metal Jacket", "Minion Candy", "Minions Foot", "Nullwave Gauntlet", "Oakheart", "Piercing Shard", "Piercing Spear", "Poisoned Shiv", "Pot Of Gold", "Protector Contract", "Reflex Block", "Scout Trap", "Serpent Mask", "Shatterglass", "Shiversteel", "Six Sins", "Slumbering Husk", "Sorrowblade", "Sprint Boots", "Stormcrown", "Stormguard Banner", "Swift Shooter", "Tension Bow", "Tornado Trigger", "Travel Boots", "Tyrants Monocle", "Void Battery", "War Treads", "Weapon Blade", "Weapon Infusion"]
-enum Item: String, EnumCollection {
+
+class Item: Model {
+    var url: String?
+    var name: String?
+    var category: ItemCategory?
+    var tier: Tier?
+    var price: Int?
+    var itemStatsId: String?
+    
+    required init(dict: [String: Any?]) {
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
+        self.category = ItemCategory(rawValue: dict["category"] as? String ?? "")
+        self.tier = Tier(rawValue: dict["tier"] as? String ?? "")
+        self.price = dict["price"] as? Int
+        self.itemStatsId = dict["itemStatsId"] as? String
+        super.init(dict: dict)
+        self.type = "Item"
+        self.id = dict["id"] as? String
+    }
+    
+    init(string: String) {
+        let item = AppConfig.current.itemCatche[string]
+        self.url = item?.url
+        self.name = item?.name
+        self.category = item?.category
+        self.tier = item?.tier
+        self.price = item?.price
+        if url == nil {
+            FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: string)
+        }
+        super.init(dict: [:])
+        self.id = string
+        self.type = "Item"
+        
+    }
+    
+    override var encoded: [String: Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "url": url,
+            "name": name,
+            "type": type,
+            "category": category?.r,
+            "tier": tier?.r,
+            "price": price,
+            "itemStatsId": itemStatsId
+        ]
+        return dict
+    }
+}
+
+enum ItemType: String, EnumCollection {
     case
     alternatingCurrent = "Alternating Current",
     aegis = "Aegis",
@@ -113,15 +164,48 @@ enum Item: String, EnumCollection {
     none
     
     init(string: String) {
-        if let item = Item(rawValue: string) {
+        if let item = ItemType(rawValue: string) {
             self = item
-        } else {
+        }
+//        else if let statsItem = itemTypeWithItemStatsId(string) {
+//            
+//        }
+        else {
             print("item missing: \(string)")
             if !itemList.contains(string) {
                 itemList.insert(string)
             }
             self = .none
         }
+    }
+    
+    func itemTypeWithItemStatsId(_ itemStatsId: String) -> ItemType? {
+        let dropppedFirstSeven = itemStatsId.chopPrefix(7).chopSuffix().removingWhitespaces()
+        if let item =  AppConfig.current.itemCatche.values
+            .filter({ $0.name?.contains(dropppedFirstSeven) ?? false })
+            .first {
+            return ItemType(rawValue: item.id ?? "")
+        } else {
+            return nil
+        }
+    }
+    
+    var itemStatsId: String? {
+        return "*Item_" + r.removingWhitespaces() + "*"
+    }
+    
+    var encoded: [String: Any?] {
+        let dict: [String: Any?] = [
+            "id": r,
+            "url": imageUrl,
+            "name": name,
+            "type": "Item",
+            "category": category.r,
+            "tier": tier.r,
+            "price": price,
+            "itemStatsId": itemStatsId
+        ]
+        return dict
     }
     
     var imageUrl: String? {

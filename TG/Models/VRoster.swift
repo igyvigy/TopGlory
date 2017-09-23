@@ -51,7 +51,7 @@ class Roster: Model {
             "turretsRemaining": turretsRemaining,
             "participants": participants?.map { $0.encoded },
             "isUserTeam": isUserTeam,
-            "partisipantActors": partisipantActors?.map { $0.r }
+            "partisipantActors": partisipantActors?.map { $0.id }
         ]
         return dict
     }
@@ -121,7 +121,7 @@ class VRoster: VModel {
             "turretsRemaining": turretsRemaining,
             "participants": participants.map { $0.encoded },
             "isUserTeam": isUserTeam,
-            "partisipantActors": partisipantActors.map { $0.r }
+            "partisipantActors": partisipantActors.map { $0.id }
         ]
         return dict
     }

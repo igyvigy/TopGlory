@@ -8,7 +8,41 @@
 
 import Foundation
 
-enum Actor: String, EnumCollection {
+class Actor: Model {
+    var url: String?
+    var name: String?
+    required init(dict: [String: Any?]) {
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
+        super.init(dict: dict)
+        self.type = "Actor"
+        self.id = dict["id"] as? String
+    }
+    
+    init(string: String) {
+        self.url = AppConfig.current.actorCatche[string]?.url
+        self.name = string.chopPrefix().chopSuffix()
+        if url == nil {
+            FirebaseHelper.storeUnknownActorIdentifier(actorIdentifier: string)
+        }
+        super.init(dict: [:])
+        self.id = string
+        self.type = "Actor"
+        
+    }
+    
+    override var encoded: [String: Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "url": url,
+            "name": name,
+            "type": type
+        ]
+        return dict
+    }
+}
+
+enum ActorType: String, EnumCollection {
     case adagio = "*Adagio*"
     case alpha = "*Alpha*"
     case ardan = "*Ardan*"
@@ -84,7 +118,7 @@ enum Actor: String, EnumCollection {
     case none = "None"
     
     init(string: String) {
-        if let actor = Actor(rawValue: string) {
+        if let actor = ActorType(rawValue: string) {
             self = actor
         } else {
             print("actor missing: \(string)")

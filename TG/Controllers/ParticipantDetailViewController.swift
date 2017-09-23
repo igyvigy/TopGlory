@@ -93,22 +93,21 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
                 cell.update(with: itemStatsModel.name)
                 return cell
             }
-            
             let cell = UsedItemTableViewCell.dequeued(by: tableView)
-            let dropppedFirstSeven = itemStatsModel.name.chopPrefix(7).chopSuffix()
-            if let item = Array(Item.cases())
-                .filter({ $0.rawValue.contains(dropppedFirstSeven) })
+            if let item = AppConfig.current.itemCatche.values
+                .filter({ $0.itemStatsId?.contains(itemStatsModel.name) ?? false })
                 .first {
                 cell.update(
-                    with: item.name,
-                    imageString: item.imageUrl ?? kEmptyStringValue,
+                    with: item.name ?? kEmptyStringValue,
+                    imageString: item.url ?? kEmptyStringValue,
                     count: itemStatsModel.count,
                     type: itemStatsModel.modelType
                 )
             } else {
+                FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: itemStatsModel.name, isItemStatsId: true)
                 cell.update(
                     with: itemStatsModel.name,
-                    imageString: Item.oakheart.imageUrl ?? kEmptyStringValue,
+                    imageString: AppConfig.current.itemCatche.values.first?.url ?? "",
                     count: itemStatsModel.count,
                     type: itemStatsModel.modelType
                 )

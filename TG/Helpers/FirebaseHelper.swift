@@ -14,6 +14,9 @@ class FirebaseHelper {
     static var ref = Database.database().reference()
     static var skinsReference = ref.child("public/skins")
     static var unknownSkinsReference = ref.child("public/unknown_skins")
+    static var unknownActorsReference = ref.child("public/unknown_actors")
+    static var unknownItemsReference = ref.child("public/unknown_items")
+    static var unknownItemStatsIdReference = ref.child("public/unknown_item_stats_id")
     static var actorsReference = ref.child("public/actors")
     static var itemsReference = ref.child("public/items")
     static var historyReference = ref.child("history")
@@ -23,19 +26,31 @@ class FirebaseHelper {
     }
     
     static func createRecordsForKnownActors() {
-        processActors(Array(Actor.cases())) {
+        processActors(Array(ActorType.cases())) {
             print("actors processing finished")
         }
     }
     
     static func createRecordsForKnownItems() {
-        processItems(Array(Item.cases())) {
+        processItems(Array(ItemType.cases())) {
             print("items processing finished")
         }
     }
     
     static func storeUnknownSkinIdentifier(skinIdentifier: String) {
         updateValues(on: unknownSkinsReference, values: [skinIdentifier: skinIdentifier])
+    }
+    
+    static func storeUnknownActorIdentifier(actorIdentifier: String) {
+        updateValues(on: unknownActorsReference, values: [actorIdentifier: actorIdentifier])
+    }
+    
+    static func storeUnknownItemIdentifier(itemIdentifier: String, isItemStatsId: Bool = false) {
+        if isItemStatsId {
+            updateValues(on: unknownItemStatsIdReference, values: [itemIdentifier: itemIdentifier])
+        } else {
+            updateValues(on: unknownItemsReference, values: [itemIdentifier: itemIdentifier])
+        }
     }
     
     static func save(model: VModel) {
@@ -56,6 +71,30 @@ class FirebaseHelper {
                 DispatchQueue.main.async {
                     completion(snap.children.map { child in
                         Skin(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllActors(completion: @escaping ([Actor]) -> Void) {
+        actorsReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        Actor(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
+                    })
+                }
+            }
+        )
+    }
+    
+    static func getAllItems(completion: @escaping ([Item]) -> Void) {
+        itemsReference
+            .observeSingleEvent(of: .value, with: { snap in
+                DispatchQueue.main.async {
+                    completion(snap.children.map { child in
+                        Item(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
                     })
                 }
             }
@@ -92,16 +131,9 @@ class FirebaseHelper {
 }
 
 fileprivate extension FirebaseHelper {
-    static func processItems(_ items: [Item], completion: @escaping () -> Void) {
+    static func processItems(_ items: [ItemType], completion: @escaping () -> Void) {
         items.forEach { item in
-            updateValues(on: itemsReference.child(item.r), values: [
-                "id": item.r,
-                "name": item.name,
-                "url": item.imageUrl,
-                "category": item.category.r,
-                "tier": item.tier.r,
-                "price": item.price
-                ])
+            updateValues(on: itemsReference.child(item.r), values: item.encoded)
         }
         completion()
     }
@@ -132,7 +164,7 @@ fileprivate extension FirebaseHelper {
         })
     }
     
-    static func processActors(_ actors: [Actor], completion: @escaping () -> Void) {
+    static func processActors(_ actors: [ActorType], completion: @escaping () -> Void) {
         actors.forEach { actor in
             updateValues(on: actorsReference.child(actor.r), values: [
                 "id": actor.r,

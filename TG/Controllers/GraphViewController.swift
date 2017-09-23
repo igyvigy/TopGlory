@@ -84,7 +84,7 @@ class GraphViewController: UIViewController {
         actions?.filter({ $0.id == "KillActor" }).forEach { action in
             switch action {
             case .KillActor(let time, let side, let actor, let killed, let killedTeam, let gold, let isHero, let targetIsHero, let position):
-                if killed.rawValue == "*Turret*" || killed.rawValue == "*VainTurret*" {
+                if killed.id == "*Turret*" || killed.id == "*VainTurret*" {
                     if let kills = teamsKillCounter[side] {
                         teamKillsData[side]?.append((time, kills + 1))
                         teamsKillCounter[side] = kills + 1

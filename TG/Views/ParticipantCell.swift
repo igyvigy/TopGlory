@@ -52,12 +52,12 @@ class ParticipantCell: TGTableViewCell {
         }
         let actor = participant.actor
         let player = participant.playerName ?? ""
-        var text = (participant.isUser ?? false) ? " (you) \(actor?.rawValue ?? "")" : actor?.rawValue
+        var text = (participant.isUser ?? false) ? " (you) \(actor?.id ?? "")" : actor?.id
         text = player + " " + (text ?? "")
         actorLabel.text = "#\(participant.skillTier ?? 0)  " + (text ?? "")
         if let skinUrl = URL(string: participant.skin?.url ?? "") {
             actorImageView.setImage(withURL: skinUrl)
-        } else if let url = URL(string: participant.actor?.imageUrl ?? "") {
+        } else if let url = URL(string: participant.actor?.url ?? "") {
             actorImageView.setImage(withURL: url)
         }
         winsLabel.text = participant.playerWinsString

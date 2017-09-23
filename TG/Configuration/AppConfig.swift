@@ -18,11 +18,42 @@ struct AppConfig {
     
     private init(){}
     
-    var skinCatche: [AnyHashable: Skin] = [:]
-    var finishedToFetchData = false
+    var skinCatche: [AnyHashable: Skin] = [:] {
+        didSet {
+            print("skinCatche: \(skinCatche)")
+        }
+    }
+    var actorCatche: [AnyHashable: Actor] = [:] {
+        didSet {
+            print("actorCatche: \(actorCatche)")
+        }
+    }
+    var itemCatche: [AnyHashable: Item] = [:] {
+        didSet {
+            print("itemCatche: \(itemCatche)")
+        }
+    }
+    var finishedToFetchData = false {
+        didSet {
+            print("finishedToFetchData: \(finishedToFetchData)")
+        }
+    }
     
     func fetchData(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        fetchActors {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
+        fetchItems {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.enter()
         fetchSkins {
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) {
             AppConfig.current.finishedToFetchData = true
             completion()
         }
@@ -31,6 +62,20 @@ struct AppConfig {
     fileprivate func fetchSkins(completion: @escaping () -> Void) {
         FirebaseHelper.getAllSkins { skins in
             skins.forEach { AppConfig.current.skinCatche[$0.id ?? ""] = $0 }
+            completion()
+        }
+    }
+    
+    fileprivate func fetchActors(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllActors { actors in
+            actors.forEach { AppConfig.current.actorCatche[$0.id ?? ""] = $0 }
+            completion()
+        }
+    }
+    
+    fileprivate func fetchItems(completion: @escaping () -> Void) {
+        FirebaseHelper.getAllItems { items in
+            items.forEach { AppConfig.current.itemCatche[$0.id ?? ""] = $0 }
             completion()
         }
     }

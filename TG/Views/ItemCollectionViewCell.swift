@@ -17,7 +17,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
     }
 
     func update(with item: Item?) {
-        guard let url = URL(string: item?.imageUrl ?? "") else { return }
+        guard let url = URL(string: item?.url ?? "") else { return }
         reusableImageView.setImage(withURL: url)
     }
 }

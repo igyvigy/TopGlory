@@ -122,7 +122,7 @@ class Participant: Model {
         let dict: [String: Any?] = [
             "id": id,
             "type": type,
-            "actor": actor?.r,
+            "actor": actor?.id,
             "shardId": shardId,
             "assists": assists,
             "crystalMineCaptures": crystalMineCaptures,
@@ -151,7 +151,7 @@ class Participant: Model {
             "player": player?.encoded,
             "playerName": playerName,
             "playerWinsString": playerWinsString,
-            "itemObjects": itemObjects?.map { $0.r }
+            "itemObjects": itemObjects?.map { $0.id }
         ]
         return dict
     }
@@ -225,8 +225,8 @@ class VParticipant: VModel {
         if let catched = Catche.runtimeAny[key] {
             return catched as! [Item]
         } else {
-            let itemz = Array(Item.cases())
-                    .filter({ self.items?.contains($0.name) ?? false })
+            let itemz = Array(AppConfig.current.itemCatche.values)
+                    .filter({ self.items?.contains($0.name ?? "") ?? false })
             Catche.runtimeAny[key] = itemz
             return itemz
         }
@@ -247,7 +247,7 @@ class VParticipant: VModel {
         let dict: [String: Any?] = [
             "id": id,
             "type": type,
-            "actor": actor?.r,
+            "actor": actor?.id,
             "shardId": shardId,
             "assists": assists,
             "crystalMineCaptures": crystalMineCaptures,
@@ -276,7 +276,7 @@ class VParticipant: VModel {
             "player": player?.encoded,
             "playerName": playerName,
             "playerWinsString": playerWinsString,
-            "itemObjects": itemObjects.map { $0.r }
+            "itemObjects": itemObjects.map { $0.id }
         ]
         return dict
     }

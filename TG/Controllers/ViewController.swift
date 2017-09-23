@@ -43,8 +43,7 @@ extension ViewController {
         guard let name = playerTextField.text, name != "", AppConfig.current.finishedToFetchData else { return }
         saveLastPlayer(playerName: name)
 
-        FirebaseHelper.createRecordsForKnownActors()
-        FirebaseHelper.createRecordsForKnownItems()
+//        FirebaseHelper.createRecordsForKnownItems()
         
         VMatch.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
             let matchesVC = MatchesViewController.deploy(with: matches)

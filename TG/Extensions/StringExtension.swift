@@ -34,4 +34,12 @@ extension String {
     func chopSuffix(_ count: Int = 1) -> String {
         return substring(to: index(endIndex, offsetBy: -count))
     }
+    
+    var withoutSpacesAndNewLines: String {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    func removingWhitespaces() -> String {
+        return components(separatedBy: .whitespaces).joined()
+    }
 }
