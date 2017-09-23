@@ -7,16 +7,9 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 struct Swap {
     var hero: Actor?
     var playerId: String?
     var side: Side?
-    
-    init (json: JSON) {
-        hero = Actor(string: json["Hero"].stringValue)
-        playerId = json["Player"].string
-        side = Side(string: json["Team"].string)
-    }
 }

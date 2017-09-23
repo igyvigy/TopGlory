@@ -3,8 +3,6 @@ import Foundation
 import UIKit
 import Whisper
 
-typealias TGOwner = UIViewController
-
 let alertTintColorConstant = UIColor.blue
 
 extension UIViewController {

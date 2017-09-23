@@ -1,8 +1,8 @@
 //
-//  Asset.swift
+//  VAsset.swift
 //  TG
 //
-//  Created by Andrii Narinian on 8/7/17.
+//  Created by Andrii Narinian on 9/23/17.
 //  Copyright © 2017 ROLIQUE. All rights reserved.
 //
 
@@ -11,61 +11,6 @@ import SwiftyJSON
 import Alamofire
 
 typealias TelemetryCompletion = ([ActionModel]) -> Void
-typealias TelemetryFCompletion = ([FActionModel]) -> Void
-
-class Asset: Model {
-    var url: String?
-    var contentType: String?
-    var createdAt: Date?
-    var description: String?
-    var filename: String?
-    var name: String?
-    
-    required init(dict: [String: Any?]) {
-        self.url = dict["url"] as? String
-        self.contentType = dict["contentType"] as? String
-        self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
-        self.description = dict["description"] as? String
-        self.filename = dict["filename"] as? String
-        self.name = dict["name"] as? String
-        super.init(dict: dict)
-        self.id = dict["id"] as? String
-        self.type = dict["type"] as? String
-    }
-    
-    override var encoded: [String : Any?] {
-        let dict: [String: Any?] = [
-            "id": id,
-            "type": type,
-            "url": url,
-            "contentType": contentType,
-            "createdAt": TGDateFormats.iso8601WithoutTimeZone.string(from: createdAt ?? Date()),
-            "description": description,
-            "filename": filename,
-            "name": name
-        ]
-        return dict
-    }
-}
-
-extension Asset {
-    func loadTelemetry(withOwner owner: TGOwner? = nil,
-                       loaderMessage: String? = nil,
-                       control: Control? = nil,
-                       onSuccess: @escaping TelemetryFCompletion,
-                       onError: Completion? = nil) {
-        let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
-        Alamofire.request(try! router.asURLRequest())
-            .responseJSON { response in
-                debugPrint(response)
-                if let object = response.result.value {
-                    let jsonArray = JSON(object).arrayValue
-                    onSuccess(jsonArray.map({ FActionModel(json: $0) }))
-                }
-        }
-    }
-    
-}
 
 class VAsset: VModel {
     var url: String?
@@ -122,6 +67,25 @@ extension VAsset {
                 if let object = response.result.value {
                     let jsonArray = JSON(object).arrayValue
                     onSuccess(jsonArray.map({ ActionModel(json: $0) }))
+                }
+        }
+    }
+    
+}
+
+extension Asset {
+    func loadTelemetry(withOwner owner: TGOwner? = nil,
+                       loaderMessage: String? = nil,
+                       control: Control? = nil,
+                       onSuccess: @escaping TelemetryFCompletion,
+                       onError: Completion? = nil) {
+        let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
+        Alamofire.request(try! router.asURLRequest())
+            .responseJSON { response in
+                debugPrint(response)
+                if let object = response.result.value {
+                    let jsonArray = JSON(object).arrayValue
+                    onSuccess(jsonArray.map({ FActionModel(json: $0) }))
                 }
         }
     }

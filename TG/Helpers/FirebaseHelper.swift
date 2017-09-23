@@ -59,18 +59,6 @@ class FirebaseHelper {
         }
     }
     
-    static func save(model: VModel) {
-        guard let currentUserName = AppConfig.currentUserName else { return }
-        let values = model.encoded
-        updateValues(
-            on: historyReference
-                .child(currentUserName)
-                .child(model.type ?? "no_type")
-                .child(model.id ?? "no_id"),
-            values: values
-        )
-    }
-    
     static func getAllSkins(completion: @escaping ([Skin]) -> Void) {
         skinsReference
             .observeSingleEvent(of: .value, with: { snap in
@@ -128,22 +116,6 @@ class FirebaseHelper {
                 }
             }
         )
-    }
-    
-    static func existsForCurrentUser(model: VModel, completion: @escaping (Bool) -> Void) {
-        guard let currentUserName = AppConfig.currentUserName else {
-            completion(false)
-            
-            return }
-        historyReference
-            .child(currentUserName)
-            .child(model.type ?? "no_type")
-            .child(model.id ?? "no_id")
-            .observeSingleEvent(of: .value, with: { snap in
-            DispatchQueue.main.async {
-                completion(snap.exists())
-            }
-        })
     }
     
 }

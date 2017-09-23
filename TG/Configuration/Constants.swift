@@ -6,7 +6,14 @@
 //  Copyright © 2017 ROLIQUE. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+typealias TGOwner = UIViewController
+typealias Completion = () -> Void
+typealias Handler = () -> Void
+typealias StringCompletion = (String) -> Void
+typealias DateCompletion = (Date) -> Void
+
 
 struct Constants {
     static let lastUserDefaultsKey = "lastPlayerName"

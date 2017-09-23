@@ -10,17 +10,12 @@ import Alamofire
 import UIKit
 import SwiftyJSON
 
-typealias Completion = () -> Void
-typealias Handler = () -> Void
-typealias ErrorCompletion = (TGError) -> Void
-typealias JSONCompletion = (JSON) -> Void
-typealias StringCompletion = (String) -> Void
-typealias DateCompletion = (Date) -> Void
 typealias MatchesCompletion = ([VMatch]) -> Void
 typealias ModelsCompletion = ([VModel]) -> Void
 typealias MatchCompletion = (VMatch) -> Void
 typealias RosterCompletion = (VRoster) -> Void
-
+typealias ErrorCompletion = (TGError) -> Void
+typealias JSONCompletion = (JSON) -> Void
 
 enum TGError: Error {
     case critical(error: NSError)
