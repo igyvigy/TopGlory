@@ -45,6 +45,30 @@ final class StorageHelper {
 
     }
     
+    static func uploadImage(_ image: UIImage, progressHandler: ((Float) -> Void)? = nil, completion: @escaping (URL?, UIImage?) -> Void) {
+        DispatchQueue.global(qos: .default).async {
+            guard let data = image.png else {
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                let fileName = "\(NSUUID().uuidString).jpg"
+                let uploadTask = StorageHelper.storageRef.child(Constants.kUploadsImagesPath).child(fileName).putData(data, metadata: nil, completion: { metadata, _ in
+                    if let imageUrl = URL(string: metadata?.downloadURLs?.first?.absoluteString ?? kEmptyStringValue) {
+                        completion(imageUrl, image)
+                    }
+                    
+                })
+                
+                uploadTask.observe(.progress, handler: { snapshot in
+                    progressHandler?(Float(snapshot.progress?.fractionCompleted ?? 0))
+                })
+            }
+        }
+        
+    }
+    
     static func uploadVideo(_ url: URL, trackProgress: Bool = false, completion: @escaping UploadVideoInfoCompletion) {
         DispatchQueue.global(qos: .default).async {
             if let data = try? Data(contentsOf: url, options: .mappedIfSafe) {

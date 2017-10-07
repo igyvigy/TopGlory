@@ -47,11 +47,8 @@ class Item: Model {
     }
     
     required init(id: String, type: ModelType) {
-        if id == "Healing Flask" {
-            
-        }
-        
         let item = AppConfig.current.itemCatche[id]
+        
         
         self.itemStatsId = item?.itemStatsId
         self.category = item?.category

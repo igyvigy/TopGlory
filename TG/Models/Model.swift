@@ -35,14 +35,23 @@ enum ModelType: String {
             }
         case .item:
             return { id in
-                let item = AppConfig.current.itemCatche[id]
-                if item?.url == nil {
+                if let existingItem = AppConfig.current.items.filter({ item -> Bool in
+                    return item.itemStatsId == id
+                }).first {
+                    return (existingItem.name, existingItem.url)
+                } else if let item = AppConfig.current.itemCatche[id] {
+                    if let url = item.url {
+                        return (item.name, url)
+                    } else {
+                        FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: id)
+                        
+                        return (item.name, nil)
+                    }
+                } else {
                     FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: id)
-
-                    return (id, "https://www.vaingloryfire.com/images/wikibase/icon/items/level-juice.png")
                     
+                    return (id, nil)
                 }
-                return (item?.name, item?.url)
             }
         case .gamemode:
             return { id in

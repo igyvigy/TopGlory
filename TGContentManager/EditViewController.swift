@@ -12,6 +12,7 @@ class EditViewController: UIViewController {
     class func deploy(with mode: ViewControllerMode, model: Model, completion: ((EditViewController?) -> Void)? = nil) -> EditViewController {
         let editmodelVC = EditViewController.instantiateFromStoryboardId(.main)
         editmodelVC.model = model
+        editmodelVC.mode = mode
         editmodelVC.completion = completion
         return editmodelVC
     }
@@ -21,10 +22,12 @@ class EditViewController: UIViewController {
     @IBOutlet weak var identifierTextField: UITextField!
     @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var progressView: UIProgressView!
     
     var completion: ((EditViewController?) -> Void)?
     var imagePicker: UIImagePickerController!
     var model: Model!
+    var mode: ViewControllerMode!
     
     var initialImageUrl: String?
     var initialName: String?
@@ -45,8 +48,8 @@ class EditViewController: UIViewController {
                            "Cancel"],
             actions: [
                 { [unowned self] in self.save(sender) },
-                { [unowned self] in self.uploadImageIfNeeded(for: self.model) },
-                { [unowned self] in self.save() },
+                { [unowned self] in self.uploadImageIfNeeded(for: self.model){} },
+                { [unowned self] in self.save(){} },
                 { [unowned self] in self.discardChanges() },
                 {}
             ],
@@ -60,13 +63,13 @@ class EditViewController: UIViewController {
                 self.initialImage = self.imageView.image
             }
         }
-        identifierTextField.text = model.name
+        identifierTextField.text = model.name ?? kEmptyStringValue
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         changeImageButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
     }
     
     var idChanged: Bool {
-        return initialName != nil ? identifierTextField.text != initialName : false
+        return identifierTextField.text != initialName
     }
     
     var imageChanged: Bool {
@@ -77,25 +80,37 @@ class EditViewController: UIViewController {
         return idChanged || imageChanged
     }
     
-    func save() {
-        let model = self.model!
+    func save(completion: @escaping () -> Void) {
         if idChanged {
             if let newName = identifierTextField.text, !newName.isEmpty {
                 model.name = newName
-                FirebaseHelper.store(models: [model], completion: { 
-                    
-                })
+                FirebaseHelper.store(models: [model])
+                switch mode! {
+                case .newItemIds: FirebaseHelper.removeUnknownRecordForMode(model: model, isItemStatsId: true)
+                case.newGameModes: FirebaseHelper.removeUnknownRecordForMode(model: model)
+                default: break
+                }
             }
         }
-        uploadImageIfNeeded(for: model)
+        uploadImageIfNeeded(for: model, completion: completion)
     }
     
-    func uploadImageIfNeeded(for model: Model) {
+    func uploadImageIfNeeded(for model: Model, completion: @escaping () -> Void) {
         if imageChanged {
-            guard let image = imageView.image else { return }
-            FirebaseHelper.update(image: image, for: model) {
-                Spitter.showOk(vc: self, completion: {})
+            guard let image = imageView.image else {
+                completion()
+                
+                return }
+            FirebaseHelper.update(image: image, for: model, progressHandler: { [unowned self] progress in
+                self.progressView.progress = progress
+            }) { [unowned self] in
+                FirebaseHelper.removeUnknownRecordForMode(model: model)
+                Spitter.showOk(vc: self, completion: {
+                    completion()
+                })
             }
+        } else {
+            completion()
         }
     }
     
@@ -112,10 +127,14 @@ class EditViewController: UIViewController {
     
     func close() {
         if changed {
-            Spitter.showAlert("You have changes", message: nil, buttonTitles: ["Apply", "Discard", "Cancel"], actions: [{ [unowned self] in
-                self.save()
-                self.shutDown()
+            Spitter.showAlert("You have changes", message: nil, buttonTitles: ["Apply", "Discard", "Cancel"], actions: [
+                { [unowned self] in
+                    //apply
+                self.save() {
+                    self.shutDown()
+                }
                 }, { [unowned self] in
+                    //discard
                     self.discardChanges()
                     self.shutDown()
                 }, {}], styles: [.default, .default, .cancel], owner: self)

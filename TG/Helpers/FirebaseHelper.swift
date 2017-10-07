@@ -53,7 +53,7 @@ class FirebaseHelper {
         completion()
     }
     
-    static func store(models: [Model], completion: @escaping () -> Void) {
+    static func store(models: [Model]) {
         models.forEach { model in
             switch model.modelType {
             case .skin:
@@ -68,18 +68,36 @@ class FirebaseHelper {
                 updateValues(on: gameModesReference.child(model.id ?? "null"), values: model.encoded)
             }
         }
-        completion()
     }
     
-    static func storeUnknownModel(model: Model) {
+    static func removeUnknownRecordForMode(model: Model, isItemStatsId: Bool = false) {
         switch model.modelType {
-        case .skin: updateValues(on: unknownSkinsReference, values: [model.id ?? "null": model.id])
-        case .actor: updateValues(on: unknownActorsReference, values: [model.id ?? "null": model.id])
-        case .item: updateValues(on: unknownItemsReference, values: [model.id ?? "null": model.id])
-        case .unknown: updateValues(on: unknownOtherReference, values: [model.id ?? "null": model.id])
-        case .gamemode: updateValues(on: unknownGameModesReference, values: [model.id ?? "null": model.id])
+        case .skin:
+            unknownSkinsReference.child(model.id ?? "null").removeValue()
+        case .actor:
+            unknownActorsReference.child(model.id ?? "null").removeValue()
+        case .item:
+            if isItemStatsId {
+                unknownItemStatsIdReference.child(model.id ?? "null").removeValue()
+            } else {
+                unknownItemsReference.child(model.id ?? "null").removeValue()
+            }
+        case .unknown:
+            unknownOtherReference.child(model.id ?? "null").removeValue()
+        case .gamemode:
+            unknownGameModesReference.child(model.id ?? "null").removeValue()
         }
     }
+    
+//    static func storeUnknownModel(model: Model) {
+//        switch model.modelType {
+//        case .skin: updateValues(on: unknownSkinsReference, values: [model.id ?? "null": model.id])
+//        case .actor: updateValues(on: unknownActorsReference, values: [model.id ?? "null": model.id])
+//        case .item: updateValues(on: unknownItemsReference, values: [model.id ?? "null": model.id])
+//        case .unknown: updateValues(on: unknownOtherReference, values: [model.id ?? "null": model.id])
+//        case .gamemode: updateValues(on: unknownGameModesReference, values: [model.id ?? "null": model.id])
+//        }
+//    }
     
     static func storeUnknownSkinIdentifier(skinIdentifier: String) {
         updateValues(on: unknownSkinsReference, values: [skinIdentifier: skinIdentifier])
@@ -220,8 +238,8 @@ class FirebaseHelper {
         )
     }
     
-    static func update(image: UIImage, for model: Model, completion: @escaping () -> Void) {
-        processModels([(model, image)], completion: completion)
+    static func update(image: UIImage, for model: Model, progressHandler: ((Float) -> Void)? = nil, completion: @escaping () -> Void) {
+        processModels([(model, image)], progressHandler: progressHandler, completion: completion)
     }
     
     static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any?]) {
@@ -249,7 +267,7 @@ fileprivate extension FirebaseHelper {
             return
         }
         let skin = skins.removeFirst()
-        uploadImage(skin.1, completion: { (url, image, _) in
+        uploadImage(skin.1, completion: { (url, image) in
             guard let url = url, let _ = image else {
                 processSkins(skins, completion: completion)
                 
@@ -263,7 +281,7 @@ fileprivate extension FirebaseHelper {
         })
     }
     
-    static func processModels(_ models: [(Model, UIImage)], completion: @escaping () -> Void) {
+    static func processModels(_ models: [(Model, UIImage)], progressHandler: ((Float) -> Void)? = nil, completion: @escaping () -> Void) {
 
         var models = models
         guard !models.isEmpty else {
@@ -272,16 +290,19 @@ fileprivate extension FirebaseHelper {
             return
         }
         let model = models.removeFirst()
-        uploadImage(model.1, completion: { (url, image, _) in
+        uploadImage(model.1, progressHandler: progressHandler, completion: { (url, image) in
             guard let url = url, let _ = image else {
-                processModels(models, completion: completion)
+                processModels(models, progressHandler: progressHandler, completion: completion)
                 
                 return }
-            updateValues(on: skinsReference.child(model.0.id ?? ""), values: ["url": url.absoluteString])
+
+            let model = model.0
+            model.url = url.absoluteString
+            store(models: [model])
             if models.isEmpty {
                 completion()
             } else {
-                processModels(models, completion: completion)
+                processModels(models, progressHandler: progressHandler, completion: completion)
             }
         })
     }
@@ -296,12 +317,12 @@ fileprivate extension FirebaseHelper {
         completion()
     }
 
-    static func uploadImage(_ image: UIImage?, completion: @escaping StorageHelper.UploadImageInfoCompletion) {
+    static func uploadImage(_ image: UIImage?, progressHandler: ((Float) -> Void)? = nil, completion: @escaping (URL?, UIImage?) -> Void) {
         guard let image = image else {
-            completion(StorageHelper.UploadImageInfo(nil, nil, nil))
+            completion(nil, nil)
             
             return
         }
-        StorageHelper.uploadImage(image, completion: completion)
+        StorageHelper.uploadImage(image, progressHandler: progressHandler, completion: completion)
     }
 }

@@ -133,12 +133,18 @@
                                             <constraint firstItem="W68-2f-5Kk" firstAttribute="top" secondItem="rCo-08-RtP" secondAttribute="top" constant="30" id="pdA-oe-F34"/>
                                         </constraints>
                                     </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kLy-YU-Esv">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                                    </progressView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="rCo-08-RtP" firstAttribute="leading" secondItem="BmF-2W-3mD" secondAttribute="leading" id="Kc0-Rf-tbq"/>
+                                    <constraint firstItem="kLy-YU-Esv" firstAttribute="top" secondItem="BmF-2W-3mD" secondAttribute="top" id="P1d-Z6-4Ae"/>
+                                    <constraint firstItem="kLy-YU-Esv" firstAttribute="leading" secondItem="BmF-2W-3mD" secondAttribute="leading" id="Q1A-5D-zko"/>
                                     <constraint firstItem="rCo-08-RtP" firstAttribute="top" secondItem="BmF-2W-3mD" secondAttribute="top" id="Tew-OX-99e"/>
                                     <constraint firstAttribute="trailing" secondItem="rCo-08-RtP" secondAttribute="trailing" id="Y6d-S6-FxK"/>
                                     <constraint firstAttribute="bottom" secondItem="rCo-08-RtP" secondAttribute="bottom" id="hTB-VK-99Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="kLy-YU-Esv" secondAttribute="trailing" id="lXr-i5-J90"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isBlurred" value="YES"/>
@@ -163,6 +169,7 @@
                         <outlet property="changeImageButton" destination="uPe-W0-J8o" id="lIO-cD-lSs"/>
                         <outlet property="identifierTextField" destination="W68-2f-5Kk" id="n8F-vN-JID"/>
                         <outlet property="imageView" destination="oJS-VF-DFK" id="vKe-35-xnx"/>
+                        <outlet property="progressView" destination="kLy-YU-Esv" id="S3k-Jn-49A"/>
                         <outlet property="scrollView" destination="BmF-2W-3mD" id="dZo-dl-aTP"/>
                     </connections>
                 </viewController>

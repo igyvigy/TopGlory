@@ -13,13 +13,18 @@ protocol SectionData {
     var detailData: [String] { get }
     var imageData: [String] { get }
     
+    var modelData: [Model] { get }
+    var stringData: [String] { get }
+    
     func getArray() -> [SectionData]?
 }
 
 extension SectionData {
+    var titleData: [String] { return [String]() }
     var detailData: [String] { return [String]() }
     var imageData: [String] { return [String]() }
-    
+    var modelData: [Model] { return [Model]() }
+    var stringData: [String] { return [String]() }
     func getArray() -> [SectionData]? {
         return nil
     }
@@ -43,12 +48,14 @@ enum ViewControllerMode {
     }
 
     var data: SectionData {
+    
         switch self {
         case .skins:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.skins.map { $0.name ?? "" } }
                 var detailData: [String] { return AppConfig.current.skins.map { $0.id ?? "" } }
                 var imageData: [String] { return AppConfig.current.skins.map { $0.url ?? "" } }
+                var modelData: [Model] { return AppConfig.current.skins }
             }
             
             return Data()
@@ -57,6 +64,7 @@ enum ViewControllerMode {
                 var titleData: [String] { return AppConfig.current.actors.map { $0.name ?? "" } }
                 var detailData: [String] { return AppConfig.current.actors.map { $0.id ?? "" } }
                 var imageData: [String] { return AppConfig.current.actors.map { $0.url ?? "" } }
+                var modelData: [Model] { return AppConfig.current.actors }
             }
             
             return Data()
@@ -65,6 +73,7 @@ enum ViewControllerMode {
                 var titleData: [String] { return AppConfig.current.items.map { $0.name ?? "" } }
                 var detailData: [String] { return AppConfig.current.items.map { $0.id ?? "" } }
                 var imageData: [String] { return AppConfig.current.items.map { $0.url ?? "" } }
+                var modelData: [Model] { return AppConfig.current.items }
             }
             
             return Data()
@@ -72,35 +81,41 @@ enum ViewControllerMode {
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.gameModes.map { $0.name ?? "" } }
                 var detailData: [String] { return AppConfig.current.gameModes.map { $0.id ?? "" } }
+                var modelData: [Model] { return AppConfig.current.gameModes }
             }
             
             return Data()
         case .newSkins:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.newSkins.map { $0 } }
+                var stringData: [String] { return AppConfig.current.newSkins }
             }
             
             return Data()
         case .newActors:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.newActors.map { $0 } }
+                var stringData: [String] { return AppConfig.current.newActors }
             }
             
             return Data()
         case .newItemImages:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.newItemImages.map { $0 } }
+                var stringData: [String] { return AppConfig.current.newItemImages }
             }
             return Data()
         case .newItemIds:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.newItemIds.map { $0 } }
+                var stringData: [String] { return AppConfig.current.newItemIds }
             }
             
             return Data()
         case .newGameModes:
             struct Data: SectionData {
                 var titleData: [String] { return AppConfig.current.newGameModes.map { $0 } }
+                var stringData: [String] { return AppConfig.current.newGameModes }
             }
             
             return Data()
@@ -156,14 +171,37 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         if mode == nil {
-            AppConfig.current.fetchAll { [unowned self] in
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            fullReload()
         }
         tableView.tableHeaderView = nil
         tableView.tableFooterView = nil
+    }
+    
+    fileprivate func fullReload() {
+        AppConfig.current.fetchAll { [unowned self] in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    fileprivate func presentItemStatsInserter(with id: String) {
+        MultiActionAlert(
+            style: .actionSheet,
+            title: "Insert Item Stats Id",
+            message: "pick item to insert stats id into",
+            buttonTitles: AppConfig.current.items.map { $0.name ?? $0.id ?? "" } + ["Cancel"],
+            actionStyles: AppConfig.current.items.map { _ in .default } + [.cancel],
+            actions: AppConfig.current.items.map { item -> () -> Void in
+                return { [unowned self] _ in
+                    item.itemStatsId = id
+                    FirebaseHelper.store(models: [item])
+                    FirebaseHelper.removeUnknownRecordForMode(model: Model(id: id, type: .item), isItemStatsId: true)
+                    self.fullReload()
+                }
+                } + [{}],
+            owner: self,
+            textfieldConfigurationHandler: nil).showAlert()
     }
 }
 
@@ -226,17 +264,28 @@ extension ViewController: UITableViewDelegate {
             }
         } else {
             let mode = self.mode!
-            var maybeId: String?
+            var model: Model?
+            var id: String?
+            var itemStatId: String?
             switch mode {
             case .actors, .gameModes, .items, .skins:
-                maybeId = mode.data.detailData[safe: indexPath.row]
-            case .newGameModes, .newItemIds, .newItemImages, .newActors, .newSkins:
-                maybeId = mode.data.titleData[safe: indexPath.row]
+                model = mode.data.modelData[safe: indexPath.row]
+            case .newItemIds:
+                itemStatId = mode.data.stringData[safe: indexPath.row]
+            case .newGameModes, .newItemImages, .newActors, .newSkins:
+                id = mode.data.stringData[safe: indexPath.row]
             }
-            guard let id = maybeId else { return }
-            present(EditViewController.deploy(with: mode, model: Model(id: id, type: (mode.modelType)), completion: { [unowned self] editVC in
+            if let itemStatId = itemStatId {
+                presentItemStatsInserter(with: itemStatId)
+                
+                return
+            } else if let id = id {
+                model = Model(id: id, type: mode.modelType)
+            }
+            guard let mdl = model else { return }
+            present(EditViewController.deploy(with: mode, model: mdl, completion: { [unowned self] editVC in
                 if editVC?.changed ?? false {
-                    self.tableView.reloadData()
+                    self.fullReload()
                 }
             }), animated: true)
         }

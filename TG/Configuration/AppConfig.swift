@@ -73,7 +73,8 @@ struct AppConfig {
         }
     }
     
-    func fetchAll(completion: @escaping () -> Void) {
+    mutating func fetchAll(completion: @escaping () -> Void) {
+        clearStorage()
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         fetchData(isFinal: false) {
@@ -87,6 +88,18 @@ struct AppConfig {
             AppConfig.current.finishedToFetchData = true
             completion()
         }
+    }
+    
+    mutating func clearStorage() {
+        skinCatche = [:]
+        actorCatche = [:]
+        itemCatche = [:]
+        gameModeCatche = [:]
+        skinUnknownCatche = [:]
+        actorUnknownCatche = [:]
+        itemUnknownImageCatche = [:]
+        itemUnknownIdentifierCatche = [:]
+        gameModeUnknownCatche = [:]
     }
     
     func fetchData(isFinal: Bool = true, completion: @escaping () -> Void) {
