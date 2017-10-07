@@ -188,8 +188,7 @@ class ViewController: UIViewController {
     fileprivate func presentItemStatsInserter(with id: String) {
         MultiActionAlert(
             style: .actionSheet,
-            title: "Insert Item Stats Id",
-            message: "pick item to insert stats id into",
+            title: id,
             buttonTitles: AppConfig.current.items.map { $0.name ?? $0.id ?? "" } + ["Cancel"],
             actionStyles: AppConfig.current.items.map { _ in .default } + [.cancel],
             actions: AppConfig.current.items.map { item -> () -> Void in

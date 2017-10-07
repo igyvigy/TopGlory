@@ -98,26 +98,32 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="800.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-VF-DFK">
-                                                <rect key="frame" x="48" y="90" width="279" height="209.5"/>
+                                                <rect key="frame" x="48" y="93.5" width="279" height="209.5"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="oJS-VF-DFK" secondAttribute="height" multiplier="4:3" id="eIE-2L-nTF"/>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="custom name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W68-2f-5Kk">
-                                                <rect key="frame" x="48" y="30" width="279" height="30"/>
+                                                <rect key="frame" x="48" y="33.5" width="279" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="job-Hs-StL">
-                                                <rect key="frame" x="248" y="350" width="39" height="30"/>
+                                                <rect key="frame" x="248" y="353.5" width="39" height="30"/>
                                                 <state key="normal" title="Close"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPe-W0-J8o">
-                                                <rect key="frame" x="58" y="349.5" width="99" height="30"/>
+                                                <rect key="frame" x="58" y="353" width="99" height="30"/>
                                                 <state key="normal" title="Change Image"/>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-qy-nHu">
+                                                <rect key="frame" x="0.0" y="4" width="375" height="13.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -126,11 +132,14 @@
                                             <constraint firstItem="job-Hs-StL" firstAttribute="top" secondItem="oJS-VF-DFK" secondAttribute="bottom" constant="50" id="CNA-fO-mcR"/>
                                             <constraint firstItem="oJS-VF-DFK" firstAttribute="leading" secondItem="rCo-08-RtP" secondAttribute="leading" constant="48" id="FNT-lX-EFr"/>
                                             <constraint firstAttribute="trailing" secondItem="oJS-VF-DFK" secondAttribute="trailing" constant="48" id="J9u-bR-7Ll"/>
+                                            <constraint firstAttribute="trailing" secondItem="Gmu-qy-nHu" secondAttribute="trailing" id="MBp-dv-DlM"/>
                                             <constraint firstItem="uPe-W0-J8o" firstAttribute="centerX" secondItem="rCo-08-RtP" secondAttribute="centerX" constant="-80" id="RqN-gW-LFP"/>
+                                            <constraint firstItem="Gmu-qy-nHu" firstAttribute="top" secondItem="rCo-08-RtP" secondAttribute="top" constant="4" id="Z5Z-bG-S3i"/>
                                             <constraint firstItem="W68-2f-5Kk" firstAttribute="leading" secondItem="rCo-08-RtP" secondAttribute="leading" constant="48" id="g75-aI-Ujb"/>
+                                            <constraint firstItem="Gmu-qy-nHu" firstAttribute="leading" secondItem="rCo-08-RtP" secondAttribute="leading" id="mHq-jn-hMD"/>
                                             <constraint firstItem="uPe-W0-J8o" firstAttribute="top" secondItem="oJS-VF-DFK" secondAttribute="bottom" constant="50" id="o5N-4F-CAf"/>
                                             <constraint firstItem="job-Hs-StL" firstAttribute="centerX" secondItem="rCo-08-RtP" secondAttribute="centerX" constant="80" id="okT-W1-eKy"/>
-                                            <constraint firstItem="W68-2f-5Kk" firstAttribute="top" secondItem="rCo-08-RtP" secondAttribute="top" constant="30" id="pdA-oe-F34"/>
+                                            <constraint firstItem="W68-2f-5Kk" firstAttribute="top" secondItem="Gmu-qy-nHu" secondAttribute="bottom" constant="16" id="xqN-3I-ik8"/>
                                         </constraints>
                                     </view>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kLy-YU-Esv">
@@ -168,6 +177,7 @@
                         <outlet property="backButton" destination="job-Hs-StL" id="reI-3A-bH1"/>
                         <outlet property="changeImageButton" destination="uPe-W0-J8o" id="lIO-cD-lSs"/>
                         <outlet property="identifierTextField" destination="W68-2f-5Kk" id="n8F-vN-JID"/>
+                        <outlet property="imageUrlLabel" destination="Gmu-qy-nHu" id="QcZ-VL-xW9"/>
                         <outlet property="imageView" destination="oJS-VF-DFK" id="vKe-35-xnx"/>
                         <outlet property="progressView" destination="kLy-YU-Esv" id="S3k-Jn-49A"/>
                         <outlet property="scrollView" destination="BmF-2W-3mD" id="dZo-dl-aTP"/>

@@ -23,6 +23,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var imageUrlLabel: UILabel!
     
     var completion: ((EditViewController?) -> Void)?
     var imagePicker: UIImagePickerController!
@@ -42,22 +43,25 @@ class EditViewController: UIViewController {
             model.id,
             message: nil,
             buttonTitles: ["Save current Image on device",
+                           "Copy imageURL",
                            "Upload current Image on server",
                            "Apply changes",
                            "Discard changes",
                            "Cancel"],
             actions: [
                 { [unowned self] in self.save(sender) },
+                { [unowned self] in let pb = UIPasteboard.general; pb.string = self.imageUrlLabel.text },
                 { [unowned self] in self.uploadImageIfNeeded(for: self.model){} },
                 { [unowned self] in self.save(){} },
                 { [unowned self] in self.discardChanges() },
                 {}
             ],
-            styles: [.default, .default, .default, .default, .cancel], owner: self)
+            styles: [.default, .default, .default, .default, .default, .cancel], owner: self)
     }
     func configure() {
-        initialName = model.name
+        initialName = model.name ?? ""
         initialImageUrl = model.url
+        imageUrlLabel.text = model.url
         if let url = URL(string: model.url ?? "") {
             imageView.setImage(withURL: url) { [unowned self] in
                 self.initialImage = self.imageView.image
@@ -65,7 +69,7 @@ class EditViewController: UIViewController {
         }
         identifierTextField.text = model.name ?? kEmptyStringValue
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        changeImageButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
+        changeImageButton.addTarget(self, action: #selector(didTapChangeImageButton), for: .touchUpInside)
     }
     
     var idChanged: Bool {
@@ -76,8 +80,30 @@ class EditViewController: UIViewController {
         return imageView.image != initialImage
     }
     
+    var imageUrlChanged: Bool {
+        return imageUrlLabel.text != initialImageUrl
+    }
+    
     var changed: Bool {
-        return idChanged || imageChanged
+        return idChanged || imageChanged || imageUrlChanged
+    }
+    
+    @IBAction func didTapChangeImageButton(_ sender: UIButton) {
+        MultiActionAlert(
+            style: .actionSheet,
+            title: "Change image?",
+            buttonTitles: ["From Camera Roll", "Paste URL", "Cancel"],
+            actionStyles: [.default, .default, .cancel],
+            actions: [{ [weak self] in self?.showImagePicker() },
+                      { [weak self] in self?.pasteFromClipBoard() },
+                      {}],
+            owner: self
+            ).showAlert()
+    }
+    
+    func pasteFromClipBoard() {
+        let pasteBoard = UIPasteboard.general
+        imageUrlLabel.text = pasteBoard.string
     }
     
     func save(completion: @escaping () -> Void) {
@@ -91,6 +117,10 @@ class EditViewController: UIViewController {
                 default: break
                 }
             }
+        }
+        if imageUrlChanged {
+            model.url = imageUrlLabel.text
+            FirebaseHelper.store(models: [model])
         }
         uploadImageIfNeeded(for: model, completion: completion)
     }
@@ -122,6 +152,9 @@ class EditViewController: UIViewController {
             if idChanged {
                 identifierTextField.text = initialName
             }
+            if imageUrlChanged {
+                imageUrlLabel.text = initialImageUrl
+            }
         }
     }
     
@@ -151,23 +184,19 @@ class EditViewController: UIViewController {
 
 extension EditViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-    //MARK: - Take image
-    @IBAction func takePhoto(_ sender: UIButton) {
+    func showImagePicker() {
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
     
-    //MARK: - Saving Image here
     @IBAction func save(_ sender: AnyObject) {
         UIImageWriteToSavedPhotosAlbum(imageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
 
-    //MARK: - Add image to Library
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
@@ -177,17 +206,11 @@ extension EditViewController: UINavigationControllerDelegate, UIImagePickerContr
             present(ac, animated: true)
         }
     }
-    
-    //MARK: - Done image capture here
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         imagePicker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.image = image
-//        FirebaseHelper.update(image: image, for: model, completion: { 
-//            Spitter.showOk {
-//                
-//            }
-//        })
         }
     }
 
