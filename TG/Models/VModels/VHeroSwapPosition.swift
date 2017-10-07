@@ -11,7 +11,7 @@ import SwiftyJSON
 
 extension Swap {
     init (json: JSON) {
-        hero = Actor(string: json["Hero"].stringValue)
+        hero = Actor(id: json["Hero"].stringValue, type: .actor)
         playerId = json["Player"].string
         side = Side(string: json["Team"].string)
     }

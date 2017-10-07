@@ -21,26 +21,33 @@ class FActionModel: Model {
         self.action = action
         super.init(dict: [:])
     }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
+    }
 }
 
 class Asset: Model {
-    var url: String?
     var contentType: String?
     var createdAt: Date?
     var description: String?
     var filename: String?
-    var name: String?
     
     required init(dict: [String: Any?]) {
-        self.url = dict["url"] as? String
         self.contentType = dict["contentType"] as? String
         self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
         self.description = dict["description"] as? String
         self.filename = dict["filename"] as? String
-        self.name = dict["name"] as? String
+        
         super.init(dict: dict)
         self.id = dict["id"] as? String
         self.type = dict["type"] as? String
+        self.name = dict["name"] as? String
+        self.url = dict["url"] as? String
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

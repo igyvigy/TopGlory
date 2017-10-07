@@ -9,26 +9,17 @@
 import Foundation
 
 class Actor: Model {
-    var url: String?
-    var name: String?
+
     required init(dict: [String: Any?]) {
-        self.url = dict["url"] as? String
-        self.name = dict["name"] as? String
         super.init(dict: dict)
         self.type = "Actor"
         self.id = dict["id"] as? String
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
     }
-    
-    init(string: String) {
-        self.url = AppConfig.current.actorCatche[string]?.url
-        self.name = string.chopPrefix().chopSuffix()
-        if url == nil {
-            FirebaseHelper.storeUnknownActorIdentifier(actorIdentifier: string)
-        }
-        super.init(dict: [:])
-        self.id = string
-        self.type = "Actor"
-        
+
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String: Any?] {
@@ -172,15 +163,15 @@ enum ActorType: String, EnumCollection {
         }
     }
     
-    var name: String {
-        return rawValue.chopPrefix().chopSuffix()
-    }
+//    var name: String {
+//        return rawValue.chopPrefix().chopSuffix()
+//    }
     
     var encoded: [String: Any] {
         let dict: [String: Any] = [
             "id": rawValue,
             "imageUrl": imageUrl ?? kEmptyStringValue,
-            "name": name
+            "name": kEmptyStringValue
         ]
         return dict
     }

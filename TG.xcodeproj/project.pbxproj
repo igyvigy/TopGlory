@@ -169,7 +169,7 @@
 		B5E6094F1F196085001D4D58 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094E1F196085001D4D58 /* NibLoadingView.swift */; };
 		B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E609501F1960EA001D4D58 /* RosterView.swift */; };
 		B5F6387F1F7668CC00E80DEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5F6387E1F7668CC00E80DEC /* GoogleService-Info.plist */; };
-		B5F638811F7672B600E80DEC /* EditSkinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F638801F7672B600E80DEC /* EditSkinViewController.swift */; };
+		B5F638811F7672B600E80DEC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F638801F7672B600E80DEC /* EditViewController.swift */; };
 		B5F638831F7678C400E80DEC /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B555F79D1F3767050091838A /* AlamofireImage.framework */; };
 		B5F638841F76790000E80DEC /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54901D51F760A1B00542AD4 /* UIImageViewExtension.swift */; };
 		B5F638851F76814700E80DEC /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B545C9A71F13F706008F191F /* Alamofire.framework */; };
@@ -311,7 +311,7 @@
 		B5E6094E1F196085001D4D58 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
 		B5E609501F1960EA001D4D58 /* RosterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
 		B5F6387E1F7668CC00E80DEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B5F638801F7672B600E80DEC /* EditSkinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSkinViewController.swift; sourceTree = "<group>"; };
+		B5F638801F7672B600E80DEC /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		B5F841161F3F0F3A00212E8A /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		B5F841171F3F0F3A00212E8A /* ParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
 		B5F8411A1F3F56D600212E8A /* ScrollableGraphView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScrollableGraphView.framework; path = Carthage/Build/iOS/ScrollableGraphView.framework; sourceTree = "<group>"; };
@@ -531,7 +531,7 @@
 				B54901961F75560B00542AD4 /* AppDelegate.swift */,
 				B5775CC91F765553005EC458 /* ContentManagerListCell.swift */,
 				B54901981F75560B00542AD4 /* TableViewController.swift */,
-				B5F638801F7672B600E80DEC /* EditSkinViewController.swift */,
+				B5F638801F7672B600E80DEC /* EditViewController.swift */,
 				B549019A1F75560B00542AD4 /* Main.storyboard */,
 				B549019D1F75560B00542AD4 /* Assets.xcassets */,
 				B549019F1F75560B00542AD4 /* LaunchScreen.storyboard */,
@@ -905,7 +905,7 @@
 				B5775CC11F764FD1005EC458 /* Catche.swift in Sources */,
 				B54901991F75560B00542AD4 /* TableViewController.swift in Sources */,
 				B5775CB11F764EFC005EC458 /* UIBarBUttonItemExtension.swift in Sources */,
-				B5F638811F7672B600E80DEC /* EditSkinViewController.swift in Sources */,
+				B5F638811F7672B600E80DEC /* EditViewController.swift in Sources */,
 				B5775CAD1F764EFC005EC458 /* DateExtensions.swift in Sources */,
 				B54901CF1F7561D900542AD4 /* FirebaseHelper.swift in Sources */,
 				B5775CA81F764E92005EC458 /* Skin.swift in Sources */,
@@ -1078,7 +1078,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1104,7 +1104,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -9,22 +9,17 @@
 import Foundation
 
 class GameMode: Model {
-    var name: String?
-    
+
     required init(dict: [String : Any?]) {
-        name = dict["name"] as? String
+        
         super.init(dict: dict)
         type = "GameMode"
+        name = dict["name"] as? String
+        id = dict["id"] as? String
     }
     
-    init(string: String) {
-        self.name = AppConfig.current.gameModeCatche[string]?.name
-        if name == nil {
-            FirebaseHelper.storeUnknownGameModeIdentifier(gameModeIdentifier: string)
-        }
-        super.init(dict: [:])
-        self.id = string
-        self.type = "GameMode"
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {
@@ -63,7 +58,8 @@ class Match: Model {
     var userWon: Bool?
     
     required init(dict: [String: Any?]) {
-        self.gameMode = GameMode(string: dict["gameMode"] as? String ?? kEmptyStringValue)
+        self.gameMode = GameMode(id: dict["gameMode"] as? String ?? kEmptyStringValue, type: .gamemode)
+        
         self.titleId = dict["titleId"] as? String
         self.createdAt = TGDateFormats.iso8601WithoutTimeZone.date(from: dict["createdAt"] as? String ?? "")
         self.patchVersion = dict["patchVersion"] as? String
@@ -76,6 +72,10 @@ class Match: Model {
         self.description = dict["description"] as? String
         self.userWon = dict["userWon"] as? Bool
         super.init(dict: dict)
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

@@ -36,23 +36,23 @@ class ParticipantDetailViewController: TableViewController {
     private func configureTableData() -> [Model] {
         var data = [participant.player!, participant] as [Model]
         let itemUses = participant.itemUses?.stats
-            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemUses) })
+            .map({ ItemStatsModel(itemStatsId: $0.key, itemCount: $0.value, modelType: .itemUses) })
         if let itemUses = itemUses, itemUses.count > 0 {
-            let header = ItemStatsModel(name: "Used items".localized, count: itemUses.count, modelType: .header)
+            let header = ItemStatsModel(itemStatsId: "Used items".localized, itemCount: itemUses.count, modelType: .header)
             data.append(header)
             data.append(contentsOf: itemUses as [Model])
         }
         let itemGrants = participant.itemGrants?.stats
-            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemGrants) })
+            .map({ ItemStatsModel(itemStatsId: $0.key, itemCount: $0.value, modelType: .itemGrants) })
         if let itemGrants = itemGrants, itemGrants.count > 0 {
-            let header = ItemStatsModel(name: "Purchased items".localized, count: itemGrants.count, modelType: .header)
+            let header = ItemStatsModel(itemStatsId: "Purchased items".localized, itemCount: itemGrants.count, modelType: .header)
             data.append(header)
             data.append(contentsOf: itemGrants as [Model])
         }
         let itemSells = participant.itemSells?.stats
-            .map({ ItemStatsModel(name: $0.key, count: $0.value, modelType: .itemSells) })
+            .map({ ItemStatsModel(itemStatsId: $0.key, itemCount: $0.value, modelType: .itemSells) })
         if let itemSells = itemSells, itemSells.count > 0 {
-            let header = ItemStatsModel(name: "Sold items".localized, count: itemSells.count, modelType: .header)
+            let header = ItemStatsModel(itemStatsId: "Sold items".localized, itemCount: itemSells.count, modelType: .header)
             data.append(header)
             data.append(contentsOf: itemSells as [Model])
         }
@@ -88,28 +88,28 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
         }
         if let itemStatsModel = model as? ItemStatsModel {
             
-            guard itemStatsModel.modelType != .header else {
+            guard itemStatsModel.itemStatsModelType != .header else {
                 let cell = HeaderTableViewCell.dequeued(by: tableView)
-                cell.update(with: itemStatsModel.name)
+                cell.update(with: itemStatsModel.itemStatsId)
                 return cell
             }
             let cell = UsedItemTableViewCell.dequeued(by: tableView)
             if let item = AppConfig.current.itemCatche.values
-                .filter({ $0.itemStatsId?.contains(itemStatsModel.name) ?? false })
+                .filter({ $0.itemStatsId?.contains(itemStatsModel.itemStatsId ?? kEmptyStringValue) ?? false })
                 .first {
                 cell.update(
                     with: item.name ?? kEmptyStringValue,
                     imageString: item.url ?? kEmptyStringValue,
-                    count: itemStatsModel.count,
-                    type: itemStatsModel.modelType
+                    count: itemStatsModel.itemCount,
+                    type: itemStatsModel.itemStatsModelType
                 )
             } else {
-                FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: itemStatsModel.name, isItemStatsId: true)
+                FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: itemStatsModel.itemStatsId ?? kEmptyStringValue, isItemStatsId: true)
                 cell.update(
-                    with: itemStatsModel.name,
+                    with: itemStatsModel.itemStatsId,
                     imageString: AppConfig.current.itemCatche.values.first?.url ?? "",
-                    count: itemStatsModel.count,
-                    type: itemStatsModel.modelType
+                    count: itemStatsModel.itemCount,
+                    type: itemStatsModel.itemStatsModelType
                 )
             }
             return cell

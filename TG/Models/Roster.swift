@@ -32,8 +32,12 @@ class Roster: Model {
         self.turretsRemaining = dict["turretsRemaining"] as? Int
         self.participants = (dict["participants"] as? [[String: Any]] ?? [[String: Any]]()).map { Participant(dict: $0) }
         self.isUserTeam = dict["isUserTeam"] as? Bool
-        self.partisipantActors = (dict["partisipantActors"] as? [String] ?? [String]()).map { Actor(string: $0) }
+        self.partisipantActors = (dict["partisipantActors"] as? [String] ?? [String]()).map { Actor(id: $0, type: .actor) }
         super.init(dict: dict)
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

@@ -13,22 +13,32 @@ enum ItemStatsModelType: String {
 }
 
 class ItemStatsModel: Model {
-    var name: String
-    var count: Int
-    var modelType: ItemStatsModelType
+
+    var itemCount: Int
+    var itemStatsModelType: ItemStatsModelType
+    var itemStatsId: String?
     
-    init (name: String, count: Int, modelType: ItemStatsModelType) {
-        self.name = name
-        self.count = count
-        self.modelType = modelType
+    init (itemStatsId: String?, itemCount: Int, modelType: ItemStatsModelType) {
+        
+        self.itemCount = itemCount
+        self.itemStatsModelType = modelType
+        self.itemStatsId = itemStatsId
         super.init(dict: [:])
     }
     
     required init(dict: [String : Any?]) {
-        self.name = dict["name"] as? String ?? ""
-        self.count = dict["count"] as? Int ?? 0
-        self.modelType = ItemStatsModelType(rawValue: dict["modelType"] as? String ?? "") ?? .itemGrants
+        
+        self.itemCount = dict["count"] as? Int ?? 0
+        self.itemStatsModelType = ItemStatsModelType(rawValue: dict["modelType"] as? String ?? "") ?? .itemGrants
         super.init(dict: dict)
+        self.name = dict["name"] as? String
+        self.id = dict["id"] as? String
+    }
+    
+    required init(id: String, type: ModelType) {
+        self.itemCount = 0
+        self.itemStatsModelType = .itemGrants
+        super.init(id: id, type: type)
     }
     
 }
@@ -76,7 +86,7 @@ class Participant: Model {
     var isUser: Bool?
     
     required init(dict: [String: Any?]) {
-        self.actor = Actor(string: dict["actor"] as? String ?? "")
+        self.actor = Actor(id: dict["actor"] as? String ?? "", type: .actor)
         self.shardId = dict["shardId"] as? String
         self.assists = dict["assists"] as? Int
         self.crystalMineCaptures = dict["crystalMineCaptures"] as? Int
@@ -97,7 +107,7 @@ class Participant: Model {
         self.minionKills = dict["minionKills"] as? Int
         self.nonJungleMinionKills = dict["nonJungleMinionKills"] as? Int
         self.skillTier = dict["skillTier"] as? Int
-        self.skin = Skin(id: dict["skin"] as? String ?? "")
+        self.skin = Skin(id: dict["skin"] as? String ?? "", type: .skin)
         self.turretCaptures = dict["turretCaptures"] as? Int
         self.wentAfk = dict["wentAfk"] as? Bool
         self.winner = dict["winner"] as? Bool
@@ -105,8 +115,12 @@ class Participant: Model {
         self.player = Player(dict: dict["player"] as? [String: Any] ?? [String: Any]())
         self.playerName = dict["playerName"] as? String
         self.playerWinsString = dict["playerWinsString"] as? String
-        self.itemObjects = (dict["itemObjects"] as? [String] ?? [""]).map { Item(string: $0) }
+        self.itemObjects = (dict["itemObjects"] as? [String] ?? [""]).map { Item(id: $0, type: .item) }
         super.init(dict: dict)
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

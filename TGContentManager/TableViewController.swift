@@ -28,6 +28,20 @@ extension SectionData {
 enum ViewControllerMode {
     case skins, actors, items, gameModes, newSkins, newActors, newItemImages, newItemIds, newGameModes
     
+    var modelType: ModelType {
+        switch self {
+        case .skins: return .skin
+        case .actors: return .actor
+        case .items: return .item
+        case .gameModes: return .gamemode
+        case .newSkins: return .skin
+        case .newActors: return .actor
+        case .newItemImages: return .item
+        case .newItemIds: return .item
+        case .newGameModes: return .gamemode
+        }
+    }
+
     var data: SectionData {
         switch self {
         case .skins:
@@ -40,24 +54,24 @@ enum ViewControllerMode {
             return Data()
         case .actors:
             struct Data: SectionData {
-                var titleData: [String] { return AppConfig.current.actors.map { $0.id ?? "" } }
-                var detailData: [String] { return AppConfig.current.actors.map { $0.name ?? "" } }
+                var titleData: [String] { return AppConfig.current.actors.map { $0.name ?? "" } }
+                var detailData: [String] { return AppConfig.current.actors.map { $0.id ?? "" } }
                 var imageData: [String] { return AppConfig.current.actors.map { $0.url ?? "" } }
             }
             
             return Data()
         case .items:
             struct Data: SectionData {
-                var titleData: [String] { return AppConfig.current.items.map { $0.id ?? "" } }
-                var detailData: [String] { return AppConfig.current.items.map { $0.name ?? "" } }
+                var titleData: [String] { return AppConfig.current.items.map { $0.name ?? "" } }
+                var detailData: [String] { return AppConfig.current.items.map { $0.id ?? "" } }
                 var imageData: [String] { return AppConfig.current.items.map { $0.url ?? "" } }
             }
             
             return Data()
         case .gameModes:
             struct Data: SectionData {
-                var titleData: [String] { return AppConfig.current.gameModes.map { $0.id ?? "" } }
-                var detailData: [String] { return AppConfig.current.gameModes.map { $0.name ?? "" } }
+                var titleData: [String] { return AppConfig.current.gameModes.map { $0.name ?? "" } }
+                var detailData: [String] { return AppConfig.current.gameModes.map { $0.id ?? "" } }
             }
             
             return Data()
@@ -210,13 +224,21 @@ extension ViewController: UITableViewDelegate {
                     navigationController?.pushViewController(ViewController.deploy(mode: .newGameModes), animated: true)
                 }
             }
-        } else if mode == .skins {
-            let skin = AppConfig.current.skins[indexPath.row]
-            present(EditSkinViewController.deploy(with: skin, completion: { [unowned self] editVC in
+        } else {
+            let mode = self.mode!
+            var maybeId: String?
+            switch mode {
+            case .actors, .gameModes, .items, .skins:
+                maybeId = mode.data.detailData[safe: indexPath.row]
+            case .newGameModes, .newItemIds, .newItemImages, .newActors, .newSkins:
+                maybeId = mode.data.titleData[safe: indexPath.row]
+            }
+            guard let id = maybeId else { return }
+            present(EditViewController.deploy(with: mode, model: Model(id: id, type: (mode.modelType)), completion: { [unowned self] editVC in
                 if editVC?.changed ?? false {
                     self.tableView.reloadData()
                 }
-            }), animated: true, completion: nil)
+            }), animated: true)
         }
     }
 }

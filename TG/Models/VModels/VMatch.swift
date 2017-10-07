@@ -81,7 +81,7 @@ class VMatch: VModel {
     
     private func decode() {
         guard let att = self.attributes as? JSON else { return }
-        self.gameMode = GameMode(string: att["gameMode"].string ?? "")
+        self.gameMode = GameMode(id: att["gameMode"].string ?? "", type: .gamemode)
         self.titleId = att["titleId"].string
         self.createdAt = (att["createdAt"].string?.dateFromISO8601WithoutTimeZone ?? Date())
         self.patchVersion = att["patchVersion"].string

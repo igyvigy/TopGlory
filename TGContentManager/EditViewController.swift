@@ -1,5 +1,5 @@
 //
-//  EditSkinViewController.swift
+//  EditViewController.swift
 //  TG
 //
 //  Created by Andrii Narinian on 9/23/17.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class EditSkinViewController: UIViewController {
-    class func deploy(with skin: Skin, completion: ((EditSkinViewController?) -> Void)? = nil) -> EditSkinViewController {
-        let editSkinVC = EditSkinViewController.instantiateFromStoryboardId(.main)
-        editSkinVC.skin = skin
-        editSkinVC.completion = completion
-        return editSkinVC
+class EditViewController: UIViewController {
+    class func deploy(with mode: ViewControllerMode, model: Model, completion: ((EditViewController?) -> Void)? = nil) -> EditViewController {
+        let editmodelVC = EditViewController.instantiateFromStoryboardId(.main)
+        editmodelVC.model = model
+        editmodelVC.completion = completion
+        return editmodelVC
     }
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -22,9 +22,9 @@ class EditSkinViewController: UIViewController {
     @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
-    var completion: ((EditSkinViewController?) -> Void)?
+    var completion: ((EditViewController?) -> Void)?
     var imagePicker: UIImagePickerController!
-    var skin: Skin!
+    var model: Model!
     
     var initialImageUrl: String?
     var initialName: String?
@@ -36,7 +36,7 @@ class EditSkinViewController: UIViewController {
     
     @IBAction func titReceiveLongTap(_ sender: UILongPressGestureRecognizer) {
         Spitter.showSheet(
-            skin.id,
+            model.id,
             message: nil,
             buttonTitles: ["Save current Image on device",
                            "Upload current Image on server",
@@ -45,7 +45,7 @@ class EditSkinViewController: UIViewController {
                            "Cancel"],
             actions: [
                 { [unowned self] in self.save(sender) },
-                { [unowned self] in self.uploadImageIfNeeded(for: self.skin) },
+                { [unowned self] in self.uploadImageIfNeeded(for: self.model) },
                 { [unowned self] in self.save() },
                 { [unowned self] in self.discardChanges() },
                 {}
@@ -53,14 +53,14 @@ class EditSkinViewController: UIViewController {
             styles: [.default, .default, .default, .default, .cancel], owner: self)
     }
     func configure() {
-        initialName = skin.name
-        initialImageUrl = skin.url
-        if let url = URL(string: skin.url ?? "") {
+        initialName = model.name
+        initialImageUrl = model.url
+        if let url = URL(string: model.url ?? "") {
             imageView.setImage(withURL: url) { [unowned self] in
                 self.initialImage = self.imageView.image
             }
         }
-        identifierTextField.text = skin.name
+        identifierTextField.text = model.name
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         changeImageButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
     }
@@ -78,22 +78,22 @@ class EditSkinViewController: UIViewController {
     }
     
     func save() {
-        let skin = self.skin ?? Skin(id: self.skin.id ?? "")
+        let model = self.model!
         if idChanged {
             if let newName = identifierTextField.text, !newName.isEmpty {
-                skin.name = newName
-                FirebaseHelper.store(skins: [skin], completion: { 
+                model.name = newName
+                FirebaseHelper.store(models: [model], completion: { 
                     
                 })
             }
         }
-        uploadImageIfNeeded(for: skin)
+        uploadImageIfNeeded(for: model)
     }
     
-    func uploadImageIfNeeded(for skin: Skin) {
+    func uploadImageIfNeeded(for model: Model) {
         if imageChanged {
             guard let image = imageView.image else { return }
-            FirebaseHelper.update(image: image, for: skin) {
+            FirebaseHelper.update(image: image, for: model) {
                 Spitter.showOk(vc: self, completion: {})
             }
         }
@@ -130,7 +130,7 @@ class EditSkinViewController: UIViewController {
     }
 }
 
-extension EditSkinViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+extension EditViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     //MARK: - Take image
     @IBAction func takePhoto(_ sender: UIButton) {
@@ -164,7 +164,7 @@ extension EditSkinViewController: UINavigationControllerDelegate, UIImagePickerC
         imagePicker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.image = image
-//        FirebaseHelper.update(image: image, for: skin, completion: { 
+//        FirebaseHelper.update(image: image, for: model, completion: { 
 //            Spitter.showOk {
 //                
 //            }

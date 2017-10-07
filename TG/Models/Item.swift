@@ -27,16 +27,14 @@ enum Tier: String {
 }
 
 class Item: Model {
-    var url: String?
-    var name: String?
+
     var category: ItemCategory?
     var tier: Tier?
     var price: Int?
     var itemStatsId: String?
     
     required init(dict: [String: Any?]) {
-        self.url = dict["url"] as? String
-        self.name = dict["name"] as? String
+        
         self.category = ItemCategory(rawValue: dict["category"] as? String ?? "")
         self.tier = Tier(rawValue: dict["tier"] as? String ?? "")
         self.price = dict["price"] as? Int
@@ -44,22 +42,23 @@ class Item: Model {
         super.init(dict: dict)
         self.type = "Item"
         self.id = dict["id"] as? String
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
     }
     
-    init(string: String) {
-        let item = AppConfig.current.itemCatche[string]
-        self.url = item?.url
-        self.name = item?.name
+    required init(id: String, type: ModelType) {
+        if id == "Healing Flask" {
+            
+        }
+        
+        let item = AppConfig.current.itemCatche[id]
+        
+        self.itemStatsId = item?.itemStatsId
         self.category = item?.category
         self.tier = item?.tier
         self.price = item?.price
-        if url == nil {
-            FirebaseHelper.storeUnknownItemIdentifier(itemIdentifier: string)
-        }
-        super.init(dict: [:])
-        self.id = string
-        self.type = "Item"
         
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String: Any?] {

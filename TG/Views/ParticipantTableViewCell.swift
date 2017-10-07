@@ -60,7 +60,7 @@ class ParticipantTableViewCell: TGTableViewCell {
         }
         let actor = participant.actor
         let player = participant.playerName ?? ""
-        var text = (participant.isUser ?? false) ? " (you) \(actor?.id ?? "")" : actor?.id
+        var text = (participant.isUser ?? false) ? " (you) \(actor?.name ?? "")" : actor?.name
         if showPlayer { text = player + " " + text! }
         actorLabel.text = text
         if let skinUrl = URL(string: participant.skin?.url ?? "") {
@@ -94,7 +94,7 @@ class ParticipantTableViewCell: TGTableViewCell {
 
 extension ParticipantTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return participant?.items?.count ?? 0
+        return participant?.itemObjects?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,7 +106,7 @@ extension ParticipantTableViewCell: UICollectionViewDataSource {
 
 extension ParticipantTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let cellCount = participant?.items?.count ?? 0
+        let cellCount = participant?.itemObjects?.count ?? 0
         let cellWidth = 50
         let cellSpacing = 10
         let totalCellWidth = cellWidth * cellCount

@@ -15,24 +15,17 @@ var skinList = Set<String>() {
 }
 
 class Skin: Model {
-    var url: String?
-    var name: String?
+
     required init(dict: [String: Any?]) {
-        self.url = dict["url"] as? String
-        self.name = dict["name"] as? String
         super.init(dict: dict)
         self.type = "Skin"
         self.id = dict["id"] as? String
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
     }
-    
-    init(id: String) {
-        self.url = AppConfig.current.skinCatche[id]?.url
-        if url == nil {
-            FirebaseHelper.storeUnknownSkinIdentifier(skinIdentifier: id)
-        }
-        super.init(dict: [:])
-        self.id = id
-        self.type = "Skin"
+
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

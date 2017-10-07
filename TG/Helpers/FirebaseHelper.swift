@@ -13,7 +13,9 @@ import FirebaseDatabase
 class FirebaseHelper {
     static var ref = Database.database().reference()
     static var skinsReference = ref.child("public/skins")
+    static var otherReference = ref.child("public/other")
     static var unknownSkinsReference = ref.child("public/unknown_skins")
+    static var unknownOtherReference = ref.child("public/unknown_other")
     static var unknownActorsReference = ref.child("public/unknown_actors")
     static var unknownItemsReference = ref.child("public/unknown_items")
     static var unknownGameModesReference = ref.child("public/unknown_game_modes")
@@ -49,6 +51,34 @@ class FirebaseHelper {
             updateValues(on: skinsReference.child(skin.id ?? ""), values: skin.encoded)
         }
         completion()
+    }
+    
+    static func store(models: [Model], completion: @escaping () -> Void) {
+        models.forEach { model in
+            switch model.modelType {
+            case .skin:
+                updateValues(on: skinsReference.child(model.id ?? "null"), values: model.encoded)
+            case .actor:
+                updateValues(on: actorsReference.child(model.id ?? "null"), values: model.encoded)
+            case .item:
+                updateValues(on: itemsReference.child(model.id ?? "null"), values: model.encoded)
+            case .unknown:
+                updateValues(on: otherReference.child(model.id ?? "null"), values: model.encoded)
+            case .gamemode:
+                updateValues(on: gameModesReference.child(model.id ?? "null"), values: model.encoded)
+            }
+        }
+        completion()
+    }
+    
+    static func storeUnknownModel(model: Model) {
+        switch model.modelType {
+        case .skin: updateValues(on: unknownSkinsReference, values: [model.id ?? "null": model.id])
+        case .actor: updateValues(on: unknownActorsReference, values: [model.id ?? "null": model.id])
+        case .item: updateValues(on: unknownItemsReference, values: [model.id ?? "null": model.id])
+        case .unknown: updateValues(on: unknownOtherReference, values: [model.id ?? "null": model.id])
+        case .gamemode: updateValues(on: unknownGameModesReference, values: [model.id ?? "null": model.id])
+        }
     }
     
     static func storeUnknownSkinIdentifier(skinIdentifier: String) {
@@ -190,8 +220,8 @@ class FirebaseHelper {
         )
     }
     
-    static func update(image: UIImage, for skin: Skin, completion: @escaping () -> Void) {
-        processSkins([(skin, image)], completion: completion)
+    static func update(image: UIImage, for model: Model, completion: @escaping () -> Void) {
+        processModels([(model, image)], completion: completion)
     }
     
     static func updateValues(on ref: DatabaseReference, values: [AnyHashable : Any?]) {
@@ -233,11 +263,33 @@ fileprivate extension FirebaseHelper {
         })
     }
     
+    static func processModels(_ models: [(Model, UIImage)], completion: @escaping () -> Void) {
+
+        var models = models
+        guard !models.isEmpty else {
+            completion()
+            
+            return
+        }
+        let model = models.removeFirst()
+        uploadImage(model.1, completion: { (url, image, _) in
+            guard let url = url, let _ = image else {
+                processModels(models, completion: completion)
+                
+                return }
+            updateValues(on: skinsReference.child(model.0.id ?? ""), values: ["url": url.absoluteString])
+            if models.isEmpty {
+                completion()
+            } else {
+                processModels(models, completion: completion)
+            }
+        })
+    }
+    
     static func processActors(_ actors: [ActorType], completion: @escaping () -> Void) {
         actors.forEach { actor in
             updateValues(on: actorsReference.child(actor.r), values: [
                 "id": actor.r,
-                "name": actor.name,
                 "url": actor.imageUrl
                 ])
         }

@@ -37,7 +37,7 @@ struct SeasonStats {
 }
 
 class Player: Model {
-    var name: String?
+    
     var shardId: String?
     var seasonStats: SeasonStats?
     var karmaLevel: Int?
@@ -53,7 +53,7 @@ class Player: Model {
     var assets: [Model]?
     
     required init(dict: [String : Any?]) {
-        self.name = dict["name"] as? String
+        
         self.shardId = dict["shardId"] as? String
         self.seasonStats = SeasonStats(dictArray: dict["seasonStats"] as? [[String : Any]] ?? [[String : Any]]())
         self.karmaLevel = dict["karmaLevel"] as? Int
@@ -68,6 +68,11 @@ class Player: Model {
         self.xp = dict["xp"] as? Int
         self.assets = (dict["assets"] as? [[String: Any]] ?? [[String: Any]]()).map { Model(dict: $0) }
         super.init(dict: dict)
+        self.name = dict["name"] as? String
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
     }
     
     override var encoded: [String : Any?] {

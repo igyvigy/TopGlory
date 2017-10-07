@@ -57,10 +57,19 @@ struct AppConfig {
         return Array(gameModeUnknownCatche.values).sorted(by: { $0 < $1 })
     }
     
-    
     var finishedToFetchData = false {
         didSet {
             print("finishedToFetchData: \(finishedToFetchData)")
+        }
+    }
+    
+    func getCatche(with type: ModelType) -> [AnyHashable: Any] {
+        switch type {
+        case .skin: return skinCatche
+        case .actor: return actorCatche
+        case .item: return itemCatche
+        case .unknown: return [:]
+        case .gamemode: return gameModeCatche
         }
     }
     

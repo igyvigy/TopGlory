@@ -13,8 +13,8 @@ class UsedItemTableViewCell: TGTableViewCell {
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemUsageLabel: UILabel!
     
-    func update(with name: String, imageString: String, count: Int, type: ItemStatsModelType) {
-        if let url = URL(string: imageString) {
+    func update(with name: String?, imageString: String?, count: Int, type: ItemStatsModelType) {
+        if let url = URL(string: imageString ?? kEmptyStringValue) {
             itemImageView.setImage(withURL: url)
         }
         itemNameLabel.text = name

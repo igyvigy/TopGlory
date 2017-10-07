@@ -88,8 +88,15 @@ class VParticipant: VModel {
         if let catched = Catche.runtimeAny[key] {
             return catched as! [Item]
         } else {
-            let itemz = Array(AppConfig.current.itemCatche.values)
-                .filter({ self.items?.contains($0.name ?? "") ?? false })
+            var itemz = [Item]()
+            self.items?.forEach { itemId in
+                if let existingItem = AppConfig.current.itemCatche[itemId] {
+                    itemz.append(existingItem)
+                } else {
+                    let item = Item(id: itemId, type: .item)
+                    itemz.append(item)
+                }
+            }
             Catche.runtimeAny[key] = itemz
             return itemz
         }
@@ -146,7 +153,7 @@ class VParticipant: VModel {
     
     private func decode() {
         guard let att = self.attributes as? JSON else { return }
-        self.actor = Actor(string: att["actor"].stringValue)
+        self.actor = Actor(id: att["actor"].stringValue, type: .actor)
         self.shardId = att["shardId"].string
         self.assists = att["stats"]["assists"].int
         self.crystalMineCaptures = att["stats"]["crystalMineCaptures"].int
@@ -167,7 +174,7 @@ class VParticipant: VModel {
         self.minionKills = att["stats"]["minionKills"].int
         self.nonJungleMinionKills = att["stats"]["nonJungleMinionKills"].int
         self.skillTier = att["stats"]["skillTier"].int
-        self.skin = Skin(id: att["stats"]["skinKey"].stringValue)
+        self.skin = Skin(id: att["stats"]["skinKey"].stringValue, type: .skin)
         self.turretCaptures = att["stats"]["turretCaptures"].int
         self.wentAfk = att["stats"]["wentAfk"].bool
         self.winner = att["stats"]["winner"].bool
@@ -177,5 +184,9 @@ class VParticipant: VModel {
             related.append(contentsOf: $0.data ?? [VModel]())
         })
         let _ = playerName
+        let itemObjects = self.itemObjects
+        if itemObjects.count < 6 {
+            
+        }
     }
 }
