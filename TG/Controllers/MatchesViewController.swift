@@ -38,9 +38,15 @@ class MatchesViewController: TableViewController, Refreshable {
     
     func loadMatches() {
         VMatch.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
-            self?.stopRefreshing()
-            self?.matches = matches
-            self?.tableView.reloadData()
+            
+            FirebaseHelper.getAllDIfferentMatchesFromHistory(for: matches, completion: { [weak self] matchesFormHistory in
+                var summ = matches
+                summ.append(contentsOf: matchesFormHistory.sorted())
+                self?.stopRefreshing()
+                self?.matches = summ
+                self?.tableView.reloadData()
+            })
+            
         })
     }
 }

@@ -43,7 +43,7 @@ enum GameModeType: String {
     }
 }
 
-class Match: Model {
+class Match: Model, Equatable, Comparable {
     var gameMode: GameMode?
     var titleId: String?
     var createdAt: Date?
@@ -97,4 +97,20 @@ class Match: Model {
         ]
         return dict
     }
+}
+
+func ==(lhs: Match, rhs: Match) -> Bool {
+    return lhs.id == rhs.id
+}
+func <(lhs: Match, rhs: Match) -> Bool {
+    return lhs.createdAt ?? Date() > rhs.createdAt ?? Date()
+}
+func <=(lhs: Match, rhs: Match) -> Bool {
+    return lhs.createdAt ?? Date() >= rhs.createdAt ?? Date()
+}
+func >=(lhs: Match, rhs: Match) -> Bool {
+    return lhs.createdAt ?? Date() <= rhs.createdAt ?? Date()
+}
+func >(lhs: Match, rhs: Match) -> Bool {
+    return lhs.createdAt ?? Date() < rhs.createdAt ?? Date()
 }

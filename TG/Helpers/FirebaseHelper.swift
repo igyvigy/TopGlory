@@ -119,6 +119,25 @@ class FirebaseHelper {
         }
     }
     
+    static func getAllDIfferentMatchesFromHistory(for matches: [Match], completion: @escaping ([Match]) -> Void) {
+        guard let currentUserName = AppConfig.currentUserName else { return }
+        historyReference
+            .child(currentUserName)
+            .child("match")
+            .observeSingleEvent(of: .value, with: { snap in
+                let allHistoryMatches = snap.children.map { child in
+                    Match(dict: (child as? DataSnapshot)?.value as? [String: Any] ?? [String: Any]())
+                }
+                let fileterdMatches = allHistoryMatches.filter({ match -> Bool in
+                    return !matches.contains(match)
+                })
+                DispatchQueue.main.async {
+                    completion(fileterdMatches)
+                }
+            }
+        )
+    }
+    
     static func getAllSkins(completion: @escaping ([Skin]) -> Void) {
         skinsReference
             .observeSingleEvent(of: .value, with: { snap in

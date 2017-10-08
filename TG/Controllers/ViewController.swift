@@ -45,9 +45,14 @@ extension ViewController {
 
 //        FirebaseHelper.createRecordsForKnownItems()
         
-        VMatch.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches in
-            let matchesVC = MatchesViewController.deploy(with: matches)
-            self?.navigationController?.pushViewController(matchesVC, animated: true)
+        VMatch.findWhere(withOwner: self, userName: name, loaderMessage: "looking for your matches", control: sender, onSuccess: { matches in
+            FirebaseHelper.getAllDIfferentMatchesFromHistory(for: matches, completion: { [weak self] matchesFormHistory in
+                var summ = matches
+                summ.append(contentsOf: matchesFormHistory.sorted())
+                let matchesVC = MatchesViewController.deploy(with: summ)
+                self?.navigationController?.pushViewController(matchesVC, animated: true)
+            })
+
         })
         
 //        VMatch.findWhere(
