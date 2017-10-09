@@ -34,30 +34,28 @@ class GraphViewController: UIViewController {
     
     func makeData() {
         let teamKills = makeTeamKillsData()
-        let turretKills = makeTeamTurretKillsData()
-        let teamDamage = makeTeamDamageData()
-        chartView.data = LineChartData(dataSets: teamKills + turretKills + teamDamage)
+        //let turretKills = makeTeamTurretKillsData()
+        //let teamDamage = makeTeamDamageData()
+        chartView.data = LineChartData(dataSets: teamKills)// + turretKills + teamDamage)
     }
     
     func makeTeamKillsData() -> [LineChartDataSet] {
         var teamKillsData = [Side: [(Date, Int)]]()
         var teamsKillCounter = [Side: Int]()
         
-        actions?.filter({ $0.id == "KillActor" }).forEach { action in
-            switch action {
-            case .KillActor(let time, let side, let actor, let killed, let killedTeam, let gold, let isHero, let targetIsHero, let position):
-                if targetIsHero {
-                    if let kills = teamsKillCounter[side] {
-                        teamKillsData[side]?.append((time, kills + 1))
-                        teamsKillCounter[side] = kills + 1
-                    } else {
-                        teamKillsData[side] = [(Date, Int)]()
-                        teamKillsData[side]?.append((time.addingTimeInterval(-1), 0))
-                        teamKillsData[side]?.append((time, 1))
-                        teamsKillCounter[side] = 1
-                    }
+        actions?.filter({ $0.actionId == "KillActor" }).forEach { action in
+            let targetIsHero = (action.payload?["TargetIsHero"] as? Int ?? 0)
+            let side = Side(string: action.payload?["Team"] as? String ?? "")
+            if targetIsHero == 1 {
+                if let kills = teamsKillCounter[side] {
+                    teamKillsData[side]?.append((action.time!, kills + 1))
+                    teamsKillCounter[side] = kills + 1
+                } else {
+                    teamKillsData[side] = [(Date, Int)]()
+                    teamKillsData[side]?.append((action.time!.addingTimeInterval(-1), 0))
+                    teamKillsData[side]?.append((action.time!, 1))
+                    teamsKillCounter[side] = 1
                 }
-            default: break
             }
         }
         
@@ -81,23 +79,23 @@ class GraphViewController: UIViewController {
         var teamKillsData = [Side: [(Date, Int)]]()
         var teamsKillCounter = [Side: Int]()
         
-        actions?.filter({ $0.id == "KillActor" }).forEach { action in
-            switch action {
-            case .KillActor(let time, let side, let actor, let killed, let killedTeam, let gold, let isHero, let targetIsHero, let position):
-                if killed.id == "*Turret*" || killed.id == "*VainTurret*" {
-                    if let kills = teamsKillCounter[side] {
-                        teamKillsData[side]?.append((time, kills + 1))
-                        teamsKillCounter[side] = kills + 1
-                    } else {
-                        teamKillsData[side] = [(Date, Int)]()
-                        teamKillsData[side]?.append((time.addingTimeInterval(-1), 0))
-                        teamKillsData[side]?.append((time, 1))
-                        teamsKillCounter[side] = 1
-                    }
+        actions?.filter({ $0.actionId == "KillActor" }).forEach { action in
+            let targetIsHero = (action.payload?["TargetIsHero"] as? Int ?? 0)
+            let side = Side(string: action.payload?["Team"] as? String ?? "")
+            let killed = Actor(id: action.payload?["Killed"] as? String ?? "", type: .actor)
+            if killed.id == "*Turret*" || killed.id == "*VainTurret*" {
+                if let kills = teamsKillCounter[side] {
+                    teamKillsData[side]?.append((action.time!, kills + 1))
+                    teamsKillCounter[side] = kills + 1
+                } else {
+                    teamKillsData[side] = [(Date, Int)]()
+                    teamKillsData[side]?.append((action.time!.addingTimeInterval(-1), 0))
+                    teamKillsData[side]?.append((action.time!, 1))
+                    teamsKillCounter[side] = 1
                 }
-            default: break
             }
         }
+
         
         var dataSets = [LineChartDataSet]()
         teamKillsData.keys.forEach { side in
@@ -121,17 +119,17 @@ class GraphViewController: UIViewController {
         
         actions?.filter({ $0.id == "DealDamage" }).forEach { action in
             switch action {
-            case .DealDamage(let time, let side, let actor, let target, let source, let damage, let delt, let isHero, let targetIsHero):
-                let delt: Double = (Double(delt)/100)
-                if targetIsHero {
-                    if let _ = teamDamageData[side] {
-                        teamDamageData[side]?.append((time, delt))
-                    } else {
-                        teamDamageData[side] = [(Date, Double)]()
-                        teamDamageData[side]?.append((time, delt))
-                    }
-                    teamDamageData[side]?.append((time, delt))
-                }
+//            case .DealDamage(let time, let side, let actor, let target, let source, let damage, let delt, let isHero, let targetIsHero):
+//                let delt: Double = (Double(delt)/100)
+//                if targetIsHero {
+//                    if let _ = teamDamageData[side] {
+//                        teamDamageData[side]?.append((time, delt))
+//                    } else {
+//                        teamDamageData[side] = [(Date, Double)]()
+//                        teamDamageData[side]?.append((time, delt))
+//                    }
+//                    teamDamageData[side]?.append((time, delt))
+//                }
             default: break
             }
         }

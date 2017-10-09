@@ -11,13 +11,13 @@ import Foundation
 typealias TelemetryFCompletion = ([FActionModel]) -> Void
 
 class FActionModel: Model {
-    var action: Action?
+    var action: ActionType?
     
     required init(dict: [String : Any?]) {
         super.init(dict: dict)
     }
     
-    init (action: Action?) {
+    init (action: ActionType?) {
         self.action = action
         super.init(dict: [:])
     }

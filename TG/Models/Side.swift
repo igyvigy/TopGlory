@@ -9,29 +9,29 @@
 import UIKit
 
 enum SideDir: String {
-    case left, right, none
+    case left, right, neutral
 }
 
 enum SideColor: String {
-    case red, blue, none
+    case red, blue, neutral
     
     var uiColor: UIColor {
         switch self {
         case .red: return .red
         case .blue: return .blue
-        case .none: return .clear
+        case .neutral: return .green
         }
     }
 }
 
 struct Side: Hashable {
-    var dir: SideDir = .none
-    var color: SideColor = .none
+    var dir: SideDir
+    var color: SideColor
     
     init (identifier: String) {
         let components = identifier.components(separatedBy: "-")
-        self.dir = SideDir(rawValue: components[0]) ?? .none
-        self.color = SideColor(rawValue: components[1]) ?? .none
+        self.dir = SideDir(rawValue: components[0]) ?? .neutral
+        self.color = SideColor(rawValue: components[1]) ?? .neutral
     }
     
     init (string: String?) {
@@ -45,6 +45,9 @@ struct Side: Hashable {
         case "2", "two", "right", "Right":
             self.dir = .right
             self.color = .red
+        case "Neutral", "neutral", "0":
+            self.dir = .neutral
+            self.color = .neutral
         default: break
         }
     }

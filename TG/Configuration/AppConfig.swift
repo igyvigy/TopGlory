@@ -20,10 +20,12 @@ struct AppConfig {
     private init(){}
     
     var skinCatche: [AnyHashable: Skin] = [:]
+    var abilityCatche: [AnyHashable: Ability] = [:]
     var actorCatche: [AnyHashable: Actor] = [:]
     var itemCatche: [AnyHashable: Item] = [:]
     var gameModeCatche: [AnyHashable: GameMode] = [:]
     var skinUnknownCatche: [AnyHashable: String] = [:]
+    var abilityUnknownCatche: [AnyHashable: String] = [:]
     var actorUnknownCatche: [AnyHashable: String] = [:]
     var itemUnknownImageCatche: [AnyHashable: String] = [:]
     var itemUnknownIdentifierCatche: [AnyHashable: String] = [:]
@@ -31,6 +33,9 @@ struct AppConfig {
     
     var skins: [Skin] {
         return Array(skinCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
+    }
+    var abilities: [Ability] {
+        return Array(abilityCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
     }
     var actors: [Actor] {
         return Array(actorCatche.values).sorted(by: { $0.id ?? "" < $1.id ?? "" })
@@ -70,6 +75,7 @@ struct AppConfig {
         case .item: return itemCatche
         case .unknown: return [:]
         case .gamemode: return gameModeCatche
+        case .ability: return abilityCatche
         }
     }
     

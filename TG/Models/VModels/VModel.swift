@@ -17,16 +17,20 @@ extension FirebaseHelper {
     static func save(model: VModel) {
         guard let currentUserName = AppConfig.currentUserName else { return }
         let values = model.encoded
-        updateValues(
-            on: historyReference
-                .child(currentUserName)
-                .child(model.type ?? "no_type")
-                .child(model.id ?? "no_id"),
-            values: values
-        )
+        existsForCurrentUser(model: model) { exists in
+            if !exists {
+                updateValues(
+                    on: historyReference
+                        .child(currentUserName)
+                        .child(model.type ?? "no_type")
+                        .child(model.id ?? "no_id"),
+                    values: values
+                )
+            }
+        }
     }
     
-    static func existsForCurrentUser(model: VModel, completion: @escaping (Bool) -> Void) {
+    static func existsForCurrentUser(model: VModel, completion: @escaping ( Bool ) -> Void) {
         guard let currentUserName = AppConfig.currentUserName else {
             completion(false)
             
@@ -37,7 +41,11 @@ extension FirebaseHelper {
             .child(model.id ?? "no_id")
             .observeSingleEvent(of: .value, with: { snap in
                 DispatchQueue.main.async {
-                    completion(snap.exists())
+                completion(snap.exists())
+                }
+            }, withCancel: { _ in
+                DispatchQueue.main.async {
+                    completion(false)
                 }
             })
     }

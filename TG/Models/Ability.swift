@@ -14,7 +14,32 @@ var abilityList = Set<String>() {
     }
 }
 
-enum Ability: String {
+class Ability: Model {
+    
+    required init(dict: [String: Any?]) {
+        super.init(dict: dict)
+        self.type = "Ability"
+        self.id = dict["id"] as? String
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
+    }
+    
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "name": name,
+            "url": url,
+            "type": type
+        ]
+        return dict
+    }
+}
+
+enum AbilityType: String {
     case
     Unset = "<Unset>",
     AbilityB_Bounce = "AbilityB_Bounce",
@@ -164,7 +189,7 @@ enum Ability: String {
     Withdraw = "Withdraw"
     
     init(string: String) {
-        if let ability = Ability(rawValue: string) {
+        if let ability = AbilityType(rawValue: string) {
             self = ability
         } else {
             print("ability missing: \(string)")

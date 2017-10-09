@@ -77,7 +77,7 @@ extension Asset {
     func loadTelemetry(withOwner owner: TGOwner? = nil,
                        loaderMessage: String? = nil,
                        control: Control? = nil,
-                       onSuccess: @escaping TelemetryFCompletion,
+                       onSuccess: @escaping ([Action]) -> Void,
                        onError: Completion? = nil) {
         let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
         Alamofire.request(try! router.asURLRequest())
@@ -85,7 +85,7 @@ extension Asset {
                 debugPrint(response)
                 if let object = response.result.value {
                     let jsonArray = JSON(object).arrayValue
-                    onSuccess(jsonArray.map({ FActionModel(json: $0) }))
+                    onSuccess(jsonArray.map({ Action(dict: ActionModel(json: $0).encoded) }))
                 }
         }
     }

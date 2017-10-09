@@ -12,18 +12,22 @@ import FirebaseDatabase
 
 class FirebaseHelper {
     static var ref = Database.database().reference()
+    
     static var skinsReference = ref.child("public/skins")
+    static var abilitiesReference = ref.child("public/abilities")
     static var otherReference = ref.child("public/other")
+    static var actorsReference = ref.child("public/actors")
+    static var itemsReference = ref.child("public/items")
+    static var gameModesReference = ref.child("public/game_mode")
+    static var historyReference = ref.child("history")
+    
     static var unknownSkinsReference = ref.child("public/unknown_skins")
+    static var unknownAbilitiesReference = ref.child("public/unknown_abilities")
     static var unknownOtherReference = ref.child("public/unknown_other")
     static var unknownActorsReference = ref.child("public/unknown_actors")
     static var unknownItemsReference = ref.child("public/unknown_items")
     static var unknownGameModesReference = ref.child("public/unknown_game_modes")
     static var unknownItemStatsIdReference = ref.child("public/unknown_item_stats_id")
-    static var actorsReference = ref.child("public/actors")
-    static var itemsReference = ref.child("public/items")
-    static var gameModesReference = ref.child("public/game_mode")
-    static var historyReference = ref.child("history")
     
     static func configure() {
         FirebaseApp.configure()
@@ -58,6 +62,8 @@ class FirebaseHelper {
             switch model.modelType {
             case .skin:
                 updateValues(on: skinsReference.child(model.id ?? "null"), values: model.encoded)
+            case .ability:
+                updateValues(on: abilitiesReference.child(model.id ?? "null"), values: model.encoded)
             case .actor:
                 updateValues(on: actorsReference.child(model.id ?? "null"), values: model.encoded)
             case .item:
@@ -74,6 +80,8 @@ class FirebaseHelper {
         switch model.modelType {
         case .skin:
             unknownSkinsReference.child(model.id ?? "null").removeValue()
+        case .ability:
+            unknownAbilitiesReference.child(model.id ?? "null").removeValue()
         case .actor:
             unknownActorsReference.child(model.id ?? "null").removeValue()
         case .item:

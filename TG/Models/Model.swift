@@ -14,6 +14,7 @@ enum ModelType: String {
     case item = "Item"
     case unknown = "Unknown"
     case gamemode = "GameMode"
+    case ability = "Ability"
     
     var nameUrlInsertion: (String) -> (name: String?, url: String?) {
         switch self {

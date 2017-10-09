@@ -49,10 +49,10 @@ class RostersViewController: TableViewController {
     @IBAction func showTelemetry(sender: UIBarButtonItem) {
         guard let asset = match.assets.first else { return }
         sender.isEnabled = false
-        asset.loadTelemetry(withOwner: self, loaderMessage: "loading match data", control: sender, onSuccess: { actionModels in
+        asset.loadTelemetry(withOwner: self, loaderMessage: "loading match data", control: sender, onSuccess: { actions in
             sender.isEnabled = true
                 self.navigationController?.pushViewController(
-                    GraphViewController.deploy(with: actionModels.map({ $0.action ?? .Unknown }), match: self.match)
+                    GraphViewController.deploy(with: actions, match: self.match)
                     , animated: true)
             
         })
@@ -87,7 +87,7 @@ extension RostersViewController: TableViewControllerDelegate {
         }
         if model is FActionModel {
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
-            cell.textLabel?.text = "\((model as? FActionModel)?.action ?? Action.Unknown)"
+            cell.textLabel?.text = "\((model as? FActionModel)?.action ?? ActionType.Unknown)"
             cell.textLabel?.numberOfLines = 0
             return cell
         }

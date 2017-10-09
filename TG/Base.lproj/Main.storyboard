@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GYq-Aa-qjo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GYq-Aa-qjo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -74,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK8-yO-SEG" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1884" y="37.331334332833585"/>
+            <point key="canvasLocation" x="1916" y="36"/>
         </scene>
         <!--Matches View Controller-->
         <scene sceneID="ncx-Wk-QuR">
@@ -170,7 +170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dnO-GN-bZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3422" y="36"/>
+            <point key="canvasLocation" x="3433" y="36"/>
         </scene>
         <!--Participant Detail View Controller-->
         <scene sceneID="OFi-JN-4tH">
@@ -207,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jVm-Fa-Oyk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4172" y="37"/>
+            <point key="canvasLocation" x="4198" y="36"/>
         </scene>
         <!--Graph View Controller-->
         <scene sceneID="oL6-Bm-3I0">
@@ -241,7 +241,67 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ndX-me-8Ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5001" y="36"/>
+            <point key="canvasLocation" x="4969" y="37"/>
+        </scene>
+        <!--Actions Table View Controller-->
+        <scene sceneID="qYT-d6-2qM">
+            <objects>
+                <tableViewController id="BSh-ve-Ezx" customClass="ActionsTableViewController" customModule="TG" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Mu-3L-xeY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeroBan" rowHeight="171" id="UG2-SO-3PW">
+                                <rect key="frame" x="0.0" y="28" width="375" height="171"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UG2-SO-3PW" id="Yee-5v-Qzl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="170.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="db4-0y-qHN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="170.5"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xVp-J5-p0l">
+                                                    <rect key="frame" x="4" y="34" width="367" height="132.5"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCe-x6-yAr">
+                                                    <rect key="frame" x="166" y="5" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="XCe-x6-yAr" firstAttribute="top" secondItem="db4-0y-qHN" secondAttribute="top" constant="5" id="0pD-LU-RbK"/>
+                                                <constraint firstItem="xVp-J5-p0l" firstAttribute="top" secondItem="db4-0y-qHN" secondAttribute="top" constant="34" id="1EY-lA-I1M"/>
+                                                <constraint firstItem="XCe-x6-yAr" firstAttribute="centerX" secondItem="db4-0y-qHN" secondAttribute="centerX" id="8kE-dg-iJA"/>
+                                                <constraint firstAttribute="bottom" secondItem="xVp-J5-p0l" secondAttribute="bottom" constant="4" id="VnK-Jv-yDo"/>
+                                                <constraint firstAttribute="trailing" secondItem="xVp-J5-p0l" secondAttribute="trailing" constant="4" id="kTq-jY-wpO"/>
+                                                <constraint firstItem="xVp-J5-p0l" firstAttribute="leading" secondItem="db4-0y-qHN" secondAttribute="leading" constant="4" id="z1b-It-4Dd"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="db4-0y-qHN" secondAttribute="bottom" id="11s-RP-mMT"/>
+                                        <constraint firstAttribute="trailing" secondItem="db4-0y-qHN" secondAttribute="trailing" id="ULL-6a-bMu"/>
+                                        <constraint firstItem="db4-0y-qHN" firstAttribute="leading" secondItem="Yee-5v-Qzl" secondAttribute="leading" id="Vh5-vj-NYh"/>
+                                        <constraint firstItem="db4-0y-qHN" firstAttribute="top" secondItem="Yee-5v-Qzl" secondAttribute="top" id="mjk-YT-Br2"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="BSh-ve-Ezx" id="RGQ-M3-1pI"/>
+                            <outlet property="delegate" destination="BSh-ve-Ezx" id="3bG-Ut-7Fi"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JAn-hT-eeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5765.6000000000004" y="35.532233883058474"/>
         </scene>
     </scenes>
 </document>

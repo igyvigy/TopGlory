@@ -8,7 +8,40 @@
 
 import Foundation
 
-enum Action: EnumCollection {
+class Action: Model {
+    
+    var actionId: String?
+    var time: Date?
+    var payload: [String: Any]?
+    
+    required init(dict: [String: Any?]) {
+        
+        self.actionId = dict["actionId"] as? String
+        self.time = (dict["timeStamp"] as? String ?? "").dateFromISO8601
+        self.payload = dict["payload"] as? [String: Any]
+        
+        super.init(dict: dict)
+        self.type = "Skin"
+        self.id = dict["id"] as? String
+        self.url = dict["url"] as? String
+        self.name = dict["name"] as? String
+    }
+    
+    required init(id: String, type: ModelType) {
+        super.init(id: id, type: type)
+    }
+    
+    override var encoded: [String : Any?] {
+        let dict: [String: Any?] = [
+            "id": id,
+            "name": name,
+            "url": url
+        ]
+        return dict
+    }
+}
+
+enum ActionType: EnumCollection {
     var hashValue: Int {
         return id.hashValue
     }
@@ -59,6 +92,6 @@ enum Action: EnumCollection {
     case Unknown
 }
 
-func == (lhs: Action, rhs: Action) -> Bool {
+func == (lhs: ActionType, rhs: ActionType) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
