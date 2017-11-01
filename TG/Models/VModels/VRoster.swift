@@ -28,31 +28,16 @@ class VRoster: VModel {
         return related.filter({ $0.type == "team" })
     }
     var isUserTeam: Bool {
-        let key = "roster\(id ?? "").isUserTeam"
-        if let catched = Catche.runtimeBool[key] {
-            return catched
-        } else {
-            let isUserTeam = participants
-                .filter({ $0.player?.name == AppConfig.currentUserName })
-                .count > 0
-            Catche.runtimeBool[key] = isUserTeam
-            return isUserTeam
-        }
+        return participants
+            .filter({ $0.player?.name == AppConfig.currentUserName })
+            .count > 0
     }
     init (model: VModel) {
         super.init(id: model.id, type: model.type, attributes: model.attributes, relationships: model.relationships)
         decode()
     }
     public var partisipantActors: [Actor] {
-        let key = "roster\(id ?? "").partisipantsString"
-        if let catched = Catche.runtimeAny[key] {
-            return catched as! [Actor]
-        } else {
-            let description = participants
-                .map({ $0.actor })
-            Catche.runtimeAny[key] = description
-            return description as! [Actor]
-        }
+        return participants.flatMap { $0.actor }
     }
     
     required init(json: JSON, included: [VModel]? = nil) {

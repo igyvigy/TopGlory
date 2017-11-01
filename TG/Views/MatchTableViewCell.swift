@@ -27,7 +27,7 @@ class MatchTableViewCell: TGTableViewCell {
     }
     
     func update(with match: Match) {
-        createdAtLabel.text = match.createdAt?.timeFromNow()
+        createdAtLabel.text = DateFormatterHelper.messageString(from: match.createdAt!)
         durationLabel.text = match.duration?.secondsFormatted
         gameModeLabel.text = match.description
         gameModeLabel.textColor = match.userWon ?? false ? .green : .red

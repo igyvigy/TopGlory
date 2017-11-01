@@ -44,7 +44,7 @@ class RosterView: NibLoadingView {
         guard let participants = roster.participants else { return }
         for (idx, participant) in participants.enumerated() {
             participantsImageViews[safe: idx]?.image = nil
-            if let skinUrl = URL(string: participant.skin?.url ?? "") {
+            if let skinUrl = URL(string: participant.actor?.url ?? "") {
                 participantsImageViews[safe: idx]?.setImage(withURL: skinUrl)
             }
             playerNamesLabels[safe: idx]?.text = participant.playerName

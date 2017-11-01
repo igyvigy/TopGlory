@@ -9,12 +9,45 @@
 
 import Foundation
 
+enum Shard: String, EnumCollection {
+    case  northAmerica = "na",
+    europe = "eu",
+    southAmerica = "sa",
+    eastAsia = "ea",
+    southeastAsia = "sg",
+    tournamentNa = "tournament-na",
+    tournamentEu = "tournament-eu",
+    tournamentSa = "tournament-sa",
+    tournamentEa = "tournament-ea",
+    tournamentSg = "tournament-sg"
+    
+    var name: String {
+        switch self {
+        case .northAmerica: return "North America"
+        case .europe: return "Europe"
+        case .southAmerica: return "South America"
+        case .eastAsia: return "East Asia"
+        case .southeastAsia: return "Southeast Asia"
+        case .tournamentNa: return "North America Tournaments"
+        case .tournamentEu: return "Europe Tournaments"
+        case .tournamentSa: return "South America Tournaments"
+        case .tournamentEa: return "East Asia Tournaments"
+        case .tournamentSg: return "Southeast Asia Tournaments"
+        }
+    }
+}
+
 struct AppConfig {
+    
     static let API_URL = "https://api.dc01.gamelockerapp.com/shards"
     static let apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwZjRiNWQ0MC00NzhkLTAxMzUtZTJhOC0wMjQyYWMxMTAwMDYiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNDk5Njg0NDkzLCJwdWIiOiJzZW1jIiwidGl0bGUiOiJ2YWluZ2xvcnkiLCJhcHAiOiIwZjQ5YTYzMC00NzhkLTAxMzUtZTJhNi0wMjQyYWMxMTAwMDYiLCJzY29wZSI6ImNvbW11bml0eSIsImxpbWl0IjoxMH0.MTXzY-WjXJtj30nBKnU9xf8hIj6FkMEAJtkKDfeXJbY"
     static var currentUserName: String? {
         return UserDefaults.standard.string(forKey: Constants.lastUserDefaultsKey)
     }
+    static var currentShardId: String {
+        return UserDefaults.standard.string(forKey: Constants.shardDefaultsKey) ?? "eu"
+    }
+    
     static var current: AppConfig = { return AppConfig() }()
     
     private init(){}

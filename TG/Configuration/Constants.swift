@@ -17,9 +17,10 @@ typealias DateCompletion = (Date) -> Void
 
 struct Constants {
     static let lastUserDefaultsKey = "lastPlayerName"
+    static let shardDefaultsKey = "shardDefaultsKey"
     static let kUploadsImagesPath = "uploads/images"
     static let kUploadsVideosPath = "uploads/videos"
-
+    static let kNumberOfDaysToSearchMatches = 27
 }
 
 let kEmptyStringValue = ""

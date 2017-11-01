@@ -63,71 +63,67 @@ class BaseRequestOperation: PSOperation {
     }
 }
 
-class JSONAPIObjectOperation<M: VModel>: GroupOperation {
-    var completion: (TGResult<M>) -> Void
+class JSONAPIObjectOperation<M: Model, V: VModel>: GroupOperation {
+    var completion: (TGResult<M, V>) -> Void
     var transferObject: TransferObject
-    init(with router: RouterCompatible, completion: @escaping (TGResult<M>) -> Void) {
+    init(with router: RouterCompatible, completion: @escaping (TGResult<M, V>) -> Void) {
         transferObject = TransferObject()
         self.completion = completion
         let requestOperation = BaseRequestOperation(transferObject: transferObject, path: router)
-        let parseOperation = JSONAPIObjectParseOperations<M>(transferObject: transferObject, completion: completion)
+        let parseOperation = JSONAPIObjectParseOperations<M, V>(transferObject: transferObject, completion: completion)
         
         super.init(operations: requestOperation >>> parseOperation )
         addObserver(NetworkObserver())
     }
 }
 
-class JSONAPIArrayOperation<M: VModel>: GroupOperation {
-    var completion: (TGResult<M>) -> Void
+class JSONAPIArrayOperation<M: Model, V: VModel>: GroupOperation {
+    var completion: (TGResult<M, V>) -> Void
     var transferObject: TransferObject
-    init(with router: RouterCompatible, completion: @escaping (TGResult<M>) -> Void) {
+    init(with router: RouterCompatible, completion: @escaping (TGResult<M, V>) -> Void) {
         transferObject = TransferObject()
         self.completion = completion
         let requestOperation = BaseRequestOperation(transferObject: transferObject, path: router)
-        let parseOperation = JSONAPIParseResponseArrayOperation<M>(transferObject: transferObject, completion: completion)
+        let parseOperation = JSONAPIParseResponseArrayOperation<M, V>(transferObject: transferObject, completion: completion)
         
         super.init(operations: requestOperation >>> parseOperation )
         addObserver(NetworkObserver())
     }
 }
 
-class JSONAPIObjectParseOperations<M: VModel>: PSOperation {
-    var completion: (TGResult<M>) -> Void
+class JSONAPIObjectParseOperations<M: Model, V: VModel>: PSOperation {
+    var completion: (TGResult<M, V>) -> Void
     var transferObject: TransferObject
-    init(transferObject: TransferObject, completion: @escaping (TGResult<M>) -> Void) {
+    init(transferObject: TransferObject, completion: @escaping (TGResult<M, V>) -> Void) {
         self.completion = completion
         self.transferObject = transferObject
         super.init()
         addObserver(NetworkObserver())
     }
     override func execute() {
-        DispatchQueue.main.async {
-            let result: TGResult<M> = TGResult(jsonApiObject: self.transferObject)
-            self.transferObject.object = result.value
-            self.completion(result)
-            self.finish()
-        }
+        let result: TGResult<M, V> = TGResult(jsonApiObject: self.transferObject)
+        self.transferObject.object = result.value
+        self.completion(result)
+        self.finish()
     }
 }
 
-class JSONAPIParseResponseArrayOperation<M: VModel>: PSOperation {
-    var completion: ((TGResult<M>) -> Void)
+class JSONAPIParseResponseArrayOperation<M: Model, V: VModel>: PSOperation {
+    var completion: ((TGResult<M, V>) -> Void)
     var transferObject: TransferObject
-    init(transferObject: TransferObject, completion: @escaping ((TGResult<M>) -> Void) ) {
+    init(transferObject: TransferObject, completion: @escaping ((TGResult<M, V>) -> Void) ) {
         self.completion = completion
         self.transferObject = transferObject
         super.init()
         addObserver(NetworkObserver())
     }
     override func execute() {
-        DispatchQueue.main.async {
-            let result: TGResult<M> = TGResult(jsonApiArray: self.transferObject)
-            if let models = result.values {
-                models.forEach { model in FirebaseHelper.save(model: model) }
-            }
-            self.completion(result)
-            self.finish()
+        let result: TGResult<M, V> = TGResult(jsonApiArray: self.transferObject)
+        if let models = result.values {
+            models.forEach { model in FirebaseHelper.save(model: model) }
         }
+        self.completion(result)
+        self.finish()
     }
 }
 

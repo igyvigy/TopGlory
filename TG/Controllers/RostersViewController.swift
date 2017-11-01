@@ -74,6 +74,10 @@ extension RostersViewController: TableViewControllerDataSource {
 }
 
 extension RostersViewController: TableViewControllerDelegate {
+    func willDisplayLastRow() {
+        
+    }
+
     func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
         if model is Roster {
             let cell = RosterTableViewCell.dequeued(by: tableView)

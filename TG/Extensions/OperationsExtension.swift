@@ -12,9 +12,9 @@ import PSOperations
 extension Foundation.BlockOperation {
     public class func createFinishOperation(_ handler: @escaping () -> Void) -> Foundation.BlockOperation {
         let finishOperation = BlockOperation(block: { () -> Void in
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 handler()
-            }
+//            }
         })
         finishOperation.name = "finishOperation"
         return finishOperation

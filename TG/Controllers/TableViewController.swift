@@ -17,6 +17,7 @@ protocol TableViewControllerDataSource: class {
 protocol TableViewControllerDelegate: class {
     func didSelect(_ model: Model, at indexPath: IndexPath)
     func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell?
+    func willDisplayLastRow()
 }
 
 class TableViewController: UIViewController {
@@ -47,6 +48,12 @@ extension TableViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if let model = dataSource?._models[indexPath.row] {
             delegate?.didSelect(model, at: indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == (dataSource?._models.count ?? 0) - 1 {
+            delegate?.willDisplayLastRow()
         }
     }
 }

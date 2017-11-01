@@ -15,12 +15,14 @@ enum Router: RouterCompatible {
     case matches(parameters: Parameters)
     case match(id: String, parameters: Parameters)
     case telemetry(urlString: String, contentType: String)
+    case nextMatches(nextPageURL: String)
     
     var method: HTTPMethod {
         switch self {
         case .matches: return .get
         case .match: return .get
         case .telemetry: return .get
+        case .nextMatches: return .get
         }
     }
     
@@ -29,17 +31,14 @@ enum Router: RouterCompatible {
         case .matches: return "/matches"
         case .match(let id, _): return "/matches/\(id)"
         case .telemetry: return ""
+        case .nextMatches(let nextPageURL): return nextPageURL
         }
-    }
-        
-    var shard: String {
-        return "/eu"
     }
     
     // MARK: URLRequestConvertible
     func asURLRequest() throws -> URLRequest {
         let url = try Router.baseURLString.asURL()
-        let urlWithShard = url.appendingPathComponent(shard)
+        let urlWithShard = url.appendingPathComponent("/" + AppConfig.currentShardId)
         var urlRequest = URLRequest(url: urlWithShard.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
         
@@ -57,8 +56,15 @@ enum Router: RouterCompatible {
             urlRequest.httpMethod = method.rawValue
             urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
             urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-//        default:
-//            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
+        case .nextMatches:
+            let url = try path.asURL()
+            var request = URLRequest(url: url)
+            request.httpMethod = method.rawValue
+            let apiKey = AppConfig.apiKey
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+            return request
         }
         return urlRequest
     }

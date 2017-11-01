@@ -14,7 +14,7 @@ enum Link {
 }
 
 extension FirebaseHelper {
-    static func save(model: VModel) {
+    static func save(model: Model) {
         guard let currentUserName = AppConfig.currentUserName else { return }
         let values = model.encoded
         existsForCurrentUser(model: model) { exists in
@@ -30,7 +30,7 @@ extension FirebaseHelper {
         }
     }
     
-    static func existsForCurrentUser(model: VModel, completion: @escaping ( Bool ) -> Void) {
+    static func existsForCurrentUser(model: Model, completion: @escaping ( Bool ) -> Void) {
         guard let currentUserName = AppConfig.currentUserName else {
             completion(false)
             
@@ -40,13 +40,9 @@ extension FirebaseHelper {
             .child(model.type ?? "no_type")
             .child(model.id ?? "no_id")
             .observeSingleEvent(of: .value, with: { snap in
-                DispatchQueue.main.async {
                 completion(snap.exists())
-                }
             }, withCancel: { _ in
-                DispatchQueue.main.async {
-                    completion(false)
-                }
+                completion(false)
             })
     }
 }
@@ -157,6 +153,7 @@ class Category {
         if json["links"].dictionary != nil {
             self.links = Links(json: json["links"])
         }
+        
     }
     
     func updateData(with included: [VModel]) {

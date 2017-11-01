@@ -11,24 +11,42 @@ import Hero
 
 class MatchesViewController: TableViewController, Refreshable {
     lazy var refreshControl: UIRefreshControl = { UIRefreshControl() }()
-    
-    class func deploy(with matches: [Match], completion: MatchCompletion? = nil) -> MatchesViewController {
+
+    class func deploy(with matches: [Match], lastDate: Date, nextPageURL: String?, completion: MatchCompletion? = nil) -> MatchesViewController {
         let vc = MatchesViewController.instantiateFromStoryboardId(.main)
         vc.completionHandler = completion
         vc.matches = matches
+        vc.nextPageURL = nextPageURL
+        vc.lastDate = lastDate
+        
         return vc
     }
     
     var completionHandler: MatchCompletion?
-    var matches = [Match]()
+    var matches = [Match]() {
+        didSet {
+            guard tableView != nil else { return }
+            tableView.reloadData()
+        }
+    }
+    var nextPageURL: String?
+    var lastDate = Date()
+    var isLoading = false
+    
+    var completionForMatchLoad: (([Match]) -> Void)? {
+        return { [unowned self] matches in
+            self.matches.append(contentsOf: matches)
+        }
+    }
+    
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         dataSource = self
         delegate = self
         super.viewDidLoad()
-        title = "\(AppConfig.currentUserName ?? "") · last 24 hours"
-        configurePullToRefresh(for: tableView, action: #selector(loadMatches))
+        title = "\(AppConfig.currentUserName ?? "") · \(Shard(rawValue: AppConfig.currentShardId)?.name ?? "")"
+        configurePullToRefresh(for: tableView, action: #selector(reloadMatches))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,17 +54,44 @@ class MatchesViewController: TableViewController, Refreshable {
         Hero.shared.setContainerColorForNextTransition(.black)
     }
     
-    func loadMatches() {
-        VMatch.findWhere(withOwner: self, userName: AppConfig.currentUserName, onSuccess: { [weak self] matches in
-            
-            FirebaseHelper.getAllDIfferentMatchesFromHistory(for: matches, completion: { [weak self] matchesFormHistory in
-                var summ = matches
-                summ.append(contentsOf: matchesFormHistory.sorted())
+    func reloadMatches() {
+        let date = Date()
+        loadMatches(with: date) { [weak self] matches in
+            self?.matches = matches
+            self?.lastDate = date
+        }
+    }
+    
+    fileprivate func loadMatches(with date: Date, completion: (([Match]) -> Void)? = nil) {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        VMatch.findWhere(withOwner: self, userName: AppConfig.currentUserName,
+                         stardDate: Calendar.current.date(byAdding: DateComponents(day: -Constants.kNumberOfDaysToSearchMatches), to: date)!,
+                         endDate: Calendar.current.date(byAdding: DateComponents(second: -1), to: date)!,
+                         loaderMessage: "loading..", onSuccess: { [unowned self] matches, nextPageURL in
+                            self.isLoading = false
+                            self.stopRefreshing()
+                            self.nextPageURL = nextPageURL
+                            completion?(matches)
+            }, onError: { [weak self] in
+                self?.isLoading = false
                 self?.stopRefreshing()
-                self?.matches = summ
-                self?.tableView.reloadData()
-            })
-            
+        })
+    }
+    
+    fileprivate func loadMatches(with nextPageURL: String, completion: (([Match]) -> Void)? = nil) {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        VMatch.findNext(withOwner: self, nextPageURL: nextPageURL, loaderMessage: "loading next..", control: nil, onSuccess: { [unowned self] matches, nextPageURL in
+            self.isLoading = false
+            self.stopRefreshing()
+            self.nextPageURL = nextPageURL
+            completion?(matches)
+            }, onError: { [weak self] in
+                self?.isLoading = false
+                self?.stopRefreshing()
         })
     }
 }
@@ -55,7 +100,7 @@ extension MatchesViewController: TableViewControllerDataSource {
     var _cellIdentifiers: [UITableViewCell.Type] {
         return [MatchTableViewCell.self, JSONModelTableViewCell.self]
     }
-
+    
     var _tableView: UITableView {
         return tableView
     }
@@ -66,12 +111,21 @@ extension MatchesViewController: TableViewControllerDataSource {
 }
 
 extension MatchesViewController: TableViewControllerDelegate {
+    func willDisplayLastRow() {
+        if let nextPageURL = nextPageURL {
+            loadMatches(with: nextPageURL, completion: completionForMatchLoad)
+        } else {
+            self.lastDate = Calendar.current.date(byAdding: DateComponents(day: -Constants.kNumberOfDaysToSearchMatches), to: self.lastDate)!
+            loadMatches(with: self.lastDate, completion: completionForMatchLoad)
+        }
+    }
+    
     func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
         let cell = MatchTableViewCell.dequeued(by: tableView)
         cell.update(with: matches[indexPath.row])
         return cell
     }
-
+    
     func didSelect(_ model: Model, at indexPath: IndexPath) {
         navigationController?.pushViewController(RostersViewController.deploy(with: matches[indexPath.row]), animated: true)
     }

@@ -75,6 +75,10 @@ extension ParticipantDetailViewController: TableViewControllerDataSource {
 }
 
 extension ParticipantDetailViewController: TableViewControllerDelegate {
+    func willDisplayLastRow() {
+        
+    }
+
     func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
         if let player = model as? Player {
             let cell = PlayerTableViewCell.dequeued(by: tableView)

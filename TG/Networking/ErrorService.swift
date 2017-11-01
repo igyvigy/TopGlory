@@ -68,11 +68,12 @@ enum TGResultType {
     case jsonApiObject, jsonApiArray
 }
 
-struct TGResult<M: VModel> {
+struct TGResult<M: Model, V: VModel> {
     var type: TGResultType = .jsonApiObject
     var value: M?
     var values: [M]?
     var error: TGError?
+    var nextPageURL: String?
     
     init (jsonApiArray transferObject: TransferObject) {
         type = .jsonApiArray
@@ -88,11 +89,12 @@ struct TGResult<M: VModel> {
             } else {
                 jsonObjects = json.arrayValue
             }
-
             for objectJSON in jsonObjects {
-                let object = M(json: objectJSON, included: json["included"].arrayValue.map({ VModel(json: $0) }))
+                let vObject = V(json: objectJSON, included: json["included"].arrayValue.map({ VModel(json: $0) }))
+                let object = M(dict: vObject.encoded)
                 responseObjects.append(object)
             }
+            nextPageURL = json["links"]["next"].string
             values = responseObjects
         }
     }
@@ -102,7 +104,8 @@ struct TGResult<M: VModel> {
         if let error = transferObject.error {
             self.error = error
         } else if let json = transferObject.json {
-            value = M(json: json["data"], included: json["included"].arrayValue.map({ VModel(json: $0) }))
+            let vObject = VModel(json: json["data"], included: json["included"].arrayValue.map({ VModel(json: $0) }))
+            value = M(dict: vObject.encoded)
         }
     }
 }
@@ -113,13 +116,13 @@ class ResultHandlerService {
     
     var loaderQueue = [String?]()
     
-    func completionForObject<M: VModel>(withOwner
+    func completionForObject<M: Model, V: VModel>(withOwner
                                        owner: TGOwner? = nil,
                                        loaderMessage: String? = nil,
                                        control: Control? = nil,
                                        shouldBlockUI: Bool = false,
                                        onSuccess: @escaping (M) -> Void,
-                                       onError: Completion? = nil) -> (TGResult<M>) -> Void {
+                                       onError: Completion? = nil) -> (TGResult<M, V>) -> Void {
         
         if isPresentingLoader { loaderQueue.append(loaderMessage) }
         let vc = owner ?? UIViewController.presentedVC()
@@ -156,13 +159,13 @@ class ResultHandlerService {
         }
     }
     
-    func completionForArray<M: VModel>(withOwner
+    func completionForArray<M: Model, V: VModel>(withOwner
                                       owner: TGOwner? = nil,
                                       loaderMessage: String? = nil,
                                       control: Control? = nil,
                                       shouldBlockUI: Bool = false,
-                                      onSuccess: @escaping ([M]) -> Void,
-                                      onError: Completion? = nil) -> (TGResult<M>) -> Void {
+                                      onSuccess: @escaping ([M], String?) -> Void,
+                                      onError: Completion? = nil) -> (TGResult<M, V>) -> Void {
         
         if isPresentingLoader { loaderQueue.append(loaderMessage) }
         let vc = owner ?? UIViewController.presentedVC()
@@ -174,24 +177,29 @@ class ResultHandlerService {
         }
         return { result in
             ErrorService.unwrapResult(forArray: result, withOwner: owner, onSuccess: { models in
-                vc?.navigationController?.hideCurrentWhisper {
-                    if !self.loaderQueue.isEmpty {
-                        self.loaderQueue.removeFirst()
-                        self.isPresentingLoader = !self.loaderQueue.isEmpty
-                    } else {
-                        self.isPresentingLoader = false
+                DispatchQueue.main.async {
+                    print("main")
+                    vc?.navigationController?.hideCurrentWhisper {
+                        if !self.loaderQueue.isEmpty {
+                            self.loaderQueue.removeFirst()
+                            self.isPresentingLoader = !self.loaderQueue.isEmpty
+                        } else {
+                            self.isPresentingLoader = false
+                        }
+                        control?.isControlEnabled = !self.isPresentingLoader
+                        if shouldBlockUI { vc?.view.isUserInteractionEnabled = true }
                     }
-                    control?.isControlEnabled = !self.isPresentingLoader
-                    if shouldBlockUI { vc?.view.isUserInteractionEnabled = true }
+                    onSuccess(models, result.nextPageURL)
                 }
-                onSuccess(models)
             }, onError: { errorString in
                 vc?.navigationController?.hideCurrentWhisper {
-                    self.loaderQueue = []
-                    self.isPresentingLoader = false
-                    vc?.showError(message: errorString) {
-                        control?.isControlEnabled = true
-                        if shouldBlockUI { vc?.view.isUserInteractionEnabled = true }
+                    DispatchQueue.main.async {
+                        self.loaderQueue = []
+                        self.isPresentingLoader = false
+                        vc?.showError(message: errorString) {
+                            control?.isControlEnabled = true
+                            if shouldBlockUI { vc?.view.isUserInteractionEnabled = true }
+                        }
                     }
                 }
                 onError?()
@@ -234,10 +242,9 @@ class ErrorService {
         }
     }
     
-    static func unwrapResult<M: VModel>(forObject result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping (M) -> Void, onError: StringCompletion? = nil) {
+    static func unwrapResult<M: Model, V: VModel>(forObject result: TGResult<M, V>, withOwner owner: TGOwner?, onSuccess: @escaping (M) -> Void, onError: StringCompletion? = nil) {
         switch result.type {
         case .jsonApiObject:
-            DispatchQueue.main.async {
                 if let error = result.error {
                     onError?(error.description)
                 } else if let value = result.value {
@@ -245,18 +252,14 @@ class ErrorService {
                 } else {
                     onError?("\(String(describing: result.type.self)) unwrap result: value is missing")
                 }
-            }
         default:
-            DispatchQueue.main.async {
                 onError?("result type missmatch")
-            }
         }
     }
     
-    static func unwrapResult<M: VModel>(forArray result: TGResult<M>, withOwner owner: TGOwner?, onSuccess: @escaping ([M]) -> Void, onError: StringCompletion? = nil) {
+    static func unwrapResult<M: Model, V: VModel>(forArray result: TGResult<M, V>, withOwner owner: TGOwner?, onSuccess: @escaping ([M]) -> Void, onError: StringCompletion? = nil) {
         switch result.type {
         case .jsonApiArray:
-            DispatchQueue.main.async {
                 if let error = result.error {
                     onError?(error.description)
                 } else if let values = result.values {
@@ -264,11 +267,8 @@ class ErrorService {
                 } else {
                     onError?("\(String(describing: result.type.self)) unwrap result: values are missing")
                 }
-            }
         default:
-            DispatchQueue.main.async {
                 onError?("result type missmatch")
-            }
         }
     }
 }

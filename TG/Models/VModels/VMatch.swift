@@ -35,14 +35,7 @@ class VMatch: VModel {
         return related.filter({ $0.type == "spectators" })
     }
     public var description: String {
-        let key = "match\(id ?? "").description"
-        if let catched = Catche.runtimeString[key] {
-            return catched
-        } else {
-            let description = "\(gameMode?.name ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
-            Catche.runtimeString[key] = description
-            return description
-        }
+        return "\(gameMode?.name ?? "") · \(rosters.filter({ $0.isUserTeam }).first?.won ?? false ? "you won" : "you lost")"
     }
     
     var userWon: Bool {
@@ -105,7 +98,7 @@ extension VMatch {
                          endDate: Date? = Calendar.current.date(byAdding: DateComponents(second: -1), to: Date())!,
                          loaderMessage: String? = nil,
                          control: Control? = nil,
-                         onSuccess: @escaping ([Match]) -> Void,
+                         onSuccess: @escaping ([Match], String?) -> Void,
                          onError: Completion? = nil) {
         let parameters: Parameters = [
             "filter[playerNames]": userName ?? "null",
@@ -115,15 +108,31 @@ extension VMatch {
         ]
         print(parameters)
         let router = Router.matches(parameters: parameters)
-        let operation = JSONAPIArrayOperation<VMatch>(
+        let operation = JSONAPIArrayOperation<Match, VMatch>(
             with: router,
             completion: APIManager.resultHandlerService().completionForArray(
                 withOwner: owner,
                 loaderMessage: loaderMessage,
                 control: control,
-                onSuccess: { matches in
-                    onSuccess( matches.map { match in Match(dict: match.encoded) } )
-            },
+                onSuccess: onSuccess,
+                onError: onError))
+        APIManager.operationQueue().addOperation(operation)
+    }
+    
+    class func findNext(withOwner owner: TGOwner? = nil,
+                        nextPageURL: String,
+                        loaderMessage: String? = nil,
+                        control: Control? = nil,
+                        onSuccess: @escaping ([Match], String?) -> Void,
+                        onError: Completion? = nil) {
+        let router = Router.nextMatches(nextPageURL: nextPageURL)
+        let operation = JSONAPIArrayOperation<Match, VMatch>(
+            with: router,
+            completion: APIManager.resultHandlerService().completionForArray(
+                withOwner: owner,
+                loaderMessage: loaderMessage,
+                control: control,
+                onSuccess: onSuccess,
                 onError: onError))
         APIManager.operationQueue().addOperation(operation)
     }
@@ -131,11 +140,11 @@ extension VMatch {
     func fetch(withOwner owner: TGOwner? = nil,
                loaderMessage: String? = nil,
                control: Control? = nil,
-               onSuccess: @escaping (VMatch) -> Void,
+               onSuccess: @escaping (Match) -> Void,
                onError: Completion? = nil) {
         let parameters: Parameters = [:]
         let router = Router.match(id: id ?? "",parameters: parameters)
-        let operation = JSONAPIObjectOperation<VMatch>(
+        let operation = JSONAPIObjectOperation<Match, VMatch>(
             with: router,
             completion: APIManager.resultHandlerService().completionForObject(
                 withOwner: owner,
