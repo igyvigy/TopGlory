@@ -75,7 +75,7 @@ struct TGResult<M: Model, V: VModel> {
     var error: TGError?
     var nextPageURL: String?
     
-    init (jsonApiArray transferObject: TransferObject) {
+    init (jsonApiArray transferObject: TransferObject<M, V>) {
         type = .jsonApiArray
         if let error = transferObject.error {
             self.error = error
@@ -99,7 +99,7 @@ struct TGResult<M: Model, V: VModel> {
         }
     }
     
-    init (jsonApiObject transferObject: TransferObject) {
+    init (jsonApiObject transferObject: TransferObject<M, V>) {
         type = .jsonApiObject
         if let error = transferObject.error {
             self.error = error

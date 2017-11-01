@@ -38,7 +38,7 @@ class RostersViewController: TableViewController {
         delegate = self
         super.viewDidLoad()
         title = match.description
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "match data", style: .plain, target: self, action: #selector(showTelemetry(sender:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "kills graph", style: .plain, target: self, action: #selector(showTelemetry(sender:)))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,13 +49,19 @@ class RostersViewController: TableViewController {
     @IBAction func showTelemetry(sender: UIBarButtonItem) {
         guard let asset = match.assets.first else { return }
         sender.isEnabled = false
-        asset.loadTelemetry(withOwner: self, loaderMessage: "loading match data", control: sender, onSuccess: { actions in
-            sender.isEnabled = true
-                self.navigationController?.pushViewController(
-                    GraphViewController.deploy(with: actions, match: self.match)
-                    , animated: true)
+        navigationController?.showLoader(message: "loading graph data")
+        
+        asset.loadTelemetry(withOwner: self, loaderMessage: nil, control: sender, onSuccess: { [weak self] actions in
+            guard let match = self?.match else { return }
+            let graphVC = GraphViewController.deploy(with: actions, match: match)
+            DispatchQueue.main.async {
+                sender.isEnabled = true
+                self?.navigationController?.hideCurrentWhisper()
+                self?.navigationController?.pushViewController(graphVC, animated: true)
+            }
             
         })
+        
     }
 }
 

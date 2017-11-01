@@ -82,10 +82,15 @@ extension Asset {
         let router = Router.telemetry(urlString: url ?? "", contentType: contentType ?? "")
         Alamofire.request(try! router.asURLRequest())
             .responseJSON { response in
-                debugPrint(response)
-                if let object = response.result.value {
-                    let jsonArray = JSON(object).arrayValue
-                    onSuccess(jsonArray.map({ Action(dict: ActionModel(json: $0).encoded) }))
+                owner?.navigationController?.showLoader(message: "building graph")
+                DispatchQueue.global(qos: .userInitiated).async {
+                    debugPrint(response)
+                    if let object = response.result.value {
+                        let jsonArray = JSON(object).arrayValue
+                        let actions = jsonArray.map({ Action(dict: ActionModel(json: $0).encoded) })
+                        
+                        onSuccess(actions)
+                    }
                 }
         }
     }

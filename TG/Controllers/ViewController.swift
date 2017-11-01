@@ -14,7 +14,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var goButton: UIButton!
     
     var titleView = UILabel()
-    
+    var isLoading = false {
+        didSet {
+            playerTextField.isEnabled = !self.isLoading
+        }
+    }
     var selectedRegion = "" {
         didSet{
             titleView.frame.size.width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
@@ -68,6 +72,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func titleWasTapped() {
+        guard !isLoading else { return }
         let picker = UIPickerView(frame: .zero)
         picker.delegate = self
         picker.dataSource = self
@@ -131,11 +136,14 @@ extension ViewController {
                          endDate: Calendar.current.date(byAdding: DateComponents(second: -1), to: date)!,
                          loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches, nextPageURL in
                             let matchesVC = MatchesViewController.deploy(with: matches, lastDate: date, nextPageURL: nextPageURL)
+                            self?.isLoading = false
                             self?.navigationController?.pushViewController(matchesVC, animated: true)
         })
     }
     
     @IBAction func didTapGoButton(_ sender: UIButton) {
+        guard !isLoading else { return }
+        isLoading = true
         guard let name = playerTextField.text, name != "", AppConfig.current.finishedToFetchData else { return }
         saveLastPlayer(playerName: name)
 

@@ -20,7 +20,8 @@ struct Constants {
     static let shardDefaultsKey = "shardDefaultsKey"
     static let kUploadsImagesPath = "uploads/images"
     static let kUploadsVideosPath = "uploads/videos"
-    static let kNumberOfDaysToSearchMatches = 27
+    static let kNumberOfDaysToSearchMatches = 2
+    
 }
 
 let kEmptyStringValue = ""

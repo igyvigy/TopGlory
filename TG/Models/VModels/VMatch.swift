@@ -109,7 +109,7 @@ extension VMatch {
         print(parameters)
         let router = Router.matches(parameters: parameters)
         let operation = JSONAPIArrayOperation<Match, VMatch>(
-            with: router,
+            with: router, owner: owner,
             completion: APIManager.resultHandlerService().completionForArray(
                 withOwner: owner,
                 loaderMessage: loaderMessage,
@@ -127,7 +127,7 @@ extension VMatch {
                         onError: Completion? = nil) {
         let router = Router.nextMatches(nextPageURL: nextPageURL)
         let operation = JSONAPIArrayOperation<Match, VMatch>(
-            with: router,
+            with: router, owner: owner,
             completion: APIManager.resultHandlerService().completionForArray(
                 withOwner: owner,
                 loaderMessage: loaderMessage,
@@ -145,7 +145,7 @@ extension VMatch {
         let parameters: Parameters = [:]
         let router = Router.match(id: id ?? "",parameters: parameters)
         let operation = JSONAPIObjectOperation<Match, VMatch>(
-            with: router,
+            with: router, owner: owner,
             completion: APIManager.resultHandlerService().completionForObject(
                 withOwner: owner,
                 loaderMessage: loaderMessage,
