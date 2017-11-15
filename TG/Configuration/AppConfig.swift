@@ -169,6 +169,7 @@ struct AppConfig {
     
     func fetchUnknownData(isFinal: Bool = true, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
+        
         dispatchGroup.enter()
         fetchUnknownActors {
             dispatchGroup.leave()
