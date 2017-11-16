@@ -159,6 +159,7 @@
 		B5890A621F3679E70046C18B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A611F3679E70046C18B /* Constants.swift */; };
 		B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AF6091F3683C100E2F4BA /* RostersViewController.swift */; };
 		B5A91F681F2FC1C600C1B512 /* Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A91F671F2FC1C600C1B512 /* Hero.framework */; };
+		B5A95E0C1FBDB46100F85C1E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE8BAD1FAA2DAF00536262 /* TimeInterval.swift */; };
 		B5AE8BAE1FAA2DB000536262 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE8BAD1FAA2DAF00536262 /* TimeInterval.swift */; };
 		B5AE8BB11FAA4BF700536262 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A571F3641E50046C18B /* Participant.swift */; };
 		B5AE8BB21FAA4BF700536262 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A611F3679E70046C18B /* Constants.swift */; };
@@ -417,7 +418,6 @@
 		B5A91F671F2FC1C600C1B512 /* Hero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hero.framework; path = Carthage/Build/iOS/Hero.framework; sourceTree = "<group>"; };
 		B5AE8BAD1FAA2DAF00536262 /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		B5AE8C281FAA4BF700536262 /* VG Fans - Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VG Fans - Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5AE8C291FAA4BF700536262 /* TG copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TG copy-Info.plist"; path = "/Users/andrii/Rolique/projects/TG/TG copy-Info.plist"; sourceTree = "<absolute>"; };
 		B5CBCB701F16BD250060E2C1 /* RosterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterView.xib; sourceTree = "<group>"; };
 		B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModelTableViewCell.swift; sourceTree = "<group>"; };
 		B5CBCB731F16D3560060E2C1 /* JSONModelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSONModelTableViewCell.xib; sourceTree = "<group>"; };
@@ -532,7 +532,6 @@
 				B54901951F75560B00542AD4 /* TGContentManager */,
 				B545C9651F13F03B008F191F /* Products */,
 				B545C9A21F13F24E008F191F /* Frameworks */,
-				B5AE8C291FAA4BF700536262 /* TG copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1148,6 +1147,7 @@
 				B5775CB61F764EFC005EC458 /* UIStackViewExtension.swift in Sources */,
 				B5775CAA1F764E92005EC458 /* Side.swift in Sources */,
 				B5775CAB1F764E92005EC458 /* Image.swift in Sources */,
+				B5A95E0C1FBDB46100F85C1E /* TimeInterval.swift in Sources */,
 				B54901D01F7561DB00542AD4 /* StorageHelper.swift in Sources */,
 				B5775CBE1F764FD1005EC458 /* TGColors.swift in Sources */,
 				B5775CB21F764EFC005EC458 /* UIColorExtension.swift in Sources */,
@@ -1394,7 +1394,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1420,7 +1420,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1482,7 +1482,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1508,7 +1508,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
