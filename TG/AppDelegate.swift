@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         FirebaseHelper.configure()
+        iVersion.sharedInstance().appStoreID = 1311847048
         return true
     }
 

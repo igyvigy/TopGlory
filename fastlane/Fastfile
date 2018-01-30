@@ -22,14 +22,15 @@ ENV["APP_IDENTIFIER"] = "io.rolique.TG"
 ENV["FABRIC_API_TOKEN"] = "22909fdaa0f026e5f352d0365e3c845a7437eca8"
 ENV["FABRIC_API_SECRET"] = "2592b7472b5a416d03d6b9edc4235212cb75de70cb19ad1f71dd6e3b373684e0"
 ENV["SLACK_URL"] = "https://hooks.slack.com/services/IDS"
+ENV["USERNAME"] = "andrii.narinian@rolique.io"
 
 desc "Register new device"
 
 lane :register_new_device do |options|
   device_name = prompt(text: "Enter the device name: ")
   device_udid = prompt(text: "Enter the device UDID: ")
-  userAppleId = prompt(text: "Enter the user apple id: ")
-  ENV["USERNAME"] = userAppleId
+ # userAppleId = prompt(text: "Enter the user apple id: ")
+ # ENV["USERNAME"] = userAppleId
   device_hash = {}
   device_hash[device_name] = device_udid
   register_devices(username: userAppleId, devices: device_hash)
@@ -41,8 +42,8 @@ lane :refresh_profiles do |options|
 end
 
 lane :beta do |options|
-  userAppleId = prompt(text: "Enter the user apple id: ")
-  ENV["USERNAME"] = userAppleId
+ # userAppleId = prompt(text: "Enter the user apple id: ")
+ # ENV["USERNAME"] = userAppleId
   
 
   gym(

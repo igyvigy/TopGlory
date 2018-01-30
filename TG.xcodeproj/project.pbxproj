@@ -142,6 +142,9 @@
 		B5775CC71F76513A005EC458 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F841221F40799E00212E8A /* Swap.swift */; };
 		B5775CC81F765186005EC458 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F7AF1F389AA40091838A /* Position.swift */; };
 		B5775CCA1F765553005EC458 /* ContentManagerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5775CC91F765553005EC458 /* ContentManagerListCell.swift */; };
+		B57F0C7220077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
+		B57F0C7320077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
+		B57F0C7420077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
 		B5890A421F3617750046C18B /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A401F3617750046C18B /* ErrorService.swift */; };
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
@@ -399,6 +402,11 @@
 		B5775CC21F7650A4005EC458 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		B5775CC51F76512E005EC458 /* VHeroSwapPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHeroSwapPosition.swift; sourceTree = "<group>"; };
 		B5775CC91F765553005EC458 /* ContentManagerListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentManagerListCell.swift; sourceTree = "<group>"; };
+		B57F0C6D20077CF50031CBF4 /* TG-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TG-Bridging-Header.h"; sourceTree = "<group>"; };
+		B57F0C6E20077CF50031CBF4 /* TGContentManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TGContentManager-Bridging-Header.h"; sourceTree = "<group>"; };
+		B57F0C6F20077CF50031CBF4 /* TGLite-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TGLite-Bridging-Header.h"; sourceTree = "<group>"; };
+		B57F0C7020077CF70031CBF4 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
+		B57F0C7120077CF70031CBF4 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
 		B5890A401F3617750046C18B /* ErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
@@ -715,10 +723,15 @@
 		B54901C21F755C3F00542AD4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B57F0C7020077CF70031CBF4 /* iVersion.h */,
+				B57F0C7120077CF70031CBF4 /* iVersion.m */,
 				B54901C41F755C3F00542AD4 /* DocumentsHelper.swift */,
 				B54901C51F755C3F00542AD4 /* Spitter.swift */,
 				B54901C61F755C3F00542AD4 /* StorageHelper.swift */,
 				B54901CD1F75614800542AD4 /* FirebaseHelper.swift */,
+				B57F0C6D20077CF50031CBF4 /* TG-Bridging-Header.h */,
+				B57F0C6E20077CF50031CBF4 /* TGContentManager-Bridging-Header.h */,
+				B57F0C6F20077CF50031CBF4 /* TGLite-Bridging-Header.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -853,7 +866,8 @@
 				TargetAttributes = {
 					B545C9631F13F03B008F191F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = ZL58JZZ8KD;
+						DevelopmentTeam = DW3EGQ38C2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -864,10 +878,12 @@
 					B54901931F75560B00542AD4 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = ZL58JZZ8KD;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					B5AE8BAF1FAA4BF700536262 = {
 						DevelopmentTeam = ZL58JZZ8KD;
+						LastSwiftMigration = 0920;
 					};
 				};
 			};
@@ -1064,6 +1080,7 @@
 				B555F7901F3749520091838A /* Item.swift in Sources */,
 				B55F20E11F36A27700770410 /* PlayerTableViewCell.swift in Sources */,
 				B5775CC61F76512E005EC458 /* VHeroSwapPosition.swift in Sources */,
+				B57F0C7220077CF70031CBF4 /* iVersion.m in Sources */,
 				B545C99C1F13F0A0008F191F /* UINavigationControllerExtension.swift in Sources */,
 				B545C9961F13F0A0008F191F /* StoryboardExtension.swift in Sources */,
 				B555F7921F3760390091838A /* EnumExtension.swift in Sources */,
@@ -1148,6 +1165,7 @@
 				B5775CAA1F764E92005EC458 /* Side.swift in Sources */,
 				B5775CAB1F764E92005EC458 /* Image.swift in Sources */,
 				B5A95E0C1FBDB46100F85C1E /* TimeInterval.swift in Sources */,
+				B57F0C7320077CF70031CBF4 /* iVersion.m in Sources */,
 				B54901D01F7561DB00542AD4 /* StorageHelper.swift in Sources */,
 				B5775CBE1F764FD1005EC458 /* TGColors.swift in Sources */,
 				B5775CB21F764EFC005EC458 /* UIColorExtension.swift in Sources */,
@@ -1197,6 +1215,7 @@
 				B5AE8BC21FAA4BF700536262 /* Item.swift in Sources */,
 				B5AE8BC31FAA4BF700536262 /* PlayerTableViewCell.swift in Sources */,
 				B5AE8BC41FAA4BF700536262 /* VHeroSwapPosition.swift in Sources */,
+				B57F0C7420077CF70031CBF4 /* iVersion.m in Sources */,
 				B5AE8BC51FAA4BF700536262 /* UINavigationControllerExtension.swift in Sources */,
 				B5AE8BC61FAA4BF700536262 /* StoryboardExtension.swift in Sources */,
 				B5AE8BC71FAA4BF700536262 /* EnumExtension.swift in Sources */,
@@ -1392,10 +1411,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = ZL58JZZ8KD;
+				CURRENT_PROJECT_VERSION = 14;
+				DEVELOPMENT_TEAM = DW3EGQ38C2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1405,11 +1425,14 @@
 				INFOPLIST_FILE = TG/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TG;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igyVigy.VGFans;
 				PRODUCT_NAME = "VG Fans";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TG-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1418,10 +1441,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = ZL58JZZ8KD;
+				CURRENT_PROJECT_VERSION = 14;
+				DEVELOPMENT_TEAM = DW3EGQ38C2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1431,11 +1455,13 @@
 				INFOPLIST_FILE = TG/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TG;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igyVigy.VGFans;
 				PRODUCT_NAME = "VG Fans";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TG-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1444,6 +1470,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1454,6 +1481,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TGContentManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TGContentManager-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1462,6 +1491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1472,6 +1502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.rolique.TGContentManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TGContentManager-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -1480,9 +1511,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1497,6 +1529,8 @@
 				PRODUCT_NAME = "VG Fans - Free";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TGLite-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1506,9 +1540,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TG/TG.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = ZL58JZZ8KD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1523,6 +1558,7 @@
 				PRODUCT_NAME = "VG Fans - Free";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TG/Helpers/TGLite-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
