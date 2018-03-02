@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import iVersion
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
