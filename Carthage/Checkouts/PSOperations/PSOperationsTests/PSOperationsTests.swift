@@ -438,20 +438,16 @@ class PSOperationsTests: XCTestCase {
             op.cancel()
         }
         op.addObserver(BlockObserver(
-            startHandler: {
-                _ in
+            startHandler: { _ in
                 startExp.fulfill()
             },
-            cancelHandler: {
-                _ in
+            cancelHandler: { _ in
                 cancelExp.fulfill()
             },
-            produceHandler: {
-                _ in
+            produceHandler: { _, _ in
                 produceExp.fulfill()
             },
-            finishHandler: {
-                _ in
+            finishHandler: { _, _ in
                 finishExp.fulfill()
         }))
         
@@ -747,14 +743,11 @@ class PSOperationsTests: XCTestCase {
     }
     
     func testBlockObserver() {
-        let opQ = PSOperations.OperationQueue()
+        let opQ = PSOperationQueue()
         
-        var op: PSOperations.BlockOperation!
-        op = PSOperations.BlockOperation {
-            let producedOperation = PSOperations.BlockOperation {
-                
-            }
-            
+        var op: PSBlockOperation!
+        op = PSBlockOperation {
+            let producedOperation = PSBlockOperation { }
             op.produceOperation(producedOperation)
         }
         
@@ -763,16 +756,13 @@ class PSOperationsTests: XCTestCase {
         let exp3 = expectation(description: "3")
         
         let blockObserver = BlockObserver (
-            startHandler: {
-                _ in
+            startHandler: { _ in
                 exp1.fulfill()
             },
-            produceHandler: {
-                _ in
+            produceHandler: { _, _ in
                 exp2.fulfill()
             },
-            finishHandler: {
-                _ in
+            finishHandler: { _, _ in
                 exp3.fulfill()
             }
         )
@@ -1022,7 +1012,7 @@ class PSOperationsTests: XCTestCase {
     func testOperationQueueNotGettingStuck() {
         
         var opCount = 0
-        var requiredToPassCount = 25_000
+        var requiredToPassCount = 5_000
         let q = PSOperations.OperationQueue()
         
         let exp = expectation(description: "requiredToPassCount")
@@ -1035,7 +1025,7 @@ class PSOperationsTests: XCTestCase {
             }
             
             let blockOp = PSOperations.BlockOperation {
-                (finishBlock: (Void) -> Void) in
+                (finishBlock: () -> Void) in
                 finishBlock()
                 go()
             }

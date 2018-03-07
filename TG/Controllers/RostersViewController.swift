@@ -43,7 +43,8 @@ class RostersViewController: TableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Hero.shared.setContainerColorForNextTransition(.black)
+        Hero.shared.containerColor = .black
+        //Hero.shared.setContainerColorForNextTransition(.black)
     }
     
     @IBAction func showTelemetry(sender: UIBarButtonItem) {

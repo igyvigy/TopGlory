@@ -40,17 +40,17 @@ class AppleProductViewController: UIViewController, HeroViewControllerDelegate {
   }
 
   func applyShrinkModifiers() {
-    view.heroModifiers = nil
-    primaryLabel.heroModifiers = [.translate(x:-50, y:(view.center.y - primaryLabel.center.y)/10), .scale(0.9), HeroModifier.duration(0.3)]
-    secondaryLabel.heroModifiers = [.translate(x:-50, y:(view.center.y - secondaryLabel.center.y)/10), .scale(0.9), HeroModifier.duration(0.3)]
-    imageView.heroModifiers = [.translate(x:-80), .scale(0.9), HeroModifier.duration(0.3)]
+    view.hero.modifiers = nil
+    primaryLabel.hero.modifiers = [.translate(x:-50, y:(view.center.y - primaryLabel.center.y)/10), .scale(0.9), HeroModifier.duration(0.3)]
+    secondaryLabel.hero.modifiers = [.translate(x:-50, y:(view.center.y - secondaryLabel.center.y)/10), .scale(0.9), HeroModifier.duration(0.3)]
+    imageView.hero.modifiers = [.translate(x:-80), .scale(0.9), HeroModifier.duration(0.3)]
   }
 
   func applySlideModifiers() {
-    view.heroModifiers = [.translate(x: view.bounds.width), .duration(0.3), .beginWith(modifiers: [.zPosition(2)])]
-    primaryLabel.heroModifiers = [.translate(x:100), .duration(0.3)]
-    secondaryLabel.heroModifiers = [.translate(x:100), .duration(0.3)]
-    imageView.heroModifiers = nil
+    view.hero.modifiers = [.translate(x: view.bounds.width), .duration(0.3), .beginWith(modifiers: [.zPosition(2)])]
+    primaryLabel.hero.modifiers = [.translate(x:100), .duration(0.3)]
+    secondaryLabel.hero.modifiers = [.translate(x:100), .duration(0.3)]
+    imageView.hero.modifiers = nil
   }
 
   enum TransitionState {
@@ -59,7 +59,7 @@ class AppleProductViewController: UIViewController, HeroViewControllerDelegate {
   var state: TransitionState = .normal
   weak var nextVC: AppleProductViewController?
 
-  func pan() {
+  @objc func pan() {
     let translateX = panGR.translation(in: nil).x
     let velocityX = panGR.velocity(in: nil).x
     switch panGR.state {
@@ -85,10 +85,10 @@ class AppleProductViewController: UIViewController, HeroViewControllerDelegate {
           nextVC!.applyShrinkModifiers()
         }
         state = nextState
-        hero_replaceViewController(with: nextVC!)
+        hero.replaceViewController(with: nextVC!)
       } else {
-        let progress = abs(Double(translateX / view.bounds.width))
-        Hero.shared.update(progress: progress)
+        let progress = abs(translateX / view.bounds.width)
+        Hero.shared.update(progress)
         if state == .slidingLeft, let nextVC = nextVC {
           Hero.shared.apply(modifiers: [.translate(x: view.bounds.width + translateX)], to: nextVC.view)
         } else {
@@ -98,7 +98,7 @@ class AppleProductViewController: UIViewController, HeroViewControllerDelegate {
     default:
       let progress = (translateX + velocityX) / view.bounds.width
       if (progress < 0) == (state == .slidingLeft) && abs(progress) > 0.3 {
-        Hero.shared.end()
+        Hero.shared.finish()
       } else {
         Hero.shared.cancel()
       }
@@ -108,7 +108,7 @@ class AppleProductViewController: UIViewController, HeroViewControllerDelegate {
 
   func heroWillStartAnimatingTo(viewController: UIViewController) {
     if !(viewController is AppleProductViewController) {
-      view.heroModifiers = [.ignoreSubviewModifiers(recursive: true)]
+      view.hero.modifiers = [.ignoreSubviewModifiers(recursive: true)]
     }
   }
 }

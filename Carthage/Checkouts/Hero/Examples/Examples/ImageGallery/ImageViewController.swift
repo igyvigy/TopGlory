@@ -50,21 +50,21 @@ class ImageViewController: UICollectionViewController {
     }
   }
 
-  func pan() {
+  @objc func pan() {
     let translation = panGR.translation(in: nil)
     let progress = translation.y / 2 / collectionView!.bounds.height
     switch panGR.state {
     case .began:
-      hero_dismissViewController()
+      hero.dismissViewController()
     case .changed:
-      Hero.shared.update(progress: Double(progress))
+      Hero.shared.update(progress)
       if let cell = collectionView?.visibleCells[0]  as? ScrollingImageCell {
         let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
         Hero.shared.apply(modifiers: [.position(currentPos)], to: cell.imageView)
       }
     default:
       if progress + panGR.velocity(in: nil).y / collectionView!.bounds.height > 0.3 {
-        Hero.shared.end()
+        Hero.shared.finish()
       } else {
         Hero.shared.cancel()
       }
@@ -80,8 +80,8 @@ extension ImageViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let imageCell = (collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as? ScrollingImageCell)!
     imageCell.image = ImageLibrary.image(index:indexPath.item)
-    imageCell.imageView.heroID = "image_\(indexPath.item)"
-    imageCell.imageView.heroModifiers = [.position(CGPoint(x:view.bounds.width/2, y:view.bounds.height+view.bounds.width/2)), .scale(0.6), .fade]
+    imageCell.imageView.hero.id = "image_\(indexPath.item)"
+    imageCell.imageView.hero.modifiers = [.position(CGPoint(x:view.bounds.width/2, y:view.bounds.height+view.bounds.width/2)), .scale(0.6), .fade]
     imageCell.topInset = topLayoutGuide.length
     imageCell.imageView.isOpaque = true
     return imageCell

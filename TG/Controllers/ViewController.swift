@@ -38,13 +38,14 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Hero.shared.setContainerColorForNextTransition(.black)
+        
+        //Hero.shared.setContainerColorForNextTransition(.black)
     }
     
     private func configure() {
         goButton.isEnabled = false
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
+        navigationController?.hero.isEnabled = true
+        navigationController?.hero.navigationAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
         playerTextField.delegate = self
         if let playerName = AppConfig.currentUserName {
             playerTextField.text = playerName

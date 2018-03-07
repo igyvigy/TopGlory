@@ -53,6 +53,25 @@ class AnimationSelectTableViewController: UITableViewController {
     super.viewDidLoad()
     tableView.backgroundColor = UIColor.randomFlat
     labelColor = UIColor(contrastingBlackOrWhiteColorOn: tableView.backgroundColor!, isFlat: true)
+    let screenEdgePanGR = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePan(gr:)))
+    screenEdgePanGR.edges = .left
+    view.addGestureRecognizer(screenEdgePanGR)
+  }
+
+  @objc func handlePan(gr: UIPanGestureRecognizer) {
+    switch gr.state {
+    case .began:
+      dismiss(animated: true, completion: nil)
+    case .changed:
+      let progress = gr.translation(in: nil).x / view.bounds.width
+      Hero.shared.update(progress)
+    default:
+      if (gr.translation(in: nil).x + gr.velocity(in: nil).x) / view.bounds.width > 0.5 {
+        Hero.shared.finish()
+      } else {
+        Hero.shared.cancel()
+      }
+    }
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -84,12 +103,8 @@ class AnimationSelectTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let vc = self.storyboard!.instantiateViewController(withIdentifier: "animationSelect")
-
-    // the following two lines configures the animation. default is .auto
-    Hero.shared.setDefaultAnimationForNextTransition(animations[indexPath.item])
-    Hero.shared.setContainerColorForNextTransition(.lightGray)
-
-    hero_replaceViewController(with: vc)
+    vc.hero.modalAnimationType = animations[indexPath.item]
+    hero.replaceViewController(with: vc)
   }
 
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -42,8 +42,8 @@ class VideoPlayerViewController: UIViewController {
     playerView = AVPlayerView(frame: view.bounds)
     playerView.backgroundColor = .black
     (playerView.layer as! AVPlayerLayer).player = player
-    playerView.heroID = "videoPlayer"
-    playerView.heroModifiers = [.useNoSnapshot, .useScaleBasedSizeChange]
+    playerView.hero.id = "videoPlayer"
+    playerView.hero.modifiers = [.useNoSnapshot, .useScaleBasedSizeChange]
     view.insertSubview(playerView, at: 0)
 
     panGR = UIPanGestureRecognizer(target: self, action: #selector(pan))
@@ -54,19 +54,19 @@ class VideoPlayerViewController: UIViewController {
     player.play()
   }
 
-  func pan() {
+  @objc func pan() {
     let translation = panGR.translation(in: nil)
     let progress = translation.y / 2 / view.bounds.height
     switch panGR.state {
     case .began:
-      hero_dismissViewController()
+      hero.dismissViewController()
     case .changed:
-      Hero.shared.update(progress: Double(progress))
+      Hero.shared.update(progress)
       let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
       Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
     default:
       if progress + panGR.velocity(in: nil).y / view.bounds.height > 0.3 {
-        Hero.shared.end()
+        Hero.shared.finish()
       } else {
         Hero.shared.cancel()
       }
@@ -77,13 +77,5 @@ class VideoPlayerViewController: UIViewController {
     super.viewWillLayoutSubviews()
     playerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 16 * 9)
     playerView.center = view.center
-  }
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    // must re-insert the playerView since we used .useNoSnapshot modifier on it.
-    // Hero will take it out of the view hierarchy during the transition.
-    playerView.frame = view.bounds
-    view.insertSubview(playerView, at: 0)
   }
 }

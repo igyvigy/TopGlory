@@ -867,7 +867,7 @@
 					B545C9631F13F03B008F191F = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = DW3EGQ38C2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
