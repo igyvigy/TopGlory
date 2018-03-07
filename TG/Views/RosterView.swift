@@ -18,15 +18,14 @@ class RosterView: NibLoadingView {
     @IBOutlet weak var turretsKilledLabel: UILabel!
     @IBOutlet weak var turretsRemainsLabel: UILabel!
     @IBOutlet weak var yourTeamLabel: UILabel!
-    @IBOutlet var participantsImageViews: [UIImageView]!
-    @IBOutlet var playerNamesLabels: [UILabel]!
+//    @IBOutlet var participantsImageViews: [UIImageView]!
+//    @IBOutlet var playerNamesLabels: [UILabel]!
+    @IBOutlet weak var playerImagesStackView: UIStackView!
+    @IBOutlet weak var playerNamesStackView: UIStackView!
     
     func prepareForReuse() {
-//        participantsImageViews.forEach { imageView in
-//            imageView.layer.removeAllAnimations()
-//            imageView.image = nil
-//            imageView.af_cancelImageRequest()
-//        }
+//        playerImagesStackView.arrangedSubviews.forEach { playerImagesStackView.removeArrangedSubview($0) }
+//        playerNamesStackView.arrangedSubviews.forEach { playerNamesStackView.removeArrangedSubview($0) }
     }
     
     func update(with roster: Roster?) {
@@ -42,12 +41,43 @@ class RosterView: NibLoadingView {
         
         yourTeamLabel.isHidden = !(roster.isUserTeam ?? false)
         guard let participants = roster.participants else { return }
+        if playerImagesStackView.arrangedSubviews.count == 0 {
+            fillStackViews(with: participants)
+        } else {
+            updateStackViews(with: participants)
+        }
+    }
+    
+    private func updateStackViews(with participants: [Participant]) {
         for (idx, participant) in participants.enumerated() {
-            participantsImageViews[safe: idx]?.image = nil
-            if let skinUrl = URL(string: participant.actor?.url ?? "") {
-                participantsImageViews[safe: idx]?.setImage(withURL: skinUrl)
+            if let imageView = playerImagesStackView.arrangedSubviews[safe: idx] as? UIImageView {
+                update(imageView: imageView, with: participant)
             }
-            playerNamesLabels[safe: idx]?.text = participant.playerName
+            if let label = playerNamesStackView.arrangedSubviews[safe: idx] as? UILabel {
+                label.text = participant.playerName
+            }
+        }
+    }
+    
+    private func update(imageView: UIImageView, with participant: Participant) {
+        imageView.image = nil
+        if let skinUrl = URL(string: participant.actor?.url ?? "") {
+            imageView.setImage(withURL: skinUrl)
+        }
+    }
+    
+    private func fillStackViews(with participants: [Participant]) {
+        participants.forEach { participant in
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFit
+            update(imageView: imageView, with: participant)
+            playerImagesStackView.addArrangedSubview(imageView)
+            let label = UILabel()
+            label.textColor = .white
+            label.adjustsFontSizeToFitWidth = true
+            label.minimumScaleFactor = 0.2
+            label.text = participant.playerName
+            playerNamesStackView.addArrangedSubview(label)
         }
     }
 }
