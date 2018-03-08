@@ -283,6 +283,14 @@
 		B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB771F1741460060E2C1 /* Match.swift */; };
 		B5CBCB7C1F1741460060E2C1 /* Roster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB781F1741460060E2C1 /* Roster.swift */; };
 		B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB791F1741460060E2C1 /* PrimaryData.swift */; };
+		B5E58A54205112EF00447906 /* RosterVIew5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A53205112EF00447906 /* RosterVIew5.xib */; };
+		B5E58A552051130300447906 /* RosterVIew5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A53205112EF00447906 /* RosterVIew5.xib */; };
+		B5E58A57205114A500447906 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A56205114A500447906 /* RosterView5.swift */; };
+		B5E58A58205114A500447906 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A56205114A500447906 /* RosterView5.swift */; };
+		B5E58A5B2051163300447906 /* Match5TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A592051163300447906 /* Match5TableViewCell.swift */; };
+		B5E58A5C2051163300447906 /* Match5TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A592051163300447906 /* Match5TableViewCell.swift */; };
+		B5E58A5D2051163300447906 /* Match5TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A5A2051163300447906 /* Match5TableViewCell.xib */; };
+		B5E58A5E2051163300447906 /* Match5TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A5A2051163300447906 /* Match5TableViewCell.xib */; };
 		B5E6094D1F1957FF001D4D58 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094C1F1957FF001D4D58 /* TableViewController.swift */; };
 		B5E6094F1F196085001D4D58 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6094E1F196085001D4D58 /* NibLoadingView.swift */; };
 		B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E609501F1960EA001D4D58 /* RosterView.swift */; };
@@ -433,6 +441,10 @@
 		B5CBCB771F1741460060E2C1 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		B5CBCB781F1741460060E2C1 /* Roster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Roster.swift; sourceTree = "<group>"; };
 		B5CBCB791F1741460060E2C1 /* PrimaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrimaryData.swift; path = ../PrimaryData.swift; sourceTree = "<group>"; };
+		B5E58A53205112EF00447906 /* RosterVIew5.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RosterVIew5.xib; sourceTree = "<group>"; };
+		B5E58A56205114A500447906 /* RosterView5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView5.swift; sourceTree = "<group>"; };
+		B5E58A592051163300447906 /* Match5TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match5TableViewCell.swift; sourceTree = "<group>"; };
+		B5E58A5A2051163300447906 /* Match5TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Match5TableViewCell.xib; sourceTree = "<group>"; };
 		B5E6094C1F1957FF001D4D58 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B5E6094E1F196085001D4D58 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
 		B5E609501F1960EA001D4D58 /* RosterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
@@ -593,8 +605,12 @@
 			children = (
 				B545C97C1F13F0A0008F191F /* MatchTableViewCell.swift */,
 				B545C97D1F13F0A0008F191F /* MatchTableViewCell.xib */,
+				B5E58A592051163300447906 /* Match5TableViewCell.swift */,
+				B5E58A5A2051163300447906 /* Match5TableViewCell.xib */,
 				B5CBCB701F16BD250060E2C1 /* RosterView.xib */,
+				B5E58A53205112EF00447906 /* RosterVIew5.xib */,
 				B5E609501F1960EA001D4D58 /* RosterView.swift */,
+				B5E58A56205114A500447906 /* RosterView5.swift */,
 				B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */,
 				B5CBCB731F16D3560060E2C1 /* JSONModelTableViewCell.xib */,
 				B5E6094E1F196085001D4D58 /* NibLoadingView.swift */,
@@ -913,6 +929,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */,
+				B5E58A54205112EF00447906 /* RosterVIew5.xib in Resources */,
 				B545C9721F13F03B008F191F /* LaunchScreen.storyboard in Resources */,
 				B545C96F1F13F03B008F191F /* Assets.xcassets in Resources */,
 				B555F7A21F376F820091838A /* UsedItemTableViewCell.xib in Resources */,
@@ -924,6 +941,7 @@
 				B545C9911F13F0A0008F191F /* MatchTableViewCell.xib in Resources */,
 				B555F7961F37613A0091838A /* ItemCollectionViewCell.xib in Resources */,
 				B55F20D61F368C8600770410 /* ParticipantTableViewCell.xib in Resources */,
+				B5E58A5D2051163300447906 /* Match5TableViewCell.xib in Resources */,
 				B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */,
 				B54901D41F75633B00542AD4 /* GoogleService-Info.plist in Resources */,
 			);
@@ -946,6 +964,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5AE8C151FAA4BF700536262 /* RosterTableViewCell.xib in Resources */,
+				B5E58A552051130300447906 /* RosterVIew5.xib in Resources */,
 				B5AE8C161FAA4BF700536262 /* LaunchScreen.storyboard in Resources */,
 				B5AE8C171FAA4BF700536262 /* Assets.xcassets in Resources */,
 				B5AE8C181FAA4BF700536262 /* UsedItemTableViewCell.xib in Resources */,
@@ -957,6 +976,7 @@
 				B5AE8C1E1FAA4BF700536262 /* MatchTableViewCell.xib in Resources */,
 				B5AE8C1F1FAA4BF700536262 /* ItemCollectionViewCell.xib in Resources */,
 				B5AE8C201FAA4BF700536262 /* ParticipantTableViewCell.xib in Resources */,
+				B5E58A5E2051163300447906 /* Match5TableViewCell.xib in Resources */,
 				B5AE8C211FAA4BF700536262 /* PlayerTableViewCell.xib in Resources */,
 				B5AE8C221FAA4BF700536262 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1087,6 +1107,7 @@
 				B545C9941F13F0A0008F191F /* ArrayExtension.swift in Sources */,
 				B58AF60A1F3683C100E2F4BA /* RostersViewController.swift in Sources */,
 				B555F7AA1F3872130091838A /* Actor.swift in Sources */,
+				B5E58A5B2051163300447906 /* Match5TableViewCell.swift in Sources */,
 				B545C9981F13F0A0008F191F /* UIBarBUttonItemExtension.swift in Sources */,
 				B5890A5F1F3679DE0046C18B /* APIManager.swift in Sources */,
 				B545C9A11F13F0A0008F191F /* UIViewExtension.swift in Sources */,
@@ -1132,6 +1153,7 @@
 				B545C9A01F13F0A0008F191F /* UIViewControllerExtension.swift in Sources */,
 				B5CBCB7A1F1741460060E2C1 /* Model.swift in Sources */,
 				B5775C9C1F764CC8005EC458 /* VAsset.swift in Sources */,
+				B5E58A57205114A500447906 /* RosterView5.swift in Sources */,
 				B5775C921F764AF7005EC458 /* VParticipant.swift in Sources */,
 				B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */,
 				B545C9991F13F0A0008F191F /* UIColorExtension.swift in Sources */,
@@ -1222,6 +1244,7 @@
 				B5AE8BC81FAA4BF700536262 /* ArrayExtension.swift in Sources */,
 				B5AE8BC91FAA4BF700536262 /* RostersViewController.swift in Sources */,
 				B5AE8BCA1FAA4BF700536262 /* Actor.swift in Sources */,
+				B5E58A5C2051163300447906 /* Match5TableViewCell.swift in Sources */,
 				B5AE8BCB1FAA4BF700536262 /* UIBarBUttonItemExtension.swift in Sources */,
 				B5AE8BCC1FAA4BF700536262 /* APIManager.swift in Sources */,
 				B5AE8BCD1FAA4BF700536262 /* UIViewExtension.swift in Sources */,
@@ -1267,6 +1290,7 @@
 				B5AE8BF51FAA4BF700536262 /* UIViewControllerExtension.swift in Sources */,
 				B5AE8BF61FAA4BF700536262 /* Model.swift in Sources */,
 				B5AE8BF71FAA4BF700536262 /* VAsset.swift in Sources */,
+				B5E58A58205114A500447906 /* RosterView5.swift in Sources */,
 				B5AE8BF81FAA4BF700536262 /* VParticipant.swift in Sources */,
 				B5AE8BF91FAA4BF700536262 /* RosterView.swift in Sources */,
 				B5AE8BFA1FAA4BF700536262 /* UIColorExtension.swift in Sources */,

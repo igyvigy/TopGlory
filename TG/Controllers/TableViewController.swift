@@ -12,11 +12,12 @@ protocol TableViewControllerDataSource: class {
     var _tableView: UITableView { get }
     var _models: [Model] { get }
     var _cellIdentifiers: [UITableViewCell.Type] { get }
+    var _is5v5: Bool { get }
 }
 
 protocol TableViewControllerDelegate: class {
     func didSelect(_ model: Model, at indexPath: IndexPath)
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell?
+    func cell(for model: Model, at indexPath: IndexPath, is5v5: Bool) -> UITableViewCell?
     func willDisplayLastRow()
 }
 
@@ -65,7 +66,7 @@ extension TableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let model = dataSource?._models[indexPath.row] {
-            return delegate?.cell(for: model, at: indexPath) ?? UITableViewCell()
+            return delegate?.cell(for: model, at: indexPath, is5v5: dataSource?._is5v5 ?? false) ?? UITableViewCell()
         }
         return UITableViewCell()
     }

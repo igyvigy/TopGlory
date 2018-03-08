@@ -10,14 +10,16 @@ import UIKit
 import Hero
 
 class ParticipantDetailViewController: TableViewController {
-    class func deploy(with participant: Participant) -> ParticipantDetailViewController {
+    class func deploy(with participant: Participant, is5v5: Bool) -> ParticipantDetailViewController {
         let vc = ParticipantDetailViewController.instantiateFromStoryboardId(.main)
         vc.participant = participant
+        vc.is5v5 = is5v5
         return vc
     }
     
     var participant: Participant!
     var models = [Model]()
+    var is5v5: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -62,6 +64,10 @@ class ParticipantDetailViewController: TableViewController {
 }
 
 extension ParticipantDetailViewController: TableViewControllerDataSource {
+    var _is5v5: Bool {
+        return is5v5
+    }
+    
     var _cellIdentifiers: [UITableViewCell.Type] {
         return [ParticipantTableViewCell.self, PlayerTableViewCell.self, UsedItemTableViewCell.self, HeaderTableViewCell.self]
     }
@@ -80,7 +86,7 @@ extension ParticipantDetailViewController: TableViewControllerDelegate {
         
     }
 
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
+    func cell(for model: Model, at indexPath: IndexPath, is5v5: Bool) -> UITableViewCell? {
         if let player = model as? Player {
             let cell = PlayerTableViewCell.dequeued(by: tableView)
             cell.update(with: player)

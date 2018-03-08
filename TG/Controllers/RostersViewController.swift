@@ -30,6 +30,9 @@ class RostersViewController: TableViewController {
     var match: Match!
     var models: [Model]!
     var actionModels: [FActionModel]?
+    var is5v5: Bool {
+        return (match.rosters.first?.participants?.count ?? 0) > 3
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -67,6 +70,10 @@ class RostersViewController: TableViewController {
 }
 
 extension RostersViewController: TableViewControllerDataSource {
+    var _is5v5: Bool {
+        return is5v5
+    }
+    
     var _cellIdentifiers: [UITableViewCell.Type] {
         return [RosterTableViewCell.self, ParticipantCell.self]
     }
@@ -85,7 +92,7 @@ extension RostersViewController: TableViewControllerDelegate {
         
     }
 
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
+    func cell(for model: Model, at indexPath: IndexPath, is5v5: Bool) -> UITableViewCell? {
         if model is Roster {
             let cell = RosterTableViewCell.dequeued(by: tableView)
             cell.update(with: model as? Roster)
@@ -109,6 +116,6 @@ extension RostersViewController: TableViewControllerDelegate {
         guard let participant = models[safe: indexPath.row] as? Participant, actionModels == nil else {
             return
         }
-        navigationController?.pushViewController(ParticipantDetailViewController.deploy(with: participant), animated: true)
+        navigationController?.pushViewController(ParticipantDetailViewController.deploy(with: participant, is5v5: is5v5), animated: true)
     }
 }

@@ -98,8 +98,12 @@ class MatchesViewController: TableViewController, Refreshable {
 }
 
 extension MatchesViewController: TableViewControllerDataSource {
+    var _is5v5: Bool {
+        return false
+    }
+    
     var _cellIdentifiers: [UITableViewCell.Type] {
-        return [MatchTableViewCell.self, JSONModelTableViewCell.self]
+        return [MatchTableViewCell.self, Match5TableViewCell.self, JSONModelTableViewCell.self]
     }
     
     var _tableView: UITableView {
@@ -121,10 +125,18 @@ extension MatchesViewController: TableViewControllerDelegate {
         }
     }
     
-    func cell(for model: Model, at indexPath: IndexPath) -> UITableViewCell? {
-        let cell = MatchTableViewCell.dequeued(by: tableView)
-        cell.update(with: matches[indexPath.row])
-        return cell
+    func cell(for model: Model, at indexPath: IndexPath, is5v5: Bool) -> UITableViewCell? {
+        let match = matches[indexPath.row]
+        let is5vs5 = (match.rosters.first?.participants?.count ?? 0) > 0
+        if is5vs5 {
+            let cell = Match5TableViewCell.dequeued(by: tableView)
+            cell.update(with: match)
+            return cell
+        } else {
+            let cell = MatchTableViewCell.dequeued(by: tableView)
+            cell.update(with: match)
+            return cell
+        }
     }
     
     func didSelect(_ model: Model, at indexPath: IndexPath) {
