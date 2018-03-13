@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     var titleView = UILabel()
     var isLoading = false {
         didSet {
-            playerTextField.isEnabled = !self.isLoading
+            self.playerTextField.isEnabled = !self.isLoading
         }
     }
     var selectedRegion = "" {
@@ -136,11 +136,15 @@ extension ViewController {
                          stardDate: Calendar.current.date(byAdding: DateComponents(day: -Constants.kNumberOfDaysToSearchMatches), to: date)!,
                          endDate: Calendar.current.date(byAdding: DateComponents(second: -1), to: date)!,
                          loaderMessage: "looking for your matches", control: sender, onSuccess: { [weak self] matches, nextPageURL in
-                            let matchesVC = MatchesViewController.deploy(with: matches, lastDate: date, nextPageURL: nextPageURL)
-                            self?.isLoading = false
-                            self?.navigationController?.pushViewController(matchesVC, animated: true)
+                            DispatchQueue.main.async {
+                                let matchesVC = MatchesViewController.deploy(with: matches, lastDate: date, nextPageURL: nextPageURL)
+                                self?.isLoading = false
+                                self?.navigationController?.pushViewController(matchesVC, animated: true)
+                            }
             }, onError: { [weak self] in
-                self?.isLoading = false
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                }
         })
     }
     
