@@ -57,6 +57,10 @@ class Match: Model, Equatable, Comparable {
     var description: String?
     var userWon: Bool?
     
+    var is5v5:Bool {
+        return (rosters.first?.participants?.count ?? 0) > 3
+    }
+    
     required init(dict: [String: Any?]) {
         self.gameMode = GameMode(id: dict["gameMode"] as? String ?? kEmptyStringValue, type: .gamemode)
         

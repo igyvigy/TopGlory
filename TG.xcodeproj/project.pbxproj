@@ -145,6 +145,10 @@
 		B57F0C7220077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
 		B57F0C7320077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
 		B57F0C7420077CF70031CBF4 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B57F0C7120077CF70031CBF4 /* iVersion.m */; };
+		B585C2CF2057FD1A00426F03 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585C2CE2057FD1A00426F03 /* RosterView5.swift */; };
+		B585C2D02057FD1A00426F03 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585C2CE2057FD1A00426F03 /* RosterView5.swift */; };
+		B585C2D22057FDBE00426F03 /* RosterView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B585C2D12057FDBE00426F03 /* RosterView5.xib */; };
+		B585C2D32057FDBE00426F03 /* RosterView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B585C2D12057FDBE00426F03 /* RosterView5.xib */; };
 		B5890A421F3617750046C18B /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A401F3617750046C18B /* ErrorService.swift */; };
 		B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A411F3617750046C18B /* NetworkObserver.swift */; };
 		B5890A481F361E6C0046C18B /* TGColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5890A471F361E6C0046C18B /* TGColors.swift */; };
@@ -283,10 +287,6 @@
 		B5CBCB7B1F1741460060E2C1 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB771F1741460060E2C1 /* Match.swift */; };
 		B5CBCB7C1F1741460060E2C1 /* Roster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB781F1741460060E2C1 /* Roster.swift */; };
 		B5CBCB7D1F1741460060E2C1 /* PrimaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CBCB791F1741460060E2C1 /* PrimaryData.swift */; };
-		B5E58A54205112EF00447906 /* RosterVIew5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A53205112EF00447906 /* RosterVIew5.xib */; };
-		B5E58A552051130300447906 /* RosterVIew5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A53205112EF00447906 /* RosterVIew5.xib */; };
-		B5E58A57205114A500447906 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A56205114A500447906 /* RosterView5.swift */; };
-		B5E58A58205114A500447906 /* RosterView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A56205114A500447906 /* RosterView5.swift */; };
 		B5E58A5B2051163300447906 /* Match5TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A592051163300447906 /* Match5TableViewCell.swift */; };
 		B5E58A5C2051163300447906 /* Match5TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E58A592051163300447906 /* Match5TableViewCell.swift */; };
 		B5E58A5D2051163300447906 /* Match5TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E58A5A2051163300447906 /* Match5TableViewCell.xib */; };
@@ -415,6 +415,8 @@
 		B57F0C6F20077CF50031CBF4 /* TGLite-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TGLite-Bridging-Header.h"; sourceTree = "<group>"; };
 		B57F0C7020077CF70031CBF4 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
 		B57F0C7120077CF70031CBF4 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
+		B585C2CE2057FD1A00426F03 /* RosterView5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RosterView5.swift; sourceTree = "<group>"; };
+		B585C2D12057FDBE00426F03 /* RosterView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RosterView5.xib; sourceTree = "<group>"; };
 		B5890A401F3617750046C18B /* ErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		B5890A411F3617750046C18B /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		B5890A471F361E6C0046C18B /* TGColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGColors.swift; sourceTree = "<group>"; };
@@ -441,8 +443,6 @@
 		B5CBCB771F1741460060E2C1 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		B5CBCB781F1741460060E2C1 /* Roster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Roster.swift; sourceTree = "<group>"; };
 		B5CBCB791F1741460060E2C1 /* PrimaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrimaryData.swift; path = ../PrimaryData.swift; sourceTree = "<group>"; };
-		B5E58A53205112EF00447906 /* RosterVIew5.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RosterVIew5.xib; sourceTree = "<group>"; };
-		B5E58A56205114A500447906 /* RosterView5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView5.swift; sourceTree = "<group>"; };
 		B5E58A592051163300447906 /* Match5TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match5TableViewCell.swift; sourceTree = "<group>"; };
 		B5E58A5A2051163300447906 /* Match5TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Match5TableViewCell.xib; sourceTree = "<group>"; };
 		B5E6094C1F1957FF001D4D58 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -608,9 +608,9 @@
 				B5E58A592051163300447906 /* Match5TableViewCell.swift */,
 				B5E58A5A2051163300447906 /* Match5TableViewCell.xib */,
 				B5CBCB701F16BD250060E2C1 /* RosterView.xib */,
-				B5E58A53205112EF00447906 /* RosterVIew5.xib */,
 				B5E609501F1960EA001D4D58 /* RosterView.swift */,
-				B5E58A56205114A500447906 /* RosterView5.swift */,
+				B585C2D12057FDBE00426F03 /* RosterView5.xib */,
+				B585C2CE2057FD1A00426F03 /* RosterView5.swift */,
 				B5CBCB721F16D3560060E2C1 /* JSONModelTableViewCell.swift */,
 				B5CBCB731F16D3560060E2C1 /* JSONModelTableViewCell.xib */,
 				B5E6094E1F196085001D4D58 /* NibLoadingView.swift */,
@@ -929,7 +929,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B55F20D21F36872E00770410 /* RosterTableViewCell.xib in Resources */,
-				B5E58A54205112EF00447906 /* RosterVIew5.xib in Resources */,
 				B545C9721F13F03B008F191F /* LaunchScreen.storyboard in Resources */,
 				B545C96F1F13F03B008F191F /* Assets.xcassets in Resources */,
 				B555F7A21F376F820091838A /* UsedItemTableViewCell.xib in Resources */,
@@ -944,6 +943,7 @@
 				B5E58A5D2051163300447906 /* Match5TableViewCell.xib in Resources */,
 				B55F20E21F36A27700770410 /* PlayerTableViewCell.xib in Resources */,
 				B54901D41F75633B00542AD4 /* GoogleService-Info.plist in Resources */,
+				B585C2D22057FDBE00426F03 /* RosterView5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,7 +964,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5AE8C151FAA4BF700536262 /* RosterTableViewCell.xib in Resources */,
-				B5E58A552051130300447906 /* RosterVIew5.xib in Resources */,
 				B5AE8C161FAA4BF700536262 /* LaunchScreen.storyboard in Resources */,
 				B5AE8C171FAA4BF700536262 /* Assets.xcassets in Resources */,
 				B5AE8C181FAA4BF700536262 /* UsedItemTableViewCell.xib in Resources */,
@@ -979,6 +978,7 @@
 				B5E58A5E2051163300447906 /* Match5TableViewCell.xib in Resources */,
 				B5AE8C211FAA4BF700536262 /* PlayerTableViewCell.xib in Resources */,
 				B5AE8C221FAA4BF700536262 /* GoogleService-Info.plist in Resources */,
+				B585C2D32057FDBE00426F03 /* RosterView5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,6 +1131,7 @@
 				B5890A481F361E6C0046C18B /* TGColors.swift in Sources */,
 				B5890A4A1F3622360046C18B /* OperationsExtension.swift in Sources */,
 				B5890A421F3617750046C18B /* ErrorService.swift in Sources */,
+				B585C2CF2057FD1A00426F03 /* RosterView5.swift in Sources */,
 				B5890A561F3637980046C18B /* NumberExtension.swift in Sources */,
 				B5890A5C1F3679D60046C18B /* ViewController.swift in Sources */,
 				B5890A431F3617750046C18B /* NetworkObserver.swift in Sources */,
@@ -1153,7 +1154,6 @@
 				B545C9A01F13F0A0008F191F /* UIViewControllerExtension.swift in Sources */,
 				B5CBCB7A1F1741460060E2C1 /* Model.swift in Sources */,
 				B5775C9C1F764CC8005EC458 /* VAsset.swift in Sources */,
-				B5E58A57205114A500447906 /* RosterView5.swift in Sources */,
 				B5775C921F764AF7005EC458 /* VParticipant.swift in Sources */,
 				B5E609511F1960EA001D4D58 /* RosterView.swift in Sources */,
 				B545C9991F13F0A0008F191F /* UIColorExtension.swift in Sources */,
@@ -1268,6 +1268,7 @@
 				B5AE8BDF1FAA4BF700536262 /* TGColors.swift in Sources */,
 				B5AE8BE01FAA4BF700536262 /* OperationsExtension.swift in Sources */,
 				B5AE8BE11FAA4BF700536262 /* ErrorService.swift in Sources */,
+				B585C2D02057FD1A00426F03 /* RosterView5.swift in Sources */,
 				B5AE8BE21FAA4BF700536262 /* NumberExtension.swift in Sources */,
 				B5AE8BE31FAA4BF700536262 /* ViewController.swift in Sources */,
 				B5AE8BE41FAA4BF700536262 /* NetworkObserver.swift in Sources */,
@@ -1290,7 +1291,6 @@
 				B5AE8BF51FAA4BF700536262 /* UIViewControllerExtension.swift in Sources */,
 				B5AE8BF61FAA4BF700536262 /* Model.swift in Sources */,
 				B5AE8BF71FAA4BF700536262 /* VAsset.swift in Sources */,
-				B5E58A58205114A500447906 /* RosterView5.swift in Sources */,
 				B5AE8BF81FAA4BF700536262 /* VParticipant.swift in Sources */,
 				B5AE8BF91FAA4BF700536262 /* RosterView.swift in Sources */,
 				B5AE8BFA1FAA4BF700536262 /* UIColorExtension.swift in Sources */,

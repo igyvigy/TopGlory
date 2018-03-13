@@ -139,6 +139,8 @@ extension ViewController {
                             let matchesVC = MatchesViewController.deploy(with: matches, lastDate: date, nextPageURL: nextPageURL)
                             self?.isLoading = false
                             self?.navigationController?.pushViewController(matchesVC, animated: true)
+            }, onError: { [weak self] in
+                self?.isLoading = false
         })
     }
     

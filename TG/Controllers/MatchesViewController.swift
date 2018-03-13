@@ -127,8 +127,7 @@ extension MatchesViewController: TableViewControllerDelegate {
     
     func cell(for model: Model, at indexPath: IndexPath, is5v5: Bool) -> UITableViewCell? {
         let match = matches[indexPath.row]
-        let is5vs5 = (match.rosters.first?.participants?.count ?? 0) > 0
-        if is5vs5 {
+        if match.is5v5 {
             let cell = Match5TableViewCell.dequeued(by: tableView)
             cell.update(with: match)
             return cell
