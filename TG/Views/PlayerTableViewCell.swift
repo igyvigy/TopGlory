@@ -21,22 +21,20 @@ class PlayerTableViewCell: TGTableViewCell {
     @IBOutlet weak var winsLabel: UILabel!
     @IBOutlet weak var xpLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
-    
     var player: Player?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureTableView()
+        //configureTableView()
     }
-    
-    private func configureTableView() {
-        tableView.dataSource = self
-    }
-    
+//
+//    private func configureTableView() {
+//        tableView.dataSource = self
+//    }
+//
     func update(with player: Player) {
         self.player = player
-        tableView.reloadData()
+//        tableView.reloadData()
         nameLabel.text = player.name
         levelLabel.text = "\(player.level ?? 0)"
         karmaLevelLabel.text = "\(player.karmaLevel ?? 0)"
@@ -59,20 +57,21 @@ class PlayerTableViewCell: TGTableViewCell {
     }
 }
 
-extension PlayerTableViewCell: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return player?.seasonStats?.data.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TGTableViewCell(style: .value1, reuseIdentifier: "statCell")
-        let season = player?.seasonStats?.data[indexPath.row]
-        cell.selectionStyle = .none
-        cell.textLabel?.text = "elo earned during season \(season?.number ?? 0)"
-        cell.detailTextLabel?.text = String(format: "%.3f", season?.value ?? 0)
-        cell.textLabel?.textColor = .white
-        cell.detailTextLabel?.textColor = .lightGray
-        cell.contentView.backgroundColor = .almostBlack
-        return cell
-    }
-}
+//extension PlayerTableViewCell: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return player?.seasonStats?.data.count ?? 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = TGTableViewCell(style: .value1, reuseIdentifier: "statCell")
+//        let season = player?.seasonStats?.data[indexPath.row]
+//        cell.selectionStyle = .none
+//        cell.textLabel?.text = "elo earned during season \(season?.number ?? 0)"
+//        cell.detailTextLabel?.text = String(format: "%.3f", season?.value ?? 0)
+//        cell.textLabel?.textColor = .white
+//        cell.detailTextLabel?.textColor = .lightGray
+//        cell.contentView.backgroundColor = .almostBlack
+//        return cell
+//    }
+//}
+
